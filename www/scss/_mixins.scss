@@ -1,0 +1,73 @@
+
+// File parziale per i mixin. Sarà poi importato dal file principale
+
+// $value... indica che il mixin accetta più di un parametro separato da
+// virgola. Ad esempio
+// @include transition(transform .5s ease, width .7s linear, color .2s ease-out);
+@mixin transition($value...){
+   transition:             $value;
+   -moz-transition:        $value;
+   -webkit-transition:     $value;
+}
+
+@mixin transform($value){
+   transform:              $value;
+   -moz-transform:         $value;
+   -webkit-transform:      $value;
+}
+
+@mixin transform-origin($value){
+   transform-origin:              $value;
+   -ms-transform-origin:          $value;
+   -moz-transform-origin:         $value;
+   -webkit-transform-origin:      $value;
+}
+
+@mixin animation($value...){
+   animation:              $value;
+   -webkit-animation:      $value;
+   -moz-animation:         $value;
+}
+
+@mixin selection($background, $value){
+   ::selection{
+      background-color: $background;
+      color: $value;
+   }
+
+   ::-moz-selection {
+      background-color: $background;
+      color: $value;
+   }
+}
+
+// settare font size in rem con pixel fallback
+@function calculateRem($size) {
+   $remSize: $size / 16px;
+   @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+   font-size: $size;
+   font-size: calculateRem($size);
+}
+
+// breakpoint
+@mixin breakpointLarge {
+   @media (min-width: $breakpointLarge) {
+      @content;
+   }
+}
+
+@mixin breakpointMedium {
+   @media (min-width: $breakpointMedium) {
+      @content;
+   }
+}
+
+@mixin breakpointSmall {
+   @media (min-width: $breakpointSmall) {
+      @content;
+   }
+}
+

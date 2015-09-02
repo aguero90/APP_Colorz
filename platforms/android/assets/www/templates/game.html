@@ -1,0 +1,118 @@
+
+
+<div id="MainContainer">
+
+
+    <div id="Title">
+        <h1>
+            <span class="Title-letter--green">r</span>
+            <span class="Title-letter--yellow">e</span>
+            <span class="Title-letter--orange">l</span>
+            <span class="Title-letter--red">a</span>
+            <span class="Title-letter--blue">x</span>
+        </h1>
+    </div>
+
+    <div id="PawnLeft">
+        <ul>
+            <li><span id="PawnLeft--red">x6</span></li>
+            <li><span id="PawnLeft--green">x6</span></li>
+            <li><span id="PawnLeft--blue">x6</span></li>
+        </ul>
+    </div>
+
+    <div id="ChessboardContainer">
+        <table id="Chessboard">
+            <tbody>
+                <tr id="Chessboard-row1">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 1 -->
+                <tr id="Chessboard-row2">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 2 -->
+                <tr id="Chessboard-row3">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 3 -->
+                <tr id="Chessboard-row4">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 4 -->
+                <tr id="Chessboard-row5">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 5 -->
+                <tr id="Chessboard-row6">
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                    <td class="Chessboard-cell Chessboard-border"></td>
+                </tr> <!-- FINE RIGA 6 -->
+            </tbody>
+        </table>
+    </div><!-- FINE table_container -->
+
+    <!-- Scelte colori
+    =================================================================-->
+
+    <div id="ColorSelectionContainer" class="is-hidden">
+        <div id="ColorSelection">
+            <h1>Seleziona il colore</h1>
+            <ul>
+                <li id="ColorSelection-red" class="ColorChoice ColorChoice--red"><span></span></li>
+                <li id="ColorSelection-green" class="ColorChoice ColorChoice--green"><span></span></li>
+                <li id="ColorSelection-blue" class="ColorChoice ColorChoice--blue"><span></span></li>
+                <li id="ColorSelection-marker" class="ColorChoice ColorChoice--marker">X</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Vittoria & Sconfitta & Errore
+    =================================================================-->
+    <div id="WinDialog" class="is-hidden">
+        <p>
+            Complimenti!
+            Hai risolto il puzzle!
+        </p>
+    </div>
+
+    <div id="LoseDialog" class="is-hidden">
+        <p>
+            Peccato!
+            Ritenta con un altro puzzle!
+        </p>
+    </div>
+
+    <div id="GameError" class='is-hidden'>
+        <p id="GameError-text">Oops! c'è qualcosa che non va!</p>
+    </div>
+
+</div>
+
+
+
+

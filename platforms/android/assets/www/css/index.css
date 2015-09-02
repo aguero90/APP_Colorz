@@ -1,0 +1,283 @@
+/*
+@font-face {
+    font-family: 'YOUR_NAME';
+    src: url(PATH) format('truetype');
+}
+*/
+@font-face {
+  font-family: 'Colorz';
+  src: url(../fonts/Colorz.ttf) format("truetype"); }
+#homeContainer #titleGame {
+  text-align: center;
+  font-size: 15px;
+  color: blue; }
+#homeContainer ul {
+  padding-left: 0; }
+  #homeContainer ul li {
+    list-style: none;
+    text-align: center; }
+
+/* COLORI
+============================================================================= */
+.gray {
+  color: #777777; }
+
+.red {
+  color: red; }
+
+.green {
+  color: green; }
+
+.blue {
+  color: blue; }
+
+/* GENERALE
+============================================================================= */
+* {
+  box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%; }
+
+ul {
+  padding-left: 0; }
+
+.is-hidden {
+  display: none; }
+
+.error {
+  border: 2px solid red; }
+
+/* TITOLO GIOCO
+============================================================================= */
+#Title > h1 {
+  font-family: "Colorz";
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: normal;
+  letter-spacing: -7px;
+  margin-bottom: 3.3rem; }
+
+.Title-letter--green {
+  color: #99ff99; }
+
+.Title-letter--yellow {
+  color: #ffcc66; }
+
+.Title-letter--orange {
+  color: #ff9966; }
+
+.Title-letter--red {
+  color: #ff6666; }
+
+.Title-letter--blue {
+  color: #9999ff; }
+
+/* LISTA PEDONI RIMASTI
+============================================================================= */
+#PawnLeft > ul > li {
+  list-style: none;
+  display: inline-block;
+  width: 30%;
+  text-align: center; }
+  #PawnLeft > ul > li > span {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    display: inline-block;
+    line-height: 2rem; }
+    #PawnLeft > ul > li > span::before {
+      content: "";
+      display: inline-block;
+      height: 2rem;
+      width: 2rem;
+      border-radius: 50%;
+      margin-right: 5px;
+      position: relative;
+      transform: translateY(4px);
+      -moz-transform: translateY(4px);
+      -webkit-transform: translateY(4px); }
+
+#PawnLeft--red::before {
+  background-color: red; }
+
+#PawnLeft--green::before {
+  background-color: green; }
+
+#PawnLeft--blue::before {
+  background-color: blue; }
+
+/* SCACCHIERA
+============================================================================= */
+#ChessboardContainer {
+  width: 100%;
+  margin: 50px 0; }
+
+#Chessboard {
+  margin: auto;
+  border-collapse: collapse; }
+
+.Chessboard-cell {
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #777777;
+  /* grigio palette */
+  position: relative; }
+
+/* RIEMPIMENTO CELLE & BORDI
+============================================================================= */
+.Chessboard-border--top--red {
+  border-top: 3px solid red; }
+
+.Chessboard-border--top--green {
+  border-top: 3px solid green; }
+
+.Chessboard-border--top--blue {
+  border-top: 3px solid blue; }
+
+.Chessboard-border--right--red {
+  border-right: 3px solid red; }
+
+.Chessboard-border--right--green {
+  border-right: 3px solid green; }
+
+.Chessboard-border--right--blue {
+  border-right: 3px solid blue; }
+
+.Chessboard-border--bottom--red {
+  border-bottom: 3px solid red; }
+
+.Chessboard-border--bottom--green {
+  border-bottom: 3px solid green; }
+
+.Chessboard-border--bottom--blue {
+  border-bottom: 3px solid blue; }
+
+.Chessboard-border--left--red {
+  border-left: 3px solid red; }
+
+.Chessboard-border--left--green {
+  border-left: 3px solid green; }
+
+.Chessboard-border--left--blue {
+  border-left: 3px solid blue; }
+
+.Chessboard-cell--red::before,
+.Chessboard-cell--green::before,
+.Chessboard-cell--blue::before {
+  content: "";
+  display: inline-block;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  vertical-align: middle; }
+
+.Chessboard-cell--red::before {
+  background-color: red; }
+
+.Chessboard-cell--green::before {
+  background-color: green; }
+
+.Chessboard-cell--blue::before {
+  background-color: blue; }
+
+.Chessboard-cell--marker::before {
+  font-family: 'Raleway', sans-serif;
+  content: "X";
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 200;
+  font-size: 2rem; }
+
+/* SCELTA COLORE
+============================================================================= */
+#ColorSelectionContainer, #WinDialog, #LoseDialog {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+#ColorSelection {
+  display: inline-block;
+  background-color: white;
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  #ColorSelection > h1 {
+    font-size: 1.5rem;
+    font-family: "Raleway";
+    font-weight: 200;
+    text-align: center;
+    margin: 0;
+    padding: 1rem 0;
+    background-color: #009999;
+    color: white; }
+
+.ColorChoice {
+  display: inline-block;
+  width: 49%;
+  text-align: center;
+  list-style: none;
+  margin: 10px 0; }
+  .ColorChoice > span {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%; }
+
+.ColorChoice--red > span {
+  background-color: red; }
+
+.ColorChoice--green > span {
+  background-color: green; }
+
+.ColorChoice--blue > span {
+  background-color: blue; }
+
+.ColorChoice--marker {
+  font-family: 'Raleway', sans-serif;
+  font-size: 3rem;
+  font-weight: 200; }
+
+/* ERRORI DI GIOCO E DI SOLUZIONE
+============================================================================= */
+#GameError {
+  max-height: 200px;
+  opacity: 1;
+  width: 60%;
+  margin: 10px auto 0 auto;
+  border-radius: 7px;
+  background: rgba(255, 0, 0, 0.8);
+  -moz-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s; }
+
+#GameError.is-hidden {
+  max-height: 0;
+  opacity: 0;
+  -moz-transition: max-height 2s ease-out, opacity 1s ease-out 1s; }
+
+#GameError-text {
+  padding: 10px 25px;
+  font-size: 1.2em;
+  color: white;
+  text-align: center; }
+
+#WinDialog > p, #LoseDialog > p {
+  position: absolute;
+  top: 50%;
+  height: 200px;
+  margin: -100px auto 0;
+  padding: 10px;
+  background-color: white;
+  border-radius: 7px; }
+
+/*# sourceMappingURL=index.css.map */
