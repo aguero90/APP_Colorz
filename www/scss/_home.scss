@@ -1,18 +1,36 @@
 
 #homeContainer{
 
-    #titleGame{
+    #TitleGame{
+        font-family: "Colorz";
+        font-size: 3rem;
+        font-weight: normal;
+        letter-spacing: -11px;
         text-align: center;
-        font-size: 15px;
-        color: blue;
+        margin: 15% 0;
     }
 
-    ul{
-        padding-left: 0;
+    .TitleGame-letter--blue   { color: #6699ff; }
+    .TitleGame-letter--green  { color: #66ff66; }
+    .TitleGame-letter--yellow { color: #ffcc66; }
+    .TitleGame-letter--orange { color: #ff9966; }
+    .TitleGame-letter--red    { color: #ff6666; }
+    .TitleGame-letter--purple { color: #9966ff; }
 
-        li{
-            list-style: none;
-            text-align: center;
-        }
+    .HomeButton{
+
+        border-radius: 50%;
+        color: #fff;
+        height: 7rem;
+        line-height: 7rem;
+        margin: 3rem auto;
+        padding: 0;
+        text-align: center;
+        width: 7rem;
     }
+
+    .HomeButton--relax  { background-color: #003366; }
+    .HomeButton--time   { background-color: #660000; }
+    .HomeButton--levels { background-color: #006600; }
+    .HomeButton--info   { background-color: #333333; }
 }

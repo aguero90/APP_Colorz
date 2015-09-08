@@ -7,29 +7,42 @@
 @font-face {
   font-family: 'Colorz';
   src: url(../fonts/Colorz.ttf) format("truetype"); }
-#homeContainer #titleGame {
+#homeContainer #TitleGame {
+  font-family: "Colorz";
+  font-size: 3rem;
+  font-weight: normal;
+  letter-spacing: -11px;
   text-align: center;
-  font-size: 15px;
-  color: blue; }
-#homeContainer ul {
-  padding-left: 0; }
-  #homeContainer ul li {
-    list-style: none;
-    text-align: center; }
-
-/* COLORI
-============================================================================= */
-.gray {
-  color: #777777; }
-
-.red {
-  color: red; }
-
-.green {
-  color: green; }
-
-.blue {
-  color: blue; }
+  margin: 15% 0; }
+#homeContainer .TitleGame-letter--blue {
+  color: #6699ff; }
+#homeContainer .TitleGame-letter--green {
+  color: #66ff66; }
+#homeContainer .TitleGame-letter--yellow {
+  color: #ffcc66; }
+#homeContainer .TitleGame-letter--orange {
+  color: #ff9966; }
+#homeContainer .TitleGame-letter--red {
+  color: #ff6666; }
+#homeContainer .TitleGame-letter--purple {
+  color: #9966ff; }
+#homeContainer .HomeButton {
+  border-radius: 50%;
+  color: #fff;
+  height: 7rem;
+  line-height: 7rem;
+  margin: 3rem auto;
+  padding: 0;
+  text-align: center;
+  width: 7rem; }
+#homeContainer .HomeButton--relax {
+  background-color: #003366; }
+#homeContainer .HomeButton--time {
+  background-color: #660000; }
+#homeContainer .HomeButton--levels {
+  background-color: #006600; }
+#homeContainer .HomeButton--info {
+  background-color: #333333; }
 
 /* GENERALE
 ============================================================================= */
@@ -37,8 +50,8 @@
   box-sizing: border-box; }
 
 html, body {
-  width: 100%;
-  height: 100%; }
+  height: 100%;
+  width: 100%; }
 
 ul {
   padding-left: 0; }
@@ -53,11 +66,11 @@ ul {
 ============================================================================= */
 #Title > h1 {
   font-family: "Colorz";
-  text-align: center;
   font-size: 2.5rem;
   font-weight: normal;
   letter-spacing: -7px;
-  margin-bottom: 3.3rem; }
+  margin: 3rem 0;
+  text-align: center; }
 
 .Title-letter--green {
   color: #99ff99; }
@@ -76,208 +89,220 @@ ul {
 
 /* LISTA PEDONI RIMASTI
 ============================================================================= */
-#PawnLeft > ul > li {
-  list-style: none;
-  display: inline-block;
-  width: 30%;
+#PawnLeft--red,
+#PawnLeft--green,
+#PawnLeft--blue {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 200;
+  letter-spacing: 3px;
+  line-height: 2rem;
+  margin: auto;
   text-align: center; }
-  #PawnLeft > ul > li > span {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 200;
-    font-size: 1.5rem;
-    letter-spacing: 3px;
+  #PawnLeft--red::before,
+  #PawnLeft--green::before,
+  #PawnLeft--blue::before {
+    border-radius: 50%;
+    content: "";
     display: inline-block;
-    line-height: 2rem; }
-    #PawnLeft > ul > li > span::before {
-      content: "";
-      display: inline-block;
-      height: 2rem;
-      width: 2rem;
-      border-radius: 50%;
-      margin-right: 5px;
-      position: relative;
-      transform: translateY(4px);
-      -moz-transform: translateY(4px);
-      -webkit-transform: translateY(4px); }
+    height: 2rem;
+    margin-right: 5px;
+    position: relative;
+    transform: translateY(4px);
+    -moz-transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+    width: 2rem; }
 
 #PawnLeft--red::before {
-  background-color: red; }
+  background-color: #ff0000; }
 
 #PawnLeft--green::before {
-  background-color: green; }
+  background-color: #00ff00; }
 
 #PawnLeft--blue::before {
-  background-color: blue; }
+  background-color: #0000ff; }
 
 /* SCACCHIERA
 ============================================================================= */
 #ChessboardContainer {
-  width: 100%;
-  margin: 50px 0; }
+  margin: 50px 0;
+  width: 100%; }
 
 #Chessboard {
-  margin: auto;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  margin: auto; }
 
 .Chessboard-cell {
-  text-align: center;
-  width: 50px;
-  height: 50px;
   border: 1px solid #777777;
   /* grigio palette */
-  position: relative; }
+  height: 50px;
+  position: relative;
+  text-align: center;
+  width: 50px; }
 
 /* RIEMPIMENTO CELLE & BORDI
 ============================================================================= */
 .Chessboard-border--top--red {
-  border-top: 3px solid red; }
+  border-top: 3px solid #ff0000; }
 
 .Chessboard-border--top--green {
-  border-top: 3px solid green; }
+  border-top: 3px solid #00ff00; }
 
 .Chessboard-border--top--blue {
-  border-top: 3px solid blue; }
+  border-top: 3px solid #0000ff; }
 
 .Chessboard-border--right--red {
-  border-right: 3px solid red; }
+  border-right: 3px solid #ff0000; }
 
 .Chessboard-border--right--green {
-  border-right: 3px solid green; }
+  border-right: 3px solid #00ff00; }
 
 .Chessboard-border--right--blue {
-  border-right: 3px solid blue; }
+  border-right: 3px solid #0000ff; }
 
 .Chessboard-border--bottom--red {
-  border-bottom: 3px solid red; }
+  border-bottom: 3px solid #ff0000; }
 
 .Chessboard-border--bottom--green {
-  border-bottom: 3px solid green; }
+  border-bottom: 3px solid #00ff00; }
 
 .Chessboard-border--bottom--blue {
-  border-bottom: 3px solid blue; }
+  border-bottom: 3px solid #0000ff; }
 
 .Chessboard-border--left--red {
-  border-left: 3px solid red; }
+  border-left: 3px solid #ff0000; }
 
 .Chessboard-border--left--green {
-  border-left: 3px solid green; }
+  border-left: 3px solid #00ff00; }
 
 .Chessboard-border--left--blue {
-  border-left: 3px solid blue; }
+  border-left: 3px solid #0000ff; }
 
 .Chessboard-cell--red::before,
 .Chessboard-cell--green::before,
 .Chessboard-cell--blue::before {
+  border-radius: 50%;
   content: "";
   display: inline-block;
-  width: 85%;
   height: 85%;
-  border-radius: 50%;
-  vertical-align: middle; }
+  vertical-align: middle;
+  width: 85%; }
 
 .Chessboard-cell--red::before {
-  background-color: red; }
+  background-color: #ff0000; }
 
 .Chessboard-cell--green::before {
-  background-color: green; }
+  background-color: #00ff00; }
 
 .Chessboard-cell--blue::before {
-  background-color: blue; }
+  background-color: #0000ff; }
 
 .Chessboard-cell--marker::before {
-  font-family: 'Raleway', sans-serif;
   content: "X";
   display: inline-block;
-  vertical-align: middle;
+  font-family: 'Raleway', sans-serif;
+  font-size: 2rem;
   font-weight: 200;
-  font-size: 2rem; }
+  vertical-align: middle; }
 
 /* SCELTA COLORE
 ============================================================================= */
 #ColorSelectionContainer, #WinDialog, #LoseDialog {
-  position: fixed;
-  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
   bottom: 0;
   left: 0;
+  position: fixed;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.2); }
+  top: 0; }
 
 #ColorSelection {
-  display: inline-block;
   background-color: white;
-  width: 90%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  left: 50%;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate3d(-50%, -50%, 0);
   -moz-transform: translate3d(-50%, -50%, 0);
   -webkit-transform: translate3d(-50%, -50%, 0);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  width: 90%; }
   #ColorSelection > h1 {
-    font-size: 1.5rem;
+    background-color: #009999;
+    color: white;
     font-family: "Raleway";
+    font-size: 1.5rem;
     font-weight: 200;
-    text-align: center;
     margin: 0;
     padding: 1rem 0;
-    background-color: #009999;
-    color: white; }
+    text-align: center; }
 
 .ColorChoice {
   display: inline-block;
-  width: 49%;
-  text-align: center;
   list-style: none;
-  margin: 10px 0; }
+  margin: 20px 0;
+  text-align: center;
+  width: 49%; }
   .ColorChoice > span {
+    border-radius: 50%;
     display: inline-block;
-    width: 3rem;
     height: 3rem;
-    border-radius: 50%; }
+    width: 3rem; }
 
 .ColorChoice--red > span {
-  background-color: red; }
+  background-color: #ff0000; }
 
 .ColorChoice--green > span {
-  background-color: green; }
+  background-color: #00ff00; }
 
 .ColorChoice--blue > span {
-  background-color: blue; }
+  background-color: #0000ff; }
 
 .ColorChoice--marker {
   font-family: 'Raleway', sans-serif;
   font-size: 3rem;
   font-weight: 200; }
 
+.ColorChoice--clear {
+  font-family: "Raleway",sans-serif;
+  text-align: right;
+  font-size: 1.3rem;
+  display: block;
+  color: #099;
+  padding-right: 3%; }
+
 /* ERRORI DI GIOCO E DI SOLUZIONE
 ============================================================================= */
 #GameError {
+  background: rgba(255, 0, 0, 0.8);
+  border-radius: 7px;
+  margin: 10px auto 0 auto;
   max-height: 200px;
   opacity: 1;
-  width: 60%;
-  margin: 10px auto 0 auto;
-  border-radius: 7px;
-  background: rgba(255, 0, 0, 0.8);
-  -moz-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s; }
+  transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
+  -moz-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
+  -webkit-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
+  width: 60%; }
 
 #GameError.is-hidden {
   max-height: 0;
   opacity: 0;
-  -moz-transition: max-height 2s ease-out, opacity 1s ease-out 1s; }
+  transition: max-height 2s ease-out, opacity 1s ease-out 1s;
+  -moz-transition: max-height 2s ease-out, opacity 1s ease-out 1s;
+  -webkit-transition: max-height 2s ease-out, opacity 1s ease-out 1s; }
 
 #GameError-text {
-  padding: 10px 25px;
-  font-size: 1.2em;
   color: white;
+  font-size: 1.2em;
+  padding: 10px 25px;
   text-align: center; }
 
 #WinDialog > p, #LoseDialog > p {
-  position: absolute;
-  top: 50%;
+  background-color: white;
+  border-radius: 7px;
   height: 200px;
   margin: -100px auto 0;
   padding: 10px;
-  background-color: white;
-  border-radius: 7px; }
+  position: absolute;
+  top: 50%; }
 
 /*# sourceMappingURL=index.css.map */

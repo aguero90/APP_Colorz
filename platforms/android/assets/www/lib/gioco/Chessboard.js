@@ -5,12 +5,6 @@ function Chessboard(size, DOMElement) {
     this.DOMElement = DOMElement;
     // prima prendiamo i riferimenti alle celle nel DOM
     this.cells = MyUtils.nodeList2Matrix(this.DOMElement.querySelectorAll("td"), this.size);
-    this.border = {
-        top: [],
-        right: [],
-        bottom: [],
-        left: []
-    };
 
 
     // creiamo la struttura della scacchiera
@@ -21,11 +15,6 @@ function Chessboard(size, DOMElement) {
             // che rappresenta le celle
             this.cells[i][j] = new Cell(this.cells[i][j], i, j);
         }
-
-        this.border.top[i] = new BorderCell();
-        this.border.right[i] = new BorderCell();
-        this.border.bottom[i] = new BorderCell();
-        this.border.left[i] = new BorderCell();
     }
 
 }
@@ -72,35 +61,98 @@ Chessboard.prototype = {
 
         return result;
     },
-    getBordersOfTheRow: function (row) {
+    getPawnsInTheRow: function (row) {
 
-        return {
-            left: this.border.left[row],
-            right: this.border.right[row]
-        };
+        var result = [];
+
+        for (var column = 0; column < this.size; column++) {
+
+            if (!this.cells[row][column].isEmpty()) {
+
+                result.push(this.cells[row][column].getPawn());
+            }
+        }
+
+        return result;
     },
-    getBordersOfTheColumn: function (column) {
+    getPawnsInTheColumn: function (column) {
 
-        return {
-            top: this.border.top[column],
-            bottom: this.border.bottom[column]
-        };
+        var result = [];
+
+        for (var row = 0; row < this.size; row++) {
+
+            if (!this.cells[row][column].isEmpty()) {
+
+                result.push(this.cells[row][column].getPawn());
+            }
+        }
+
+        return result;
     },
-    setLeftBorderOfTheRow: function (row, color) {
+    getTopBorders: function () {
 
-        this.border.left[row].setColor(color);
+        var result = [];
+
+        for (var column = 0; column < this.getSize(); column++) {
+
+            result.push(this.getCell(0, column).getBorderColor().top);
+        }
+
+        return result;
+
     },
-    setRightBorderOfTheRow: function (row, color) {
+    getRightBorders: function () {
 
-        this.border.right[row].setColor(color);
+        var result = [];
+
+        for (var row = 0; row < this.getSize(); row++) {
+
+            result.push(this.getCell(row, this.getSize() - 1).getBorderColor().right);
+        }
+
+        return result;
+
     },
-    setTopBorderdOfTheColumn: function (column, color) {
+    getBottomBorders: function () {
 
-        this.border.top[column].setColor(color);
+        var result = [];
+
+        for (var column = 0; column < this.getSize(); column++) {
+
+            result.push(this.getCell(this.getSize() - 1, column).getBorderColor().bottom);
+        }
+
+        return result;
     },
-    setBottomBorderdOfTheColumn: function (column, color) {
+    getLeftBorders: function () {
 
-        this.border.bottom[column].setColor(color);
-    }
+        var result = [];
+
+        for (var row = 0; row < this.getSize(); row++) {
+
+            result.push(this.getCell(row, 0).getBorderColor().left);
+        }
+
+        return result;
+
+    },
+    getRowBorders: function (row) {
+
+        var result = {};
+
+        result.left = this.getCell(row, 0).getBorderColor().left;
+        result.right = this.getCell(row, this.getSize() - 1).getBorderColor().right;
+
+        return result;
+    },
+    getColumnBorders: function (column) {
+
+        var result = {};
+
+        result.top = this.getCell(0, column).getBorderColor().top;
+        result.bottom = this.getCell(this.getSize() - 1, column).getBorderColor().bottom;
+
+        return result;
+    },
 };
 
