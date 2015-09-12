@@ -6,6 +6,7 @@ function MyUtils() {
 
 MyUtils.enhanceDOMElements = function () {
 
+
     /* per rendere disponibile la funzione contains anche su chrome */
     if (!String.prototype.contains) {
 

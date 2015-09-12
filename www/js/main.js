@@ -32,6 +32,9 @@ require(['backbone', 'utils'], function (Backbone, Utils) {
 
         function run() {
 
+            document.addEventListener("backbutton", onBackKeyDown, false);
+
+
             // Here we precompile ALL the templates so that the app will be quickier when switching views
             // see utils.js
             Utils.loadTemplates().once("templatesLoaded", function () {
@@ -52,6 +55,33 @@ require(['backbone', 'utils'], function (Backbone, Utils) {
                     Backbone.history.start();
                 }
             });
+        }
+
+
+
+        function onBackKeyDown() {
+
+            console.log("onBackKeyDown()");
+
+
+            if (document.getElementById("GameContainer")) {
+
+                // siamo nella view del gioco
+
+                if (!document.getElementById("ColorSelectionContainer").hasClass("is-hidden")) {
+
+                    // il tasto back è stato premuto nel momento in cui è visibile la finestra
+                    // => chiudiamo semplicemente la finestra per la selezione
+                    //    dei colori
+
+                    document.getElementById("ColorSelectionContainer").addClass("is-hidden");
+                    return;
+                }
+
+                // altrimenti il tasto è stato premuto durante il gioco
+                // => chiediamo la conferma
+                alert("sei sicuro di voler tornare al menù perdendo i progressi della partita?");
+            }
         }
     });
 });

@@ -7,6 +7,41 @@
 @font-face {
   font-family: 'Colorz';
   src: url(../fonts/Colorz.ttf) format("truetype"); }
+/* GENERALE
+============================================================================= */
+* {
+  box-sizing: border-box; }
+
+html, body {
+  font-family: 'Raleway', sans-serif;
+  height: 100%;
+  width: 100%; }
+
+ul {
+  padding-left: 0; }
+
+.is-hidden {
+  display: none; }
+
+.FlatButton {
+  color: #006699;
+  background-color: transparent;
+  border: none;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase; }
+
+.CloseDialog {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 200;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translate3d(-100%, -50%, 0px);
+  -moz-transform: translate3d(-100%, -50%, 0px);
+  -webkit-transform: translate3d(-100%, -50%, 0px); }
+
 #homeContainer #TitleGame {
   font-family: "Colorz";
   font-size: 3rem;
@@ -44,24 +79,6 @@
 #homeContainer .HomeButton--info {
   background-color: #333333; }
 
-/* GENERALE
-============================================================================= */
-* {
-  box-sizing: border-box; }
-
-html, body {
-  height: 100%;
-  width: 100%; }
-
-ul {
-  padding-left: 0; }
-
-.is-hidden {
-  display: none; }
-
-.error {
-  border: 2px solid red; }
-
 /* TITOLO GIOCO
 ============================================================================= */
 #Title > h1 {
@@ -92,7 +109,6 @@ ul {
 #PawnLeft--red,
 #PawnLeft--green,
 #PawnLeft--blue {
-  font-family: 'Raleway', sans-serif;
   font-size: 1.5rem;
   font-weight: 200;
   letter-spacing: 3px;
@@ -181,6 +197,9 @@ ul {
 .Chessboard-cell--red::before,
 .Chessboard-cell--green::before,
 .Chessboard-cell--blue::before {
+  animation: zoomIn 0.3s ease;
+  -webkit-animation: zoomIn 0.3s ease;
+  -moz-animation: zoomIn 0.3s ease;
   border-radius: 50%;
   content: "";
   display: inline-block;
@@ -200,41 +219,46 @@ ul {
 .Chessboard-cell--marker::before {
   content: "X";
   display: inline-block;
-  font-family: 'Raleway', sans-serif;
   font-size: 2rem;
   font-weight: 200;
   vertical-align: middle; }
 
 /* SCELTA COLORE
 ============================================================================= */
-#ColorSelectionContainer, #WinDialog, #LoseDialog {
-  background-color: rgba(0, 0, 0, 0.2);
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0; }
-
-#ColorSelection {
+#ColorSelection,
+#WinDialog,
+#LoseDialog {
   background-color: white;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  display: inline-block;
   left: 50%;
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translate3d(-50%, -50%, 0);
   -moz-transform: translate3d(-50%, -50%, 0);
   -webkit-transform: translate3d(-50%, -50%, 0);
   width: 90%; }
-  #ColorSelection > h1 {
-    background-color: #009999;
-    color: white;
-    font-family: "Raleway";
-    font-size: 1.5rem;
-    font-weight: 200;
-    margin: 0;
-    padding: 1rem 0;
-    text-align: center; }
+  #ColorSelection > header,
+  #WinDialog > header,
+  #LoseDialog > header {
+    position: relative; }
+    #ColorSelection > header > h1,
+    #WinDialog > header > h1,
+    #LoseDialog > header > h1 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 200;
+      margin: 0;
+      padding: 1rem 0;
+      text-align: center; }
+
+#ColorSelection h1 {
+  background-color: #009999; }
+
+#WinDialog h1 {
+  background-color: #009933; }
+
+#LoseDialog h1 {
+  background-color: #660000; }
 
 .ColorChoice {
   display: inline-block;
@@ -258,51 +282,19 @@ ul {
   background-color: #0000ff; }
 
 .ColorChoice--marker {
-  font-family: 'Raleway', sans-serif;
   font-size: 3rem;
   font-weight: 200; }
 
-.ColorChoice--clear {
-  font-family: "Raleway",sans-serif;
-  text-align: right;
-  font-size: 1.3rem;
-  display: block;
-  color: #099;
-  padding-right: 3%; }
-
-/* ERRORI DI GIOCO E DI SOLUZIONE
+/* VITTORIA E SCONFITTA
 ============================================================================= */
-#GameError {
-  background: rgba(255, 0, 0, 0.8);
-  border-radius: 7px;
-  margin: 10px auto 0 auto;
-  max-height: 200px;
-  opacity: 1;
-  transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
-  -moz-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
-  -webkit-transition: max-height 2s ease-in, opacity 1s ease-in 0.3s;
-  width: 60%; }
-
-#GameError.is-hidden {
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 2s ease-out, opacity 1s ease-out 1s;
-  -moz-transition: max-height 2s ease-out, opacity 1s ease-out 1s;
-  -webkit-transition: max-height 2s ease-out, opacity 1s ease-out 1s; }
-
-#GameError-text {
-  color: white;
-  font-size: 1.2em;
-  padding: 10px 25px;
+#WinDialog > p,
+#LoseDialog > p {
+  line-height: 1.6rem;
+  padding: 20px 10px;
   text-align: center; }
-
-#WinDialog > p, #LoseDialog > p {
-  background-color: white;
-  border-radius: 7px;
-  height: 200px;
-  margin: -100px auto 0;
+#WinDialog > footer,
+#LoseDialog > footer {
   padding: 10px;
-  position: absolute;
-  top: 50%; }
+  text-align: right; }
 
 /*# sourceMappingURL=index.css.map */

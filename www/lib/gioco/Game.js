@@ -30,7 +30,8 @@ function Game(size) {
         this.pawnLeft.marker.push(new Pawn(Pawn.MARKER));
     }
 
-    this.colorSelectionContainer = document.getElementById("ColorSelectionContainer");
+    // questo timer serve per distinguere il tap dal doppio tap
+    this.timer = null;
 }
 
 Game.prototype = {
@@ -41,13 +42,29 @@ Game.prototype = {
         this.createLevel();
         this.addHandler();
     },
+    restart: function () {
+
+        this.clearLevel();
+        this.createLevel();
+    },
+    clearLevel: function () {
+
+        for (var row = 0; row < this.size; row++) {
+
+            for (var column = 0; column < this.size; column++) {
+
+                this.clearCell(this.chessboard.getCell(row, column));
+                this.chessboard.getCell(row, column).clearBorder();
+            }
+        }
+    },
     createLevel: function () {
 
         this.generateSolution();
         this.generateBorderFromSolution();
-        this.resetSolution();
+        this.clearSolution();
     },
-    resetSolution: function () {
+    clearSolution: function () {
 
         for (var row = 0; row < this.size; row++) {
 
@@ -104,7 +121,7 @@ Game.prototype = {
                         // Infatti potrebbe accadere che l'array delle posizioni
                         // disponibili sia vuoto, cioè che non abbiamo
                         // più celle libere per poter posizionare il colore
-                        this.resetSolution();
+                        this.clearSolution();
                         this.createLevel();
                         return;
                     }
@@ -123,7 +140,7 @@ Game.prototype = {
 
 
                 // Decommentare se si vuole vedere la soluzione generata
-                this.chessboard.getCell(row, randomPosition).getDOMElement().addClass("Chessboard-cell--" + randomColor);
+                // this.chessboard.getCell(row, randomPosition).getDOMElement().addClass("Chessboard-cell--" + randomColor);
             }
         }
     },
@@ -187,58 +204,102 @@ Game.prototype = {
 
             for (var column = 0; column < this.size; column++) {
 
-                this.chessboard.getCell(row, column).getDOMElement().addEventListener("click", this.showColorSelection.bind(this));
+                this.chessboard.getCell(row, column).getDOMElement().addEventListener("touchend", this.correctActionDispatcher.bind(this));
             }
         }
 
 
         // aggiungiamo handler alla selezione dei colori
-        document.getElementById("ColorSelection-red").addEventListener("click", this.colorSelected.bind(this, Pawn.RED));
-        document.getElementById("ColorSelection-green").addEventListener("click", this.colorSelected.bind(this, Pawn.GREEN));
-        document.getElementById("ColorSelection-blue").addEventListener("click", this.colorSelected.bind(this, Pawn.BLUE));
-        document.getElementById("ColorSelection-marker").addEventListener("click", this.colorSelected.bind(this, Pawn.MARKER));
+        document.getElementById("ColorSelection-red").addEventListener("touchend", this.colorSelected.bind(this, Pawn.RED));
+        document.getElementById("ColorSelection-green").addEventListener("touchend", this.colorSelected.bind(this, Pawn.GREEN));
+        document.getElementById("ColorSelection-blue").addEventListener("touchend", this.colorSelected.bind(this, Pawn.BLUE));
+        document.getElementById("ColorSelection-marker").addEventListener("touchend", this.colorSelected.bind(this, Pawn.MARKER));
 
-        // aggiungiamo handler al container per la selezione dei colori
-        this.colorSelectionContainer.addEventListener("click", function (e) {
+        // aggiungiamo handler per la chiusura dei dialog
+        document.getElementById("ColorSelection-close").addEventListener("click", function (e) {
 
-            if (this === e.target) {
-                this.addClass("is-hidden");
-            }
+            document.getElementById("ColorSelection").addClass("is-hidden");
         });
+
+        document.getElementById("WinDialog-close").addEventListener("click", function (e) {
+
+            document.getElementById("WinDialog").addClass("is-hidden");
+        });
+
+        document.getElementById("LoseDialog-close").addEventListener("click", function (e) {
+
+            document.getElementById("LoseDialog").addClass("is-hidden");
+        });
+
+        // aggiungiamo handler ai bottoni del winDialog
+        document.getElementById("NewGameWin").addEventListener("click", function (e) {
+
+            document.getElementById("WinDialog").addClass("is-hidden");
+            this.restart();
+        }.bind(this));
+
+        // aggiungiamo handler ai bottoni del loseDialog
+        document.getElementById("ContinueTheGame").addEventListener("click", function (e) {
+
+            document.getElementById("LoseDialog").addClass("is-hidden");
+        }.bind(this));
+
+        document.getElementById("NewGameLose").addEventListener("click", function (e) {
+
+            document.getElementById("LoseDialog").addClass("is-hidden");
+            this.restart();
+        }.bind(this));
+
+    },
+    correctActionDispatcher: function (e) {
+
+        if (this.timer !== null) {
+
+            clearTimeout(this.timer);
+            this.timer = null;
+
+            this.clearCell(this.tappedCell);
+            return;
+        }
+
+        this.tappedCell = this.chessboard.getCell(e.target.Colorz.row, e.target.Colorz.column);
+
+        this.timer = setTimeout(this.showColorSelection.bind(this), 225);
     },
     showColorSelection: function (e) {
 
         console.log("ShowColorSelection");
-        this.colorSelectionContainer.removeClass("is-hidden");
+        document.getElementById("ColorSelection").removeClass("is-hidden");
 
-        this.tappedCell = this.chessboard.getCell(e.target.Colorz.row, e.target.Colorz.column);
+        this.timer = null;
+
     },
-    colorSelected: function (color, e) {
+    clearCell: function (cell) {
 
         var pawn;
 
-        if (!this.tappedCell.isEmpty()) {
+        if (cell.isEmpty()) {
 
-            // se la cella che è stata tappata non è vuota
-            // devo rimuovere la pedina già inserita
-
-            pawn = this.tappedCell.getPawn();
-
-            // reinseriamo la pedina da rimuovere tra quelle che possono
-            // essere piazzate
-            this.pawnLeft[pawn.getColor()].push(pawn);
-
-            if (pawn.getColor() !== Pawn.MARKER) {
-
-                // aggiorniamo la grafica delle pedine restanti
-                document.getElementById("PawnLeft--" + pawn.getColor()).innerHTML = "x" + this.pawnLeft[pawn.getColor()].length;
-            }
-
-            // rimuoviamo la pedina dalla cella
-            this.tappedCell.clear();
+            return;
         }
 
+        pawn = cell.getPawn();
 
+        // reinseriamo la pedina da rimuovere tra quelle che possono
+        // essere piazzate
+        this.pawnLeft[pawn.getColor()].push(pawn);
+
+        if (pawn.getColor() !== Pawn.MARKER) {
+
+            // aggiorniamo la grafica delle pedine restanti
+            document.getElementById("PawnLeft--" + pawn.getColor()).innerHTML = "x" + this.pawnLeft[pawn.getColor()].length;
+        }
+
+        // rimuoviamo la pedina dalla cella
+        cell.clear();
+
+    },
+    colorSelected: function (color, e) {
 
         if (this.pawnLeft[color].length === 0) {
 
@@ -246,6 +307,9 @@ Game.prototype = {
             // non faccio nulla
             return;
         }
+
+        // altrimenti, prima pulisco la cella selezionata
+        this.clearCell(this.tappedCell);
 
         // prendiamo la pedina in questione tra quelle disponibili
         this.tappedCell.setPawn(this.pawnLeft[color].pop());
@@ -266,7 +330,7 @@ Game.prototype = {
         }
 
         // nascondiamo il popup contenente le pedine da scegliere
-        document.getElementById("ColorSelectionContainer").addClass("is-hidden");
+        document.getElementById("ColorSelection").addClass("is-hidden");
 
         if (this.pawnLeft.red.length <= 0
                 && this.pawnLeft.green.length <= 0
@@ -309,7 +373,9 @@ Game.prototype = {
             }
 
             if (red !== 1 || green !== 1 || blue !== 1) {
-                alert("la riga " + i + " non ha una pedina per ogni colore");
+
+                document.getElementById("LoseDialog").removeClass("is-hidden");
+                // alert("la riga " + i + " non ha una pedina per ogni colore");
                 return;
             }
         }
@@ -340,7 +406,9 @@ Game.prototype = {
             }
 
             if (red !== 1 || green !== 1 || blue !== 1) {
-                alert("la colonna " + i + " non ha una pedina per ogni colore");
+
+                document.getElementById("LoseDialog").removeClass("is-hidden");
+                // alert("la colonna " + i + " non ha una pedina per ogni colore");
                 return;
             }
         }
@@ -360,7 +428,9 @@ Game.prototype = {
                 if (pawns[i].getColor() !== Pawn.MARKER) {
 
                     if (pawns[i].getColor() !== borders.left) {
-                        alert("il bordo sinistro della riga " + (row + 1) + " non coincide");
+
+                        document.getElementById("LoseDialog").removeClass("is-hidden");
+                        // alert("il bordo sinistro della riga " + (row + 1) + " non coincide");
                         return;
                     } else {
                         break;
@@ -373,7 +443,9 @@ Game.prototype = {
                 if (pawns[i].getColor() !== Pawn.MARKER) {
 
                     if (pawns[i].getColor() !== borders.right) {
-                        alert("il bordo destro della riga " + (row + 1) + " non coincide");
+
+                        document.getElementById("LoseDialog").removeClass("is-hidden");
+                        // alert("il bordo destro della riga " + (row + 1) + " non coincide");
                         return;
                     } else {
                         break;
@@ -394,7 +466,9 @@ Game.prototype = {
                 if (pawns[i].getColor() !== Pawn.MARKER) {
 
                     if (pawns[i].getColor() !== borders.top) {
-                        alert("il bordo superiore della colonna " + (column + 1) + " non coincide");
+
+                        document.getElementById("LoseDialog").removeClass("is-hidden");
+                        // alert("il bordo superiore della colonna " + (column + 1) + " non coincide");
                         return;
                     } else {
                         break;
@@ -407,7 +481,9 @@ Game.prototype = {
                 if (pawns[i].getColor() !== Pawn.MARKER) {
 
                     if (pawns[i].getColor() !== borders.bottom) {
-                        alert("il bordo inferiore della colonna " + (column + 1) + " non coincide");
+
+                        document.getElementById("LoseDialog").removeClass("is-hidden");
+                        // alert("il bordo inferiore della colonna " + (column + 1) + " non coincide");
                         return;
                     } else {
                         break;
@@ -418,7 +494,8 @@ Game.prototype = {
 
         // se arrivo qui allora è tutto ok
         // ed il giocatore ha trovato la soluzione
-        alert("Hai vinto");
+        document.getElementById("WinDialog").removeClass("is-hidden");
+        // alert("Hai vinto");
 
     }
 };

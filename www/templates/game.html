@@ -1,6 +1,6 @@
 
 
-<div id="MainContainer">
+<div id="GameContainer">
 
 
     <div id="Title">
@@ -77,37 +77,48 @@
     <!-- Scelte colori
     =================================================================-->
 
-    <div id="ColorSelectionContainer" class="is-hidden">
-        <div id="ColorSelection">
+    <div id="ColorSelection" class="is-hidden">
+        <header>
             <h1>Seleziona il colore</h1>
-            <ul>
-                <li id="ColorSelection-red" class="ColorChoice ColorChoice--red"><span></span></li>
-                <li id="ColorSelection-green" class="ColorChoice ColorChoice--green"><span></span></li>
-                <li id="ColorSelection-blue" class="ColorChoice ColorChoice--blue"><span></span></li>
-                <li id="ColorSelection-marker" class="ColorChoice ColorChoice--marker">X</li>
-                <li id="ColorSelection-clear" class="ColorChoice--clear">RIMUOVI</li>
-            </ul>
-        </div>
+            <span id="ColorSelection-close" class="CloseDialog">X</span>
+        </header>
+        <ul>
+            <li id="ColorSelection-red" class="ColorChoice ColorChoice--red"><span></span></li>
+            <li id="ColorSelection-green" class="ColorChoice ColorChoice--green"><span></span></li>
+            <li id="ColorSelection-blue" class="ColorChoice ColorChoice--blue"><span></span></li>
+            <li id="ColorSelection-marker" class="ColorChoice ColorChoice--marker">X</li>
+        </ul>
     </div>
 
     <!-- Vittoria & Sconfitta & Errore
     =================================================================-->
     <div id="WinDialog" class="is-hidden">
+        <header>
+            <h1>Hai vinto!</h1>
+            <span id="WinDialog-close" class="CloseDialog">X</span>
+        </header>
         <p>
-            Complimenti!
+            Complimenti! <br/>
             Hai risolto il puzzle!
         </p>
+        <footer>
+            <button id="NewGameWin" class="FlatButton">Nuova</button>
+        </footer>
     </div>
 
     <div id="LoseDialog" class="is-hidden">
+        <header>
+            <h1>Hai perso!</h1>
+            <span id="LoseDialog-close" class="CloseDialog">X</span>
+        </header>
         <p>
-            Peccato!
-            Ritenta con un altro puzzle!
+            Peccato, questa soluzione non è corretta :( <br/>
+            Continua per trovare quella esatta oppure risolvi un nuovo tabellone
         </p>
-    </div>
-
-    <div id="GameError" class='is-hidden'>
-        <p id="GameError-text">Oops! c'è qualcosa che non va!</p>
+        <footer>
+            <button id="ContinueTheGame" class="FlatButton">Continua</button>
+            <button id="NewGameLose" class="FlatButton">Nuova</button>
+        </footer>
     </div>
 
 </div>

@@ -1,0 +1,14 @@
+
+// NOTE
+// ============================================================================
+
+- al momento la gestione del tasto back è gestito interamente nel file main.js
+  però si potrebbbe tranquillamente splittare all'interno dei singoli file xD
+
+
+
+
+
+
+
+

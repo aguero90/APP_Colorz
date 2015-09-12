@@ -73,6 +73,32 @@ Cell.prototype = {
 
         this.DOMElement.removeClass("Chessboard-cell--" + this.pawn.getColor());
         this.pawn = undefined;
+    },
+    clearBorder: function () {
+
+        if (this.borderColor.top) {
+
+            this.getDOMElement().removeClass("Chessboard-border--top--" + this.borderColor.top);
+            this.borderColor.top = null;
+        }
+
+        if (this.borderColor.right) {
+
+            this.getDOMElement().removeClass("Chessboard-border--right--" + this.borderColor.right);
+            this.borderColor.right = null;
+        }
+
+        if (this.borderColor.bottom) {
+
+            this.getDOMElement().removeClass("Chessboard-border--bottom--" + this.borderColor.bottom);
+            this.borderColor.bottom = null;
+        }
+
+        if (this.borderColor.left) {
+
+            this.getDOMElement().removeClass("Chessboard-border--left--" + this.borderColor.left);
+            this.borderColor.left = null;
+        }
     }
 };
 
