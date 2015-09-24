@@ -11,5 +11,9 @@
 define({
     structure: "templates/structure.html",
     home: "templates/home.html",
-    game: "templates/game.html"
+    relax: "templates/relax.html",
+    time: "templates/time.html",
+    level: "templates/level.html",
+    levelList: "templates/levelList.html",
+    info: "templates/info.html"
 });

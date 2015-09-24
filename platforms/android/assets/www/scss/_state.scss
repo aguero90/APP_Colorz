@@ -1,0 +1,10 @@
+
+.is-hidden { display: none; }
+
+.is-droppable{
+
+    @include transform(scale(1.2));
+    @include transition(transform .2s ease);
+
+}
+

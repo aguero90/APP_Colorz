@@ -1,12 +1,25 @@
 
-function Game(size) {
+// il primo parametro indica la grandezza della scacchiera. Ad esempio, se ci
+// viene passato 6 => la scacchiera sarà 6*6
+//
+// il secondo parametro indica la quantità di minuti massimi per risolvere
+// il puzzle. Questo parametro è opzionale
+function Game(size, time, level) {
 
     MyUtils.enhanceDOMElements();
 
 
     this.size = size;
-    this.chessboard = new Chessboard(size, document.getElementById("Chessboard"));
 
+    this.time = time;
+    this.timeLeft = null;
+    this.endTime = null;
+
+    this.level = level;
+
+
+
+    this.chessboard = new Chessboard(size, document.getElementById("Chessboard"));
 
     this.pawnLeft = {
         red: [],
@@ -15,54 +28,160 @@ function Game(size) {
         marker: []
     };
 
-    for (var i = 0; i < size; i++) {
-
-        this.pawnLeft.red.push(new Pawn(Pawn.RED));
-        this.pawnLeft.green.push(new Pawn(Pawn.GREEN));
-        this.pawnLeft.blue.push(new Pawn(Pawn.BLUE));
-    }
-
-
-    // i marker al massimo possono essere in tutte le caselle (size * size)
-    // meno quelle in cui ci vanno le pedine (size * 3)
-    for (var i = 0; i < (size * size) - (size * 3); i++) {
-
-        this.pawnLeft.marker.push(new Pawn(Pawn.MARKER));
-    }
-
-    // questo timer serve per distinguere il tap dal doppio tap
-    this.timer = null;
+    this.graphicsLayer = new GraphicsLayer(this);
 }
 
 Game.prototype = {
     tappedCell: null,
+    init: function () {
+
+        for (var i = 0; i < this.size; i++) {
+
+            this.pawnLeft.red.push(new Pawn(Pawn.RED));
+            this.pawnLeft.green.push(new Pawn(Pawn.GREEN));
+            this.pawnLeft.blue.push(new Pawn(Pawn.BLUE));
+        }
+
+        for (var i = 0; i < this.size * this.size; i++) {
+
+            this.pawnLeft.marker.push(new Pawn(Pawn.MARKER));
+        }
+
+        // inizializziamo per bene il timer se c'è
+        if (this.time) {
+
+            // calcoliamo il tempo restante in millisecondi
+            this.timeLeft = this.time * 60 * 1000;
+
+            // aggiungiamo "time" minuti alla data di inizio
+            this.endTime = new Date().getTime() + this.timeLeft;
+        }
+
+        if (this.level && typeof this.level === 'string') {
+
+            // se il livello ci è stato passato come stringa JSON e non come
+            // oggetto JS => la parsiamo per trasformarla in oggetto
+            this.level = JSON.parse(this.level);
+        }
+
+        this.graphicsLayer.init(this.timeLeft);
+
+    },
     start: function () {
 
-        console.log("game.start()");
+        this.init();
         this.createLevel();
-        this.addHandler();
+
+        // se è il gioco a tempo => avviamo il timer
+        if (this.time) {
+
+            this.graphicsLayer.startTimer();
+        }
     },
     restart: function () {
 
         this.clearLevel();
         this.createLevel();
+
+        // se è il gioco a tempo => resettiamo il timer e lo avviamo
+        if (this.time) {
+
+            // calcoliamo il tempo restante in millisecondi
+            this.timeLeft = this.time * 60 * 1000;
+
+            // aggiungiamo "time" minuti alla data di inizio
+            this.endTime = new Date().getTime() + this.time * 60 * 1000;
+
+            this.graphicsLayer.startTimer();
+        }
     },
+    // questa funzione pulisce tutte le celle
+    // dalle pedine
+    // e resetta anche tutti i bordi
     clearLevel: function () {
+
+        var cell;
+        var pawn;
 
         for (var row = 0; row < this.size; row++) {
 
             for (var column = 0; column < this.size; column++) {
 
-                this.clearCell(this.chessboard.getCell(row, column));
-                this.chessboard.getCell(row, column).clearBorder();
+                cell = this.chessboard.getCell(row, column);
+
+                // ripuliamo prima i bordi della cella
+                // ripuliamo anche i bordi della cella
+                cell.clearBorder();
+                this.graphicsLayer.clearBorder(cell.getDOMElement());
+
+                if (!cell.isEmpty()) {
+
+                    // se la cella non è vuota
+                    // prima prendiamo la pedina
+                    pawn = cell.getPawn();
+
+                    // poi puliamo la cella e la pedina
+                    cell.clear();
+                    pawn.setCell(null);
+                    pawn.isPlaced(false);
+
+                    // reinseriamo la pedina nell'array di quelle restanti
+                    this.pawnLeft[pawn.getColor()].push(pawn);
+
+                    // se la pedina non è il marker
+                    // la riportiamo all'inizio
+                    // ed aggiorniamo la grafica delle pedine rimanenti
+                    if (pawn.getColor() !== Pawn.MARKER) {
+
+                        if (this.pawnLeft[pawn.getColor()].length - 1 !== 0) {
+
+                            // se prima di questa c'era già un altra pedina
+                            // => rimuoviamo quella pedina dal DOM
+                            this.graphicsLayer.removeFromDOM(this.pawnLeft[pawn.getColor()][this.pawnLeft[pawn.getColor()].length - 2].getDOMElement());
+                        }
+
+                        this.graphicsLayer.movePawnToStart(pawn.getDOMElement());
+                        this.graphicsLayer.updatePawnLeft(pawn.getDOMElement(), pawn.getColor(), this.pawnLeft[pawn.getColor()].length);
+                    } else {
+
+                        // la pedina è un marker
+                        // => rimuoviamo l'icona del marker
+                        this.graphicsLayer.unmarkCell(cell.getDOMElement());
+                    }
+                }
             }
         }
     },
     createLevel: function () {
 
-        this.generateSolution();
+        if (this.level) {
+
+            this.setSolution(this.level.solution);
+
+        } else {
+
+            this.generateSolution();
+        }
+
         this.generateBorderFromSolution();
         this.clearSolution();
+    },
+    setSolution: function (solution) {
+
+        for (var row = 0; row < this.size; row++) {
+
+            for (var column = 0; column < this.size; column++) {
+
+
+                if (solution[row][column] !== "void") {
+
+                    this.chessboard.getCell(row, column).getDOMElement().Colorz.color = solution[row][column];
+
+                    // decommentare se si vuole vedere la soluzione creata
+                    // this.chessboard.getCell(row, column).getDOMElement().addClass("Chessboard-cell--" + level.solution[row][column]);
+                }
+            }
+        }
     },
     clearSolution: function () {
 
@@ -122,7 +241,7 @@ Game.prototype = {
                         // disponibili sia vuoto, cioè che non abbiamo
                         // più celle libere per poter posizionare il colore
                         this.clearSolution();
-                        this.createLevel();
+                        this.generateSolution();
                         return;
                     }
 
@@ -146,6 +265,8 @@ Game.prototype = {
     },
     generateBorderFromSolution: function () {
 
+        var color;
+
         // facciamo prima il bordo sinistro e destro
         for (var row = 0; row < this.size; row++) {
 
@@ -154,7 +275,10 @@ Game.prototype = {
 
                 if (this.cellHasColor(row, column)) {
 
-                    this.chessboard.getCell(row, 0).setBorderColorLeft(this.chessboard.getCell(row, column).getDOMElement().Colorz.color);
+                    color = this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
+
+                    this.chessboard.getCell(row, 0).setBorderColorLeft(color);
+                    this.graphicsLayer.updateBorder(this.chessboard.getCell(row, 0).getDOMElement(), 'left', color);
                     break;
                 }
             }
@@ -164,7 +288,10 @@ Game.prototype = {
 
                 if (this.cellHasColor(row, column)) {
 
-                    this.chessboard.getCell(row, this.size - 1).setBorderColorRight(this.chessboard.getCell(row, column).getDOMElement().Colorz.color);
+                    color = this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
+
+                    this.chessboard.getCell(row, this.size - 1).setBorderColorRight(color);
+                    this.graphicsLayer.updateBorder(this.chessboard.getCell(row, this.size - 1).getDOMElement(), 'right', color);
                     break;
                 }
             }
@@ -178,7 +305,10 @@ Game.prototype = {
 
                 if (this.cellHasColor(row, column)) {
 
-                    this.chessboard.getCell(0, column).setBorderColorTop(this.chessboard.getCell(row, column).getDOMElement().Colorz.color);
+                    color = this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
+
+                    this.chessboard.getCell(0, column).setBorderColorTop(color);
+                    this.graphicsLayer.updateBorder(this.chessboard.getCell(0, column).getDOMElement(), 'top', color);
                     break;
                 }
             }
@@ -189,314 +319,358 @@ Game.prototype = {
 
                 if (this.cellHasColor(row, column)) {
 
-                    this.chessboard.getCell(this.size - 1, column).setBorderColorBottom(this.chessboard.getCell(row, column).getDOMElement().Colorz.color);
+                    color = this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
+
+                    this.chessboard.getCell(this.size - 1, column).setBorderColorBottom(color);
+                    this.graphicsLayer.updateBorder(this.chessboard.getCell(this.size - 1, column).getDOMElement(), 'bottom', color);
                     break;
                 }
             }
         }
     },
-    addHandler: function () {
+    // questa funzione viene chiamata nel momento in cui una
+    // cella viene tappata
+    // semplicemente inserisce un marker se questo non c'è già
+    // altrimenti lo rimuove
+    onTappedCell: function (row, column) {
 
-        // aggiungiamo handler alla scacchiera
-        // cioè al click su una cella deve accadere qualcosa
-
-        for (var row = 0; row < this.size; row++) {
-
-            for (var column = 0; column < this.size; column++) {
-
-                this.chessboard.getCell(row, column).getDOMElement().addEventListener("touchend", this.correctActionDispatcher.bind(this));
-            }
-        }
-
-
-        // aggiungiamo handler alla selezione dei colori
-        document.getElementById("ColorSelection-red").addEventListener("touchend", this.colorSelected.bind(this, Pawn.RED));
-        document.getElementById("ColorSelection-green").addEventListener("touchend", this.colorSelected.bind(this, Pawn.GREEN));
-        document.getElementById("ColorSelection-blue").addEventListener("touchend", this.colorSelected.bind(this, Pawn.BLUE));
-        document.getElementById("ColorSelection-marker").addEventListener("touchend", this.colorSelected.bind(this, Pawn.MARKER));
-
-        // aggiungiamo handler per la chiusura dei dialog
-        document.getElementById("ColorSelection-close").addEventListener("click", function (e) {
-
-            document.getElementById("ColorSelection").addClass("is-hidden");
-        });
-
-        document.getElementById("WinDialog-close").addEventListener("click", function (e) {
-
-            document.getElementById("WinDialog").addClass("is-hidden");
-        });
-
-        document.getElementById("LoseDialog-close").addEventListener("click", function (e) {
-
-            document.getElementById("LoseDialog").addClass("is-hidden");
-        });
-
-        // aggiungiamo handler ai bottoni del winDialog
-        document.getElementById("NewGameWin").addEventListener("click", function (e) {
-
-            document.getElementById("WinDialog").addClass("is-hidden");
-            this.restart();
-        }.bind(this));
-
-        // aggiungiamo handler ai bottoni del loseDialog
-        document.getElementById("ContinueTheGame").addEventListener("click", function (e) {
-
-            document.getElementById("LoseDialog").addClass("is-hidden");
-        }.bind(this));
-
-        document.getElementById("NewGameLose").addEventListener("click", function (e) {
-
-            document.getElementById("LoseDialog").addClass("is-hidden");
-            this.restart();
-        }.bind(this));
-
-    },
-    correctActionDispatcher: function (e) {
-
-        if (this.timer !== null) {
-
-            clearTimeout(this.timer);
-            this.timer = null;
-
-            this.clearCell(this.tappedCell);
-            return;
-        }
-
-        this.tappedCell = this.chessboard.getCell(e.target.Colorz.row, e.target.Colorz.column);
-
-        this.timer = setTimeout(this.showColorSelection.bind(this), 225);
-    },
-    showColorSelection: function (e) {
-
-        console.log("ShowColorSelection");
-        document.getElementById("ColorSelection").removeClass("is-hidden");
-
-        this.timer = null;
-
-    },
-    clearCell: function (cell) {
-
+        var cell = this.chessboard.getCell(row, column);
         var pawn;
 
         if (cell.isEmpty()) {
 
+            // se la cella è vuota, settiamo semplicemente il marker
+            pawn = this.pawnLeft.marker.pop();
+            cell.setPawn(pawn);
+            pawn.setCell(cell);
+            pawn.isPlaced(true);
+
+        } else {
+
+            if (cell.getPawn().getColor() !== Pawn.MARKER) {
+
+                // se la cella ha già una pedina e questa non è un marker
+                // => non facciamo nulla
+                return;
+            }
+
+            // se siamo qui, la cella contiene già un marker
+            // => rimuoviamolo
+            pawn = cell.getPawn();
+            cell.clear();
+            pawn.setCell(null);
+            pawn.isPlaced(false);
+            this.pawnLeft.marker.push(pawn);
+        }
+    },
+    // questa funzione viene chiamata nel momento in cui una NUOVA
+    // pedina viene inserita nella scacchiera
+    pawnPlaced: function (row, column, color) {
+
+        var cell = this.chessboard.getCell(row, column);
+
+        if (!cell.isEmpty()) {
+
+            // se la cella su cui p stata rilasciata la pedina non è vuota
+            // => riportiamo la pedina all'inizio
+            this.graphicsLayer.movePawnToStart(this.pawnLeft[color][this.pawnLeft[color].length - 1].getDOMElement());
             return;
         }
 
-        pawn = cell.getPawn();
+        // altrimenti piazziamo la pedina in quella cella
+        var pawn = this.pawnLeft[color].pop();
 
-        // reinseriamo la pedina da rimuovere tra quelle che possono
-        // essere piazzate
-        this.pawnLeft[pawn.getColor()].push(pawn);
+        cell.setPawn(pawn);
+        pawn.setCell(cell);
+        pawn.isPlaced(true);
 
-        if (pawn.getColor() !== Pawn.MARKER) {
+        if (this.pawnLeft[color].length === 0) {
 
-            // aggiorniamo la grafica delle pedine restanti
-            document.getElementById("PawnLeft--" + pawn.getColor()).innerHTML = "x" + this.pawnLeft[pawn.getColor()].length;
+            // qui bisogna gestire il caso in cui non ci sono più pedine da inserire
+            this.graphicsLayer.updatePawnLeft(null, color, this.pawnLeft[color].length);
+
+        } else {
+
+            // ci sono ancora pedine da mostrare
+            pawn = this.pawnLeft[color][this.pawnLeft[color].length - 1];
+            this.graphicsLayer.updatePawnLeft(pawn.getDOMElement(), pawn.getColor(), this.pawnLeft[color].length);
         }
 
-        // rimuoviamo la pedina dalla cella
-        cell.clear();
+        if (this.pawnLeft.red.length === 0
+                && this.pawnLeft.green.length === 0
+                && this.pawnLeft.blue.length === 0) {
+
+            this.checkSolution();
+        }
 
     },
-    colorSelected: function (color, e) {
+    // questa funzione viene chiamata nel momento in cui una
+    // pedina viene rimossa dalla scacchiera
+    pawnRemoved: function (row, column, color) {
 
-        if (this.pawnLeft[color].length === 0) {
+        var cell = this.chessboard.getCell(row, column);
+        var pawn = cell.getPawn();
 
-            // se non si possono più mettere pedine da inserire
-            // non faccio nulla
-            return;
-        }
+        if (this.pawnLeft[color].length !== 0) {
 
-        // altrimenti, prima pulisco la cella selezionata
-        this.clearCell(this.tappedCell);
-
-        // prendiamo la pedina in questione tra quelle disponibili
-        this.tappedCell.setPawn(this.pawnLeft[color].pop());
-
-
-        if (color !== Pawn.MARKER) {
-
-            // aggiorniamo la grafica delle pedine restanti
-            document.getElementById("PawnLeft--" + color).innerHTML = "x" + this.pawnLeft[color].length;
+            // qui dobbiamo mettere la pedina appena rimossa accanto al numerino
+            // mostrato per le pedine rimanenti
+            // e togliere dal DOM quella che c'era al suo posto
+            this.graphicsLayer.removeFromDOM(this.pawnLeft[color][this.pawnLeft[color].length - 1].getDOMElement(), color);
         }
 
 
-        if (this.pawnLeft[color].length === 0) {
+        // ripuliamo la cella e mettiamo la pedina tra quelle da inserire
+        cell.clear();
+        this.pawnLeft[color].push(pawn);
+        pawn.setCell(null);
+        pawn.isPlaced(false);
 
-            // mostriamo che non è più possibile selezionare quel
-            // tipo di pedina
-            document.getElementById("PawnLeft--" + color).addClass("is-disabled");
+        this.graphicsLayer.updatePawnLeft(pawn.getDOMElement(), pawn.getColor(), this.pawnLeft[color].length);
+    },
+    // questa funzione viene chiamata nel momento in cui una pedina
+    // GIA' PRESENTE SULLA SCACCHIERA viene spostata e piazzata in un'altra
+    // cella
+    pawnMoved: function (newRow, newColumn, oldRow, oldColumn, color) {
+
+        var oldCell = this.chessboard.getCell(oldRow, oldColumn);
+        var newCell = this.chessboard.getCell(newRow, newColumn);
+        var pawn = oldCell.getPawn();
+
+
+        if (!newCell.isEmpty()) {
+
+            // se la nuova cella non è già occupata
+            // => riportiamo la pedina alla cella di partenza
+            this.graphicsLayer.movePawnToCell(pawn.getDOMElement(), oldCell.getDOMElement());
+
+        } else {
+
+            // altrimenti semplicemente togliamo la pedina dalla vecchia
+            // cella e la mettiamo in quella nuova
+            oldCell.clear();
+            newCell.setPawn(pawn);
+            pawn.setCell(newCell);
         }
 
-        // nascondiamo il popup contenente le pedine da scegliere
-        document.getElementById("ColorSelection").addClass("is-hidden");
+        if (this.pawnLeft.red.length === 0
+                && this.pawnLeft.green.length === 0
+                && this.pawnLeft.blue.length === 0) {
 
-        if (this.pawnLeft.red.length <= 0
-                && this.pawnLeft.green.length <= 0
-                && this.pawnLeft.blue.length <= 0) {
-
-            // se sono state inserite tutte le pedine
-            // => si controlla la soluzione
             this.checkSolution();
         }
     },
+    // questa funziona controlla la soluzione del
+    // giocatore
     checkSolution: function () {
 
-        var pawns;
-        var red, green, blue;
-
-        // controlliamo se ogni riga ed ogni colonna ha 3 pedine di colori diversi
-        //
-        // facciamo prima per ogni riga
         for (var i = 0; i < this.size; i++) {
 
-            pawns = this.chessboard.getPawnsInTheRow(i);
-            red = green = blue = 0;
+            if (!this.checkRow(i) || !this.checkColumn(i)) {
 
-            for (var j = 0; j < pawns.length; j++) {
-
-                switch (pawns[j].getColor()) {
-
-                    case Pawn.RED:
-                        red++;
-                        break;
-
-                    case Pawn.GREEN:
-                        green++;
-                        break;
-
-                    case Pawn.BLUE:
-                        blue++;
-                        break;
-                }
-            }
-
-            if (red !== 1 || green !== 1 || blue !== 1) {
-
-                document.getElementById("LoseDialog").removeClass("is-hidden");
-                // alert("la riga " + i + " non ha una pedina per ogni colore");
+                this.lose();
                 return;
-            }
-        }
-
-        // poi per ogni colonna
-        for (var i = 0; i < this.size; i++) {
-
-            pawns = this.chessboard.getPawnsInTheColumn(i);
-            // resettiamo i contatori
-            red = green = blue = 0;
-
-            for (var j = 0; j < pawns.length; j++) {
-
-                switch (pawns[j].getColor()) {
-
-                    case Pawn.RED:
-                        red++;
-                        break;
-
-                    case Pawn.GREEN:
-                        green++;
-                        break;
-
-                    case Pawn.BLUE:
-                        blue++;
-                        break;
-                }
-            }
-
-            if (red !== 1 || green !== 1 || blue !== 1) {
-
-                document.getElementById("LoseDialog").removeClass("is-hidden");
-                // alert("la colonna " + i + " non ha una pedina per ogni colore");
-                return;
-            }
-        }
-
-
-        // ora controlliamo i bordi
-        var borders;
-
-        // controlliamo prima le righe
-        for (var row = 0; row < this.size; row++) {
-
-            pawns = this.chessboard.getPawnsInTheRow(row);
-            borders = this.chessboard.getRowBorders(row);
-
-            for (var i = 0; i < pawns.length; i++) {
-
-                if (pawns[i].getColor() !== Pawn.MARKER) {
-
-                    if (pawns[i].getColor() !== borders.left) {
-
-                        document.getElementById("LoseDialog").removeClass("is-hidden");
-                        // alert("il bordo sinistro della riga " + (row + 1) + " non coincide");
-                        return;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            for (var i = pawns.length - 1; i >= 0; i--) {
-
-                if (pawns[i].getColor() !== Pawn.MARKER) {
-
-                    if (pawns[i].getColor() !== borders.right) {
-
-                        document.getElementById("LoseDialog").removeClass("is-hidden");
-                        // alert("il bordo destro della riga " + (row + 1) + " non coincide");
-                        return;
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-
-        // controlliamo le colonne
-        for (var column = 0; column < this.size; column++) {
-
-            pawns = this.chessboard.getPawnsInTheColumn(column);
-            borders = this.chessboard.getColumnBorders(column);
-
-
-            for (var i = 0; i < pawns.length; i++) {
-
-                if (pawns[i].getColor() !== Pawn.MARKER) {
-
-                    if (pawns[i].getColor() !== borders.top) {
-
-                        document.getElementById("LoseDialog").removeClass("is-hidden");
-                        // alert("il bordo superiore della colonna " + (column + 1) + " non coincide");
-                        return;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            for (var i = pawns.length - 1; i >= 0; i--) {
-
-                if (pawns[i].getColor() !== Pawn.MARKER) {
-
-                    if (pawns[i].getColor() !== borders.bottom) {
-
-                        document.getElementById("LoseDialog").removeClass("is-hidden");
-                        // alert("il bordo inferiore della colonna " + (column + 1) + " non coincide");
-                        return;
-                    } else {
-                        break;
-                    }
-                }
             }
         }
 
         // se arrivo qui allora è tutto ok
         // ed il giocatore ha trovato la soluzione
-        document.getElementById("WinDialog").removeClass("is-hidden");
-        // alert("Hai vinto");
+        this.win();
+    },
+    // questa funzione verifica che in una riga
+    // ci sono 3 pedine di colori diversi
+    // e che i bordi siano rispettati
+    checkRow: function (row) {
 
+        var pawns = this.chessboard.getPawnsInTheRow(row);
+        var red = 0;
+        var green = 0;
+        var blue = 0;
+
+        for (var i = 0; i < pawns.length; i++) {
+
+            switch (pawns[i].getColor()) {
+
+                case Pawn.RED:
+                    red++;
+                    break;
+
+                case Pawn.GREEN:
+                    green++;
+                    break;
+
+                case Pawn.BLUE:
+                    blue++;
+                    break;
+            }
+        }
+
+        if (red !== 1 || green !== 1 || blue !== 1) {
+
+            return false;
+        }
+
+
+        // altrimenti il numero di pedine è corretto
+        // => controlliamo i bordi
+        var borders = this.chessboard.getRowBorders(row);
+        var firstPawn;
+        var lastPawn;
+
+        for (var i = 0; i < pawns.length; i++) {
+
+            // ignoriamo tutti i marker
+            if (pawns[i].getColor() !== Pawn.MARKER) {
+
+                lastPawn = pawns[i];
+
+                if (!firstPawn) {
+
+                    firstPawn = lastPawn;
+                }
+            }
+        }
+
+        return (firstPawn.getColor() === borders.left && lastPawn.getColor() === borders.right);
+    },
+    // come checkRow() ma per le colonne
+    checkColumn: function (column) {
+
+        var pawns = this.chessboard.getPawnsInTheColumn(column);
+        var red = 0;
+        var green = 0;
+        var blue = 0;
+
+        for (var i = 0; i < pawns.length; i++) {
+
+            switch (pawns[i].getColor()) {
+
+                case Pawn.RED:
+                    red++;
+                    break;
+
+                case Pawn.GREEN:
+                    green++;
+                    break;
+
+                case Pawn.BLUE:
+                    blue++;
+                    break;
+            }
+        }
+
+        if (red !== 1 || green !== 1 || blue !== 1) {
+
+            return false;
+        }
+
+
+        // altrimenti il numero di pedine è corretto
+        // => controlliamo i bordi
+        var borders = this.chessboard.getColumnBorders(column);
+        var firstPawn;
+        var lastPawn;
+
+        for (var i = 0; i < pawns.length; i++) {
+
+            // ignoriamo tutti i marker
+            if (pawns[i].getColor() !== Pawn.MARKER) {
+
+                lastPawn = pawns[i];
+
+                if (!firstPawn) {
+
+                    firstPawn = lastPawn;
+                }
+
+            }
+        }
+
+        return (firstPawn.getColor() === borders.top && lastPawn.getColor() === borders.bottom);
+    },
+    lose: function () {
+
+        this.pause();
+        this.graphicsLayer.loseDialog.removeClass("is-hidden");
+    },
+    win: function () {
+
+        if (this.level && this.level.cleared === false) {
+
+            // aggiorniamo levels
+            var levels = JSON.parse(window.localStorage.getItem('levels'));
+            levels[this.level.number].cleared = true;
+
+            window.localStorage.setItem('levels', JSON.stringify(levels));
+        }
+
+        this.pause();
+        this.graphicsLayer.winDialog.removeClass("is-hidden");
+    },
+    pause: function () {
+
+        // se c'è il timer lo stoppiamo
+        if (this.time) {
+
+            // salviamo il tempo rimanente in modo da ripristinarlo
+            // al resume
+            this.timeLeft = this.endTime - new Date().getTime();
+            this.graphicsLayer.stopTimer();
+        }
+
+    },
+    resume: function () {
+
+        if (this.time) {
+
+            this.endTime = new Date().getTime() + this.timeLeft;
+            this.graphicsLayer.startTimer();
+        }
+
+    },
+    exit: function () {
+
+        this.graphicsLayer.destroy();
+        this.destroy();
+        Backbone.history.history.back();
+    },
+    // questa funzione viene chiamata nel momento in cui scade il tempo
+    // nella modalità "tempo"
+    timeUp: function () {
+
+        this.pause();
+        this.graphicsLayer.TimeUpDialog.removeClass('is-hidden');
+    },
+    // questa funzione viene chiamata nel momento in cui il gioco
+    // viene chiuso.
+    // Si occupa di cancellare tutti i riferimenti e gli handler
+    destroy: function () {
+
+        // dereferenziamo le variabili
+//        this.size =
+//                this.time =
+//                this.timeLeft =
+//                this.endTime =
+//                this.chessboard =
+//                this.pawnLeft =
+//                this.pawnLeft.red =
+//                this.pawnLeft.green =
+//                this.pawnLeft.blue =
+//                this.pawnLeft.marker =
+//                this.graphicsLayer =
+//                this.tappedCell = null;
+
+    },
+    bindAll: function () {
+
+        for (var prop in this) {
+
+            if (typeof this[prop] === 'function') {
+
+                this[prop] = this[prop].bind(this);
+            }
+
+        }
     }
 };
 

@@ -1,0 +1,278 @@
+
+#RelaxContainer{
+
+    /* TITOLO GIOCO
+    ============================================================================= */
+
+    #Title{
+
+        & > h1{
+
+            font-family: "Colorz";
+            font-size: 2.5rem;
+            font-weight: normal;
+            letter-spacing: -7px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+    }
+
+    .Title-letter--green  { color: #99ff99; }
+    .Title-letter--yellow { color: #ffcc66; }
+    .Title-letter--orange { color: #ff9966; }
+    .Title-letter--red    { color: #ff6666; }
+    .Title-letter--blue   { color: #9999ff; }
+
+
+
+    /* LISTA PEDONI RIMASTI
+    ============================================================================= */
+    #PawnLeft {
+
+        // non capisco per quale fottuto motivo
+        // ma se uso questa regola, le pedine iniziano a spostarsi in modo strano
+        // ad un certo punto o.O
+        //
+        // perciò la togliamo
+        //
+        text-align: center;
+    }
+
+    #PawnLeft-dummyContainer--red,
+    #PawnLeft-dummyContainer--green,
+    #PawnLeft-dummyContainer--blue{
+
+        display: inline-block;
+        height: 2.5rem;
+        position: relative;
+        vertical-align: middle;
+        width: 2.5rem;
+    }
+
+
+    .PawnLeft--red,
+    .PawnLeft--green,
+    .PawnLeft--blue,
+    .PawnLeft--placeholder{
+
+        @include animation(zoomOut .3s ease forwards);
+
+        border-radius: 50%;
+        display: inline-block;
+        height: 2.5rem;
+        left: 0;
+        position: absolute;
+        top: 0;
+        vertical-align: middle;
+        width: 2.5rem;
+        // per fare in modo che siano ancora draggabili una
+        // volta droppati nella scacchiera
+        z-index: 2;
+    }
+
+    .PawnLeft--red   { background-color: #ff0000; }
+    .PawnLeft--green { background-color: #00ff00; }
+    .PawnLeft--blue  { background-color: #0000ff; }
+    .PawnLeft--placeholder { background-color: #666666 }
+
+    .PawnLeft--red.visible,
+    .PawnLeft--green.visible,
+    .PawnLeft--blue.visible,
+    .PawnLeft--placeholder.visible{
+
+        @include animation(zoomIn .3s ease);
+        // perchè quello visibile deve essere quello che viene
+        // draggato. Perciò lo mettiamo sopra gli altri
+        z-index: 3;
+    }
+
+
+    #PawnLeft--red-text,
+    #PawnLeft--green-text,
+    #PawnLeft--blue-text{
+
+        display: inline-block;
+        font-size: 1.5rem;
+        font-weight: 200;
+        margin-left: 2px;
+        vertical-align: middle;
+        width: 1.5rem;
+    }
+
+
+    /* SCACCHIERA
+    ============================================================================= */
+    #ChessboardContainer{
+
+        margin: 50px 0;
+        width: 100%;
+    }
+
+    #Chessboard{
+
+        border-collapse: collapse;
+        margin: auto;
+    }
+
+    .Chessboard-cell{
+
+        border: 1px solid rgb(119, 119, 119); /* grigio palette */
+        height: 50px;
+        position: relative;
+        text-align: center;
+        width: 50px;
+    }
+
+
+    /* RIEMPIMENTO CELLE & BORDI
+    ============================================================================= */
+    .Chessboard-border--top--red   { border-top: $cellBorderWidth solid #ff0000; }
+    .Chessboard-border--top--green { border-top: $cellBorderWidth solid #00ff00; }
+    .Chessboard-border--top--blue  { border-top: $cellBorderWidth solid #0000ff; }
+
+    .Chessboard-border--right--red   { border-right: $cellBorderWidth solid #ff0000; }
+    .Chessboard-border--right--green { border-right: $cellBorderWidth solid #00ff00; }
+    .Chessboard-border--right--blue  { border-right: $cellBorderWidth solid #0000ff; }
+
+    .Chessboard-border--bottom--red   { border-bottom: $cellBorderWidth solid #ff0000; }
+    .Chessboard-border--bottom--green { border-bottom: $cellBorderWidth solid #00ff00; }
+    .Chessboard-border--bottom--blue  { border-bottom: $cellBorderWidth solid #0000ff; }
+
+    .Chessboard-border--left--red   { border-left: $cellBorderWidth solid #ff0000; }
+    .Chessboard-border--left--green { border-left: $cellBorderWidth solid #00ff00; }
+    .Chessboard-border--left--blue  { border-left: $cellBorderWidth solid #0000ff; }
+
+
+    .Chessboard-cell--red::before,
+    .Chessboard-cell--green::before,
+    .Chessboard-cell--blue::before{
+
+        @include animation(zoomIn .3s ease);
+        border-radius: 50%;
+        content: "";
+        display: inline-block;
+        height: 85%;
+        vertical-align: middle;
+        width: 85%;
+
+    }
+
+    .Chessboard-cell--red::before   { background-color: #ff0000; }
+    .Chessboard-cell--green::before { background-color: #00ff00; }
+    .Chessboard-cell--blue::before  { background-color: #0000ff; }
+
+
+    .Chessboard-cell--marker::before{
+
+        content: "X";
+        display: inline-block;
+        font-size: 2rem;
+        font-weight: 200;
+        vertical-align: middle;
+    }
+
+
+
+    /* SCELTA COLORE
+    ============================================================================= */
+    #ColorSelection,
+    #WinDialog,
+    #LoseDialog,
+    #ExitDialog{
+
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        left: 50%;
+        position: fixed;
+        top: 50%;
+        @include transform(translate3d(-50%, -50%, 0));
+        width: 90%;
+        // deve stare sopra le pedine xD
+        z-index: 10;
+
+        & > header{
+            position: relative;
+
+            & > h1{
+
+                color: white;
+                font-size: 1.5rem;
+                font-weight: 200;
+                margin: 0;
+                padding: 1rem 0;
+                text-align: center;
+            }
+        }
+    }
+
+    #ColorSelection,
+    #ExitDialog h1 { background-color: #009999; }
+    #WinDialog h1  { background-color: #009933; }
+    #LoseDialog h1 { background-color: #660000; }
+
+
+    .ColorChoice{
+
+        display: inline-block;
+        list-style: none;
+        margin: 20px 0;
+        text-align: center;
+        width: 49%;
+
+        & > span{
+
+            border-radius: 50%;
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
+        }
+    }
+
+    .ColorChoice--red > span   { background-color: #ff0000; }
+    .ColorChoice--green > span { background-color: #00ff00; }
+    .ColorChoice--blue > span  { background-color: #0000ff; }
+
+    .ColorChoice--marker{
+
+        font-size: 3rem;
+        font-weight: 200;
+    }
+
+    /* VITTORIA E SCONFITTA
+    ============================================================================= */
+
+    #WinDialog,
+    #LoseDialog,
+    #ExitDialog{
+
+        & > p{
+
+            line-height: 1.6rem;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        & > footer{
+
+            padding: 10px;
+            text-align: right;
+        }
+    }
+
+}
+
+
+
+
+// tutti quei dispositivi che al massimo 600px CSS ( cioè quelli fisici)
+// e che hanno al massimo 1.5 come device pixel ratio.
+// questo vuol dire che stiamo identificando qui tutti quei dispostivi che
+// hanno al massimo 600px * 1.5 = 900px logici
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5){
+
+    #RelaxContainer{
+
+        #Title > h1{ letter-spacing: 3px; }
+    }
+
+}

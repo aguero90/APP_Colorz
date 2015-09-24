@@ -5,10 +5,15 @@ define(function (require) {
 
     var HomeView = Utils.Page.extend({
         constructorName: "HomeView",
-        id: "home",
-        className: "i-g page",
+        id: "HomeContainer",
+        // qui inseriamo eventuali classi che vogliamo aggiungere
+        // al wrapper del template
+        className: "",
         events: {
-            "tap #goToGame": "goToGame"
+            "tap #goToRelax": "goToRelax",
+            "tap #goToTime": "goToTime",
+            "tap #goToLevel": "goToLevel",
+            "tap #goToInfo": "goToInfo"
         },
         initialize: function () {
             // load the precompiled template
@@ -27,10 +32,17 @@ define(function (require) {
             $(this.el).html(this.template());
             return this;
         },
-        goToGame: function (e) {
-            Backbone.history.navigate("game", {
-                trigger: true
-            });
+        goToRelax: function (e) {
+            Backbone.history.navigate("relax", {trigger: true});
+        },
+        goToTime: function (e) {
+            Backbone.history.navigate("time", {trigger: true});
+        },
+        goToLevel: function (e) {
+            Backbone.history.navigate("levelList", {trigger: true});
+        },
+        goToInfo: function (e) {
+            Backbone.history.navigate("info", {trigger: true});
         }
     });
 

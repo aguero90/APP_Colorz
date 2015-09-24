@@ -29,6 +29,11 @@
     -moz-animation:         $value;
 }
 
+@mixin filter($value){
+    filter:              $value;
+    -webkit-filter:      $value;
+}
+
 @mixin selection($background, $value){
     ::selection{
         background-color: $background;

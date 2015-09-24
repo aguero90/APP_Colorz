@@ -2,8 +2,16 @@
 // COSE DA FARE
 // ============================================================================
 
-- fighizzare gli alert
-- fare le media query per far vedere il gioco bene anche su dispositivi non HD
+
+// IDEA
+// ============================================================================
+
+
+// BUG
+// ============================================================================
+
+- sul cellulare di luce il tempo risulta essere "NaN:NaN" O.o vedere perchè
+
 
 
 

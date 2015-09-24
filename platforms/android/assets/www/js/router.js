@@ -4,7 +4,11 @@ define(function (require) {
     var Backbone = require("backbone");
     var StructureView = require("views/StructureView");
     var HomeView = require("views/pages/HomeView");
-    var GameView = require("views/pages/GameView");
+    var RelaxView = require("views/pages/RelaxView");
+    var TimeView = require("views/pages/TimeView");
+    var LevelListView = require("views/pages/LevelListView");
+    var LevelView = require("views/pages/LevelView");
+    var InfoView = require("views/pages/InfoView");
 
     var AppRouter = Backbone.Router.extend({
         constructorName: "AppRouter",
@@ -12,7 +16,11 @@ define(function (require) {
             // the default is the structure view
             "": "showStructure",
             "home": "HomeView",
-            "game": "GameView"
+            "relax": "RelaxView",
+            "time": "TimeView",
+            "levelList": "LevelListView",
+            "level/:number": "LevelView",
+            "info": "InfoView"
         },
         firstView: "home",
         initialize: function (options) {
@@ -25,9 +33,30 @@ define(function (require) {
             // show the view
             this.changePage(page);
         },
-        GameView: function () {
+        RelaxView: function () {
             // create the view and show it
-            var page = new GameView();
+            var page = new RelaxView();
+            this.changePage(page);
+        },
+        TimeView: function () {
+            // create the view and show it
+            var page = new TimeView();
+            this.changePage(page);
+        },
+        LevelListView: function () {
+            // create the view and show it
+            var page = new LevelListView();
+            this.changePage(page);
+        },
+        LevelView: function (number) {
+
+            // create the view and show it
+            var page = new LevelView(number);
+            this.changePage(page);
+        },
+        InfoView: function () {
+            // create the view and show it
+            var page = new InfoView();
             this.changePage(page);
         },
         // load the structure view

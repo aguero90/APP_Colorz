@@ -8,17 +8,39 @@
         <link rel="stylesheet" href="lib/animate/animate.css"/>
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/index.css"/>
-        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,100' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <title>Colorz</title>
     </head>
     <body>
+        <script src="lib/interact/interact.js"></script>
+        <script src="lib/circles/circles.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script data-main="js/main" src="lib/require/require.js"></script>
-        <script type="text/javascript" src="lib/interact/interact.min.js"></script>
         <script type="text/javascript" src="lib/gioco/myUtils.js"></script>
         <script type="text/javascript" src="lib/gioco/Pawn.js"></script>
         <script type="text/javascript" src="lib/gioco/Cell.js"></script>
         <script type="text/javascript" src="lib/gioco/Chessboard.js"></script>
+        <script type="text/javascript" src="lib/gioco/GraphicsLayer.js"></script>
         <script type="text/javascript" src="lib/gioco/Game.js"></script>
+        <script>
+
+            function getDeviceInfo() {
+
+                var info = document.createElement("div");
+
+                info.innerHTML = "devicePixelRatio: " + window.devicePixelRatio + "</br>";
+                info.innerHTML += "innerWidth: " + window.innerWidth + "</br>";
+                info.innerHTML += "innerHeight: " + window.innerHeight + "</br>";
+                info.innerHTML += "outerWidth: " + window.innerWidth + "</br>";
+                info.innerHTML += "outerHeight: " + window.innerWidth + "</br>";
+                info.innerHTML += "</br>";
+                info.innerHTML += "platform: " + window.cordova.platformId + "</br>";
+                info.innerHTML += "platformVersion: " + window.cordova.platformVersion + "</br>";
+
+                document.getElementById("content").appendChild(info);
+            }
+        </script>
     </body>
 </html>

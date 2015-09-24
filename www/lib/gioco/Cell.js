@@ -7,10 +7,9 @@ function Cell(DOMElement, row, column, borderColorTop, borderColorRight, borderC
 
     // impostiamo delle proprietà all'interno dell'elemento DOM per riprenderle
     // in seguito
-
-    this.DOMElement.Colorz = {
-        row: this.row,
-        column: this.column
+    DOMElement.Colorz = {
+        row: row,
+        column: column
     };
 
     this.borderColor = {
@@ -40,65 +39,40 @@ Cell.prototype = {
     },
     setBorderColorTop: function (borderColorTop) {
         this.borderColor.top = borderColorTop;
-        this.getDOMElement().addClass("Chessboard-border--top--" + borderColorTop);
     },
     setBorderColorRight: function (borderColorRight) {
         this.borderColor.right = borderColorRight;
-        this.getDOMElement().addClass("Chessboard-border--right--" + borderColorRight);
     },
     setBorderColorBottom: function (borderColorBottom) {
         this.borderColor.bottom = borderColorBottom;
-        this.getDOMElement().addClass("Chessboard-border--bottom--" + borderColorBottom);
     },
     setBorderColorLeft: function (borderColorLeft) {
         this.borderColor.left = borderColorLeft;
-        this.getDOMElement().addClass("Chessboard-border--left--" + borderColorLeft);
     },
     getPawn: function () {
         return this.pawn;
     },
     setPawn: function (pawn) {
 
-        if (!this.isEmpty()) {
-            this.clear();
-        }
+//        if (!this.isEmpty()) {
+//            this.clear();
+//        }
 
         this.pawn = pawn;
-        this.DOMElement.addClass("Chessboard-cell--" + this.pawn.getColor());
     },
     isEmpty: function () {
         return !this.pawn;
     },
     clear: function () {
 
-        this.DOMElement.removeClass("Chessboard-cell--" + this.pawn.getColor());
         this.pawn = undefined;
     },
     clearBorder: function () {
 
-        if (this.borderColor.top) {
-
-            this.getDOMElement().removeClass("Chessboard-border--top--" + this.borderColor.top);
-            this.borderColor.top = null;
-        }
-
-        if (this.borderColor.right) {
-
-            this.getDOMElement().removeClass("Chessboard-border--right--" + this.borderColor.right);
-            this.borderColor.right = null;
-        }
-
-        if (this.borderColor.bottom) {
-
-            this.getDOMElement().removeClass("Chessboard-border--bottom--" + this.borderColor.bottom);
-            this.borderColor.bottom = null;
-        }
-
-        if (this.borderColor.left) {
-
-            this.getDOMElement().removeClass("Chessboard-border--left--" + this.borderColor.left);
-            this.borderColor.left = null;
-        }
+        this.borderColor.top = null;
+        this.borderColor.right = null;
+        this.borderColor.bottom = null;
+        this.borderColor.left = null;
     }
 };
 

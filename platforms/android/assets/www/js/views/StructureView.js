@@ -34,14 +34,10 @@ define(function (require) {
 
         },
         game: function (event) {
-            Backbone.history.navigate("game", {
-                trigger: true
-            });
+            Backbone.history.navigate("game", {trigger: true});
         },
         home: function (event) {
-            Backbone.history.navigate("home", {
-                trigger: true
-            });
+            Backbone.history.navigate("home", {trigger: true});
         }
     });
 

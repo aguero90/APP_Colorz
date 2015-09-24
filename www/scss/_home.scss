@@ -1,5 +1,5 @@
 
-#homeContainer{
+#HomeContainer{
 
     #TitleGame{
         font-family: "Colorz";
@@ -19,6 +19,8 @@
 
     .HomeButton{
 
+        @include animation(zoomIn .3s ease both);
+
         border-radius: 50%;
         color: #fff;
         height: 7rem;
@@ -33,4 +35,18 @@
     .HomeButton--time   { background-color: #660000; }
     .HomeButton--levels { background-color: #006600; }
     .HomeButton--info   { background-color: #333333; }
+}
+
+
+
+// tutti quei dispositivi che al massimo 600px CSS ( cioè quelli fisici)
+// e che hanno al massimo 1.5 come device pixel ratio.
+// questo vuol dire che stiamo identificando qui tutti quei dispostivi che
+// hanno al massimo 600px * 1.5 = 900px logici
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5){
+
+    #HomeContainer{
+
+        #TitleGame { letter-spacing: 5px; }
+    }
 }

@@ -153,6 +153,6 @@ Chessboard.prototype = {
         result.bottom = this.getCell(this.getSize() - 1, column).getBorderColor().bottom;
 
         return result;
-    },
+    }
 };
 

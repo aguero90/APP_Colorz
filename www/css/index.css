@@ -13,21 +13,20 @@
   box-sizing: border-box; }
 
 html, body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   height: 100%;
   width: 100%; }
 
 ul {
   padding-left: 0; }
 
-.is-hidden {
-  display: none; }
+.u-positionRelative {
+  position: relative; }
 
 .FlatButton {
   color: #006699;
   background-color: transparent;
   border: none;
-  font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   text-transform: uppercase; }
 
@@ -42,26 +41,40 @@ ul {
   -moz-transform: translate3d(-100%, -50%, 0px);
   -webkit-transform: translate3d(-100%, -50%, 0px); }
 
-#homeContainer #TitleGame {
+.is-hidden {
+  display: none; }
+
+.is-droppable {
+  transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transition: transform 0.2s ease;
+  -moz-transition: transform 0.2s ease;
+  -webkit-transition: transform 0.2s ease; }
+
+#HomeContainer #TitleGame {
   font-family: "Colorz";
   font-size: 3rem;
   font-weight: normal;
   letter-spacing: -11px;
   text-align: center;
   margin: 15% 0; }
-#homeContainer .TitleGame-letter--blue {
+#HomeContainer .TitleGame-letter--blue {
   color: #6699ff; }
-#homeContainer .TitleGame-letter--green {
+#HomeContainer .TitleGame-letter--green {
   color: #66ff66; }
-#homeContainer .TitleGame-letter--yellow {
+#HomeContainer .TitleGame-letter--yellow {
   color: #ffcc66; }
-#homeContainer .TitleGame-letter--orange {
+#HomeContainer .TitleGame-letter--orange {
   color: #ff9966; }
-#homeContainer .TitleGame-letter--red {
+#HomeContainer .TitleGame-letter--red {
   color: #ff6666; }
-#homeContainer .TitleGame-letter--purple {
+#HomeContainer .TitleGame-letter--purple {
   color: #9966ff; }
-#homeContainer .HomeButton {
+#HomeContainer .HomeButton {
+  animation: zoomIn 0.3s ease both;
+  -webkit-animation: zoomIn 0.3s ease both;
+  -moz-animation: zoomIn 0.3s ease both;
   border-radius: 50%;
   color: #fff;
   height: 7rem;
@@ -70,15 +83,1078 @@ ul {
   padding: 0;
   text-align: center;
   width: 7rem; }
-#homeContainer .HomeButton--relax {
+#HomeContainer .HomeButton--relax {
   background-color: #003366; }
-#homeContainer .HomeButton--time {
+#HomeContainer .HomeButton--time {
   background-color: #660000; }
-#homeContainer .HomeButton--levels {
+#HomeContainer .HomeButton--levels {
   background-color: #006600; }
-#homeContainer .HomeButton--info {
+#HomeContainer .HomeButton--info {
   background-color: #333333; }
 
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
+  #HomeContainer #TitleGame {
+    letter-spacing: 5px; } }
+#RelaxContainer {
+  /* TITOLO GIOCO
+  ============================================================================= */
+  /* LISTA PEDONI RIMASTI
+  ============================================================================= */
+  /* SCACCHIERA
+  ============================================================================= */
+  /* RIEMPIMENTO CELLE & BORDI
+  ============================================================================= */
+  /* SCELTA COLORE
+  ============================================================================= */
+  /* VITTORIA E SCONFITTA
+  ============================================================================= */ }
+  #RelaxContainer #Title > h1 {
+    font-family: "Colorz";
+    font-size: 2.5rem;
+    font-weight: normal;
+    letter-spacing: -7px;
+    margin: 3rem 0;
+    text-align: center; }
+  #RelaxContainer .Title-letter--green {
+    color: #99ff99; }
+  #RelaxContainer .Title-letter--yellow {
+    color: #ffcc66; }
+  #RelaxContainer .Title-letter--orange {
+    color: #ff9966; }
+  #RelaxContainer .Title-letter--red {
+    color: #ff6666; }
+  #RelaxContainer .Title-letter--blue {
+    color: #9999ff; }
+  #RelaxContainer #PawnLeft {
+    text-align: center; }
+  #RelaxContainer #PawnLeft-dummyContainer--red,
+  #RelaxContainer #PawnLeft-dummyContainer--green,
+  #RelaxContainer #PawnLeft-dummyContainer--blue {
+    display: inline-block;
+    height: 2.5rem;
+    position: relative;
+    vertical-align: middle;
+    width: 2.5rem; }
+  #RelaxContainer .PawnLeft--red,
+  #RelaxContainer .PawnLeft--green,
+  #RelaxContainer .PawnLeft--blue,
+  #RelaxContainer .PawnLeft--placeholder {
+    animation: zoomOut 0.3s ease forwards;
+    -webkit-animation: zoomOut 0.3s ease forwards;
+    -moz-animation: zoomOut 0.3s ease forwards;
+    border-radius: 50%;
+    display: inline-block;
+    height: 2.5rem;
+    left: 0;
+    position: absolute;
+    top: 0;
+    vertical-align: middle;
+    width: 2.5rem;
+    z-index: 2; }
+  #RelaxContainer .PawnLeft--red {
+    background-color: #ff0000; }
+  #RelaxContainer .PawnLeft--green {
+    background-color: #00ff00; }
+  #RelaxContainer .PawnLeft--blue {
+    background-color: #0000ff; }
+  #RelaxContainer .PawnLeft--placeholder {
+    background-color: #666666; }
+  #RelaxContainer .PawnLeft--red.visible,
+  #RelaxContainer .PawnLeft--green.visible,
+  #RelaxContainer .PawnLeft--blue.visible,
+  #RelaxContainer .PawnLeft--placeholder.visible {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    z-index: 3; }
+  #RelaxContainer #PawnLeft--red-text,
+  #RelaxContainer #PawnLeft--green-text,
+  #RelaxContainer #PawnLeft--blue-text {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 200;
+    margin-left: 2px;
+    vertical-align: middle;
+    width: 1.5rem; }
+  #RelaxContainer #ChessboardContainer {
+    margin: 50px 0;
+    width: 100%; }
+  #RelaxContainer #Chessboard {
+    border-collapse: collapse;
+    margin: auto; }
+  #RelaxContainer .Chessboard-cell {
+    border: 1px solid #777777;
+    /* grigio palette */
+    height: 50px;
+    position: relative;
+    text-align: center;
+    width: 50px; }
+  #RelaxContainer .Chessboard-border--top--red {
+    border-top: 3px solid #ff0000; }
+  #RelaxContainer .Chessboard-border--top--green {
+    border-top: 3px solid #00ff00; }
+  #RelaxContainer .Chessboard-border--top--blue {
+    border-top: 3px solid #0000ff; }
+  #RelaxContainer .Chessboard-border--right--red {
+    border-right: 3px solid #ff0000; }
+  #RelaxContainer .Chessboard-border--right--green {
+    border-right: 3px solid #00ff00; }
+  #RelaxContainer .Chessboard-border--right--blue {
+    border-right: 3px solid #0000ff; }
+  #RelaxContainer .Chessboard-border--bottom--red {
+    border-bottom: 3px solid #ff0000; }
+  #RelaxContainer .Chessboard-border--bottom--green {
+    border-bottom: 3px solid #00ff00; }
+  #RelaxContainer .Chessboard-border--bottom--blue {
+    border-bottom: 3px solid #0000ff; }
+  #RelaxContainer .Chessboard-border--left--red {
+    border-left: 3px solid #ff0000; }
+  #RelaxContainer .Chessboard-border--left--green {
+    border-left: 3px solid #00ff00; }
+  #RelaxContainer .Chessboard-border--left--blue {
+    border-left: 3px solid #0000ff; }
+  #RelaxContainer .Chessboard-cell--red::before,
+  #RelaxContainer .Chessboard-cell--green::before,
+  #RelaxContainer .Chessboard-cell--blue::before {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 85%;
+    vertical-align: middle;
+    width: 85%; }
+  #RelaxContainer .Chessboard-cell--red::before {
+    background-color: #ff0000; }
+  #RelaxContainer .Chessboard-cell--green::before {
+    background-color: #00ff00; }
+  #RelaxContainer .Chessboard-cell--blue::before {
+    background-color: #0000ff; }
+  #RelaxContainer .Chessboard-cell--marker::before {
+    content: "X";
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 200;
+    vertical-align: middle; }
+  #RelaxContainer #ColorSelection,
+  #RelaxContainer #WinDialog,
+  #RelaxContainer #LoseDialog,
+  #RelaxContainer #ExitDialog {
+    background-color: white;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    width: 90%;
+    z-index: 10; }
+    #RelaxContainer #ColorSelection > header,
+    #RelaxContainer #WinDialog > header,
+    #RelaxContainer #LoseDialog > header,
+    #RelaxContainer #ExitDialog > header {
+      position: relative; }
+      #RelaxContainer #ColorSelection > header > h1,
+      #RelaxContainer #WinDialog > header > h1,
+      #RelaxContainer #LoseDialog > header > h1,
+      #RelaxContainer #ExitDialog > header > h1 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 200;
+        margin: 0;
+        padding: 1rem 0;
+        text-align: center; }
+  #RelaxContainer #ColorSelection,
+  #RelaxContainer #ExitDialog h1 {
+    background-color: #009999; }
+  #RelaxContainer #WinDialog h1 {
+    background-color: #009933; }
+  #RelaxContainer #LoseDialog h1 {
+    background-color: #660000; }
+  #RelaxContainer .ColorChoice {
+    display: inline-block;
+    list-style: none;
+    margin: 20px 0;
+    text-align: center;
+    width: 49%; }
+    #RelaxContainer .ColorChoice > span {
+      border-radius: 50%;
+      display: inline-block;
+      height: 3rem;
+      width: 3rem; }
+  #RelaxContainer .ColorChoice--red > span {
+    background-color: #ff0000; }
+  #RelaxContainer .ColorChoice--green > span {
+    background-color: #00ff00; }
+  #RelaxContainer .ColorChoice--blue > span {
+    background-color: #0000ff; }
+  #RelaxContainer .ColorChoice--marker {
+    font-size: 3rem;
+    font-weight: 200; }
+  #RelaxContainer #WinDialog > p,
+  #RelaxContainer #LoseDialog > p,
+  #RelaxContainer #ExitDialog > p {
+    line-height: 1.6rem;
+    padding: 20px 10px;
+    text-align: center; }
+  #RelaxContainer #WinDialog > footer,
+  #RelaxContainer #LoseDialog > footer,
+  #RelaxContainer #ExitDialog > footer {
+    padding: 10px;
+    text-align: right; }
+
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
+  #RelaxContainer #Title > h1 {
+    letter-spacing: 3px; } }
+#TimeContainer {
+  /* TITOLO GIOCO
+  ============================================================================= */
+  /* TIMER
+  ============================================================================= */
+  /* LISTA PEDONI RIMASTI
+  ============================================================================= */
+  /* SCACCHIERA
+  ============================================================================= */
+  /* RIEMPIMENTO CELLE & BORDI
+  ============================================================================= */
+  /* SCELTA COLORE
+  ============================================================================= */
+  /* VITTORIA E SCONFITTA
+  ============================================================================= */ }
+  #TimeContainer #Title > h1 {
+    font-family: "Colorz";
+    font-size: 2.5rem;
+    font-weight: normal;
+    letter-spacing: -7px;
+    margin: 2rem 0 1rem;
+    text-align: center; }
+  #TimeContainer .Title-letter--green {
+    color: #99ff99; }
+  #TimeContainer .Title-letter--yellow {
+    color: #ffcc66; }
+  #TimeContainer .Title-letter--orange {
+    color: #ff9966; }
+  #TimeContainer .Title-letter--red {
+    color: #ff6666; }
+  #TimeContainer .Title-letter--blue {
+    color: #9999ff; }
+  #TimeContainer #Timer {
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin-bottom: 5%;
+    text-align: center; }
+  #TimeContainer #PawnLeft {
+    text-align: center; }
+  #TimeContainer #PawnLeft-dummyContainer--red,
+  #TimeContainer #PawnLeft-dummyContainer--green,
+  #TimeContainer #PawnLeft-dummyContainer--blue {
+    display: inline-block;
+    height: 2.5rem;
+    position: relative;
+    vertical-align: middle;
+    width: 2.5rem; }
+  #TimeContainer .PawnLeft--red,
+  #TimeContainer .PawnLeft--green,
+  #TimeContainer .PawnLeft--blue,
+  #TimeContainer .PawnLeft--placeholder {
+    animation: zoomOut 0.3s ease forwards;
+    -webkit-animation: zoomOut 0.3s ease forwards;
+    -moz-animation: zoomOut 0.3s ease forwards;
+    border-radius: 50%;
+    display: inline-block;
+    height: 2.5rem;
+    left: 0;
+    position: absolute;
+    top: 0;
+    vertical-align: middle;
+    width: 2.5rem;
+    z-index: 2; }
+  #TimeContainer .PawnLeft--red {
+    background-color: #ff0000; }
+  #TimeContainer .PawnLeft--green {
+    background-color: #00ff00; }
+  #TimeContainer .PawnLeft--blue {
+    background-color: #0000ff; }
+  #TimeContainer .PawnLeft--placeholder {
+    background-color: #666666; }
+  #TimeContainer .PawnLeft--red.visible,
+  #TimeContainer .PawnLeft--green.visible,
+  #TimeContainer .PawnLeft--blue.visible,
+  #TimeContainer .PawnLeft--placeholder.visible {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    z-index: 3; }
+  #TimeContainer #PawnLeft--red-text,
+  #TimeContainer #PawnLeft--green-text,
+  #TimeContainer #PawnLeft--blue-text {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 200;
+    margin-left: 2px;
+    vertical-align: middle;
+    width: 1.5rem; }
+  #TimeContainer #ChessboardContainer {
+    margin: 50px 0;
+    width: 100%; }
+  #TimeContainer #Chessboard {
+    border-collapse: collapse;
+    margin: auto; }
+  #TimeContainer .Chessboard-cell {
+    border: 1px solid #777777;
+    /* grigio palette */
+    height: 50px;
+    position: relative;
+    text-align: center;
+    width: 50px; }
+  #TimeContainer .Chessboard-border--top--red {
+    border-top: 3px solid #ff0000; }
+  #TimeContainer .Chessboard-border--top--green {
+    border-top: 3px solid #00ff00; }
+  #TimeContainer .Chessboard-border--top--blue {
+    border-top: 3px solid #0000ff; }
+  #TimeContainer .Chessboard-border--right--red {
+    border-right: 3px solid #ff0000; }
+  #TimeContainer .Chessboard-border--right--green {
+    border-right: 3px solid #00ff00; }
+  #TimeContainer .Chessboard-border--right--blue {
+    border-right: 3px solid #0000ff; }
+  #TimeContainer .Chessboard-border--bottom--red {
+    border-bottom: 3px solid #ff0000; }
+  #TimeContainer .Chessboard-border--bottom--green {
+    border-bottom: 3px solid #00ff00; }
+  #TimeContainer .Chessboard-border--bottom--blue {
+    border-bottom: 3px solid #0000ff; }
+  #TimeContainer .Chessboard-border--left--red {
+    border-left: 3px solid #ff0000; }
+  #TimeContainer .Chessboard-border--left--green {
+    border-left: 3px solid #00ff00; }
+  #TimeContainer .Chessboard-border--left--blue {
+    border-left: 3px solid #0000ff; }
+  #TimeContainer .Chessboard-cell--red::before,
+  #TimeContainer .Chessboard-cell--green::before,
+  #TimeContainer .Chessboard-cell--blue::before {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 85%;
+    vertical-align: middle;
+    width: 85%; }
+  #TimeContainer .Chessboard-cell--red::before {
+    background-color: #ff0000; }
+  #TimeContainer .Chessboard-cell--green::before {
+    background-color: #00ff00; }
+  #TimeContainer .Chessboard-cell--blue::before {
+    background-color: #0000ff; }
+  #TimeContainer .Chessboard-cell--marker::before {
+    content: "X";
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 200;
+    vertical-align: middle; }
+  #TimeContainer #ColorSelection,
+  #TimeContainer #WinDialog,
+  #TimeContainer #LoseDialog,
+  #TimeContainer #ExitDialog,
+  #TimeContainer #TimeUp {
+    background-color: white;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    width: 90%;
+    z-index: 10; }
+    #TimeContainer #ColorSelection > header,
+    #TimeContainer #WinDialog > header,
+    #TimeContainer #LoseDialog > header,
+    #TimeContainer #ExitDialog > header,
+    #TimeContainer #TimeUp > header {
+      position: relative; }
+      #TimeContainer #ColorSelection > header > h1,
+      #TimeContainer #WinDialog > header > h1,
+      #TimeContainer #LoseDialog > header > h1,
+      #TimeContainer #ExitDialog > header > h1,
+      #TimeContainer #TimeUp > header > h1 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 200;
+        margin: 0;
+        padding: 1rem 0;
+        text-align: center; }
+  #TimeContainer #ColorSelection h1,
+  #TimeContainer #ExitDialog h1 {
+    background-color: #009999; }
+  #TimeContainer #WinDialog h1 {
+    background-color: #009933; }
+  #TimeContainer #LoseDialog h1,
+  #TimeContainer #TimeUp h1 {
+    background-color: #660000; }
+  #TimeContainer .ColorChoice {
+    display: inline-block;
+    list-style: none;
+    margin: 20px 0;
+    text-align: center;
+    width: 49%; }
+    #TimeContainer .ColorChoice > span {
+      border-radius: 50%;
+      display: inline-block;
+      height: 3rem;
+      width: 3rem; }
+  #TimeContainer .ColorChoice--red > span {
+    background-color: #ff0000; }
+  #TimeContainer .ColorChoice--green > span {
+    background-color: #00ff00; }
+  #TimeContainer .ColorChoice--blue > span {
+    background-color: #0000ff; }
+  #TimeContainer .ColorChoice--marker {
+    font-size: 3rem;
+    font-weight: 200; }
+  #TimeContainer #WinDialog > p,
+  #TimeContainer #LoseDialog > p,
+  #TimeContainer #ExitDialog > p,
+  #TimeContainer #TimeUp > p {
+    line-height: 1.6rem;
+    padding: 20px 10px;
+    text-align: center; }
+  #TimeContainer #WinDialog > footer,
+  #TimeContainer #LoseDialog > footer,
+  #TimeContainer #ExitDialog > footer,
+  #TimeContainer #TimeUp > footer {
+    padding: 10px;
+    text-align: right; }
+
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
+  #TimeContainer #Title > h1 {
+    letter-spacing: 3px; } }
+#LevelListContainer .LevelButton {
+  animation: zoomIn 0.3s ease both;
+  -webkit-animation: zoomIn 0.3s ease both;
+  -moz-animation: zoomIn 0.3s ease both;
+  background-color: darkcyan;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 100;
+  height: 5rem;
+  line-height: 5rem;
+  margin: 1rem auto;
+  padding: 0;
+  text-align: center;
+  width: 5rem; }
+#LevelListContainer .i-4:nth-of-type(1) .LevelButton {
+  animation-delay: 0.1s;
+  filter: hue-rotate(20deg);
+  -webkit-filter: hue-rotate(20deg); }
+#LevelListContainer .i-4:nth-of-type(2) .LevelButton {
+  animation-delay: 0.2s;
+  filter: hue-rotate(40deg);
+  -webkit-filter: hue-rotate(40deg); }
+#LevelListContainer .i-4:nth-of-type(3) .LevelButton {
+  animation-delay: 0.3s;
+  filter: hue-rotate(60deg);
+  -webkit-filter: hue-rotate(60deg); }
+#LevelListContainer .i-4:nth-of-type(4) .LevelButton {
+  animation-delay: 0.4s;
+  filter: hue-rotate(80deg);
+  -webkit-filter: hue-rotate(80deg); }
+#LevelListContainer .i-4:nth-of-type(5) .LevelButton {
+  animation-delay: 0.5s;
+  filter: hue-rotate(100deg);
+  -webkit-filter: hue-rotate(100deg); }
+#LevelListContainer .i-4:nth-of-type(6) .LevelButton {
+  animation-delay: 0.6s;
+  filter: hue-rotate(120deg);
+  -webkit-filter: hue-rotate(120deg); }
+#LevelListContainer .i-4:nth-of-type(7) .LevelButton {
+  animation-delay: 0.7s;
+  filter: hue-rotate(140deg);
+  -webkit-filter: hue-rotate(140deg); }
+#LevelListContainer .i-4:nth-of-type(8) .LevelButton {
+  animation-delay: 0.8s;
+  filter: hue-rotate(160deg);
+  -webkit-filter: hue-rotate(160deg); }
+#LevelListContainer .i-4:nth-of-type(9) .LevelButton {
+  animation-delay: 0.9s;
+  filter: hue-rotate(180deg);
+  -webkit-filter: hue-rotate(180deg); }
+#LevelListContainer .i-4:nth-of-type(10) .LevelButton {
+  animation-delay: 1s;
+  filter: hue-rotate(200deg);
+  -webkit-filter: hue-rotate(200deg); }
+#LevelListContainer .i-4:nth-of-type(11) .LevelButton {
+  animation-delay: 1.1s;
+  filter: hue-rotate(220deg);
+  -webkit-filter: hue-rotate(220deg); }
+#LevelListContainer .i-4:nth-of-type(12) .LevelButton {
+  animation-delay: 1.2s;
+  filter: hue-rotate(240deg);
+  -webkit-filter: hue-rotate(240deg); }
+#LevelListContainer .i-4:nth-of-type(13) .LevelButton {
+  animation-delay: 1.3s;
+  filter: hue-rotate(260deg);
+  -webkit-filter: hue-rotate(260deg); }
+#LevelListContainer .i-4:nth-of-type(14) .LevelButton {
+  animation-delay: 1.4s;
+  filter: hue-rotate(280deg);
+  -webkit-filter: hue-rotate(280deg); }
+#LevelListContainer .i-4:nth-of-type(15) .LevelButton {
+  animation-delay: 1.5s;
+  filter: hue-rotate(300deg);
+  -webkit-filter: hue-rotate(300deg); }
+#LevelListContainer .i-4:nth-of-type(16) .LevelButton {
+  animation-delay: 1.6s;
+  filter: hue-rotate(320deg);
+  -webkit-filter: hue-rotate(320deg); }
+#LevelListContainer .i-4:nth-of-type(17) .LevelButton {
+  animation-delay: 1.7s;
+  filter: hue-rotate(340deg);
+  -webkit-filter: hue-rotate(340deg); }
+#LevelListContainer .i-4:nth-of-type(18) .LevelButton {
+  animation-delay: 1.8s;
+  filter: hue-rotate(360deg);
+  -webkit-filter: hue-rotate(360deg); }
+#LevelListContainer .i-4:nth-of-type(19) .LevelButton {
+  animation-delay: 1.9s;
+  filter: hue-rotate(380deg);
+  -webkit-filter: hue-rotate(380deg); }
+#LevelListContainer .i-4:nth-of-type(20) .LevelButton {
+  animation-delay: 2s;
+  filter: hue-rotate(400deg);
+  -webkit-filter: hue-rotate(400deg); }
+#LevelListContainer .i-4:nth-of-type(21) .LevelButton {
+  animation-delay: 2.1s;
+  filter: hue-rotate(420deg);
+  -webkit-filter: hue-rotate(420deg); }
+#LevelListContainer .i-4:nth-of-type(22) .LevelButton {
+  animation-delay: 2.2s;
+  filter: hue-rotate(440deg);
+  -webkit-filter: hue-rotate(440deg); }
+#LevelListContainer .i-4:nth-of-type(23) .LevelButton {
+  animation-delay: 2.3s;
+  filter: hue-rotate(460deg);
+  -webkit-filter: hue-rotate(460deg); }
+#LevelListContainer .i-4:nth-of-type(24) .LevelButton {
+  animation-delay: 2.4s;
+  filter: hue-rotate(480deg);
+  -webkit-filter: hue-rotate(480deg); }
+#LevelListContainer .i-4:nth-of-type(25) .LevelButton {
+  animation-delay: 2.5s;
+  filter: hue-rotate(500deg);
+  -webkit-filter: hue-rotate(500deg); }
+#LevelListContainer .i-4:nth-of-type(26) .LevelButton {
+  animation-delay: 2.6s;
+  filter: hue-rotate(520deg);
+  -webkit-filter: hue-rotate(520deg); }
+#LevelListContainer .i-4:nth-of-type(27) .LevelButton {
+  animation-delay: 2.7s;
+  filter: hue-rotate(540deg);
+  -webkit-filter: hue-rotate(540deg); }
+#LevelListContainer .i-4:nth-of-type(28) .LevelButton {
+  animation-delay: 2.8s;
+  filter: hue-rotate(560deg);
+  -webkit-filter: hue-rotate(560deg); }
+#LevelListContainer .i-4:nth-of-type(29) .LevelButton {
+  animation-delay: 2.9s;
+  filter: hue-rotate(580deg);
+  -webkit-filter: hue-rotate(580deg); }
+#LevelListContainer .i-4:nth-of-type(30) .LevelButton {
+  animation-delay: 3s;
+  filter: hue-rotate(600deg);
+  -webkit-filter: hue-rotate(600deg); }
+#LevelListContainer .i-4:nth-of-type(31) .LevelButton {
+  animation-delay: 3.1s;
+  filter: hue-rotate(620deg);
+  -webkit-filter: hue-rotate(620deg); }
+#LevelListContainer .i-4:nth-of-type(32) .LevelButton {
+  animation-delay: 3.2s;
+  filter: hue-rotate(640deg);
+  -webkit-filter: hue-rotate(640deg); }
+#LevelListContainer .i-4:nth-of-type(33) .LevelButton {
+  animation-delay: 3.3s;
+  filter: hue-rotate(660deg);
+  -webkit-filter: hue-rotate(660deg); }
+#LevelListContainer .i-4:nth-of-type(34) .LevelButton {
+  animation-delay: 3.4s;
+  filter: hue-rotate(680deg);
+  -webkit-filter: hue-rotate(680deg); }
+#LevelListContainer .i-4:nth-of-type(35) .LevelButton {
+  animation-delay: 3.5s;
+  filter: hue-rotate(700deg);
+  -webkit-filter: hue-rotate(700deg); }
+#LevelListContainer .i-4:nth-of-type(36) .LevelButton {
+  animation-delay: 3.6s;
+  filter: hue-rotate(720deg);
+  -webkit-filter: hue-rotate(720deg); }
+#LevelListContainer .i-4:nth-of-type(37) .LevelButton {
+  animation-delay: 3.7s;
+  filter: hue-rotate(740deg);
+  -webkit-filter: hue-rotate(740deg); }
+#LevelListContainer .i-4:nth-of-type(38) .LevelButton {
+  animation-delay: 3.8s;
+  filter: hue-rotate(760deg);
+  -webkit-filter: hue-rotate(760deg); }
+#LevelListContainer .i-4:nth-of-type(39) .LevelButton {
+  animation-delay: 3.9s;
+  filter: hue-rotate(780deg);
+  -webkit-filter: hue-rotate(780deg); }
+#LevelListContainer .i-4:nth-of-type(40) .LevelButton {
+  animation-delay: 4s;
+  filter: hue-rotate(800deg);
+  -webkit-filter: hue-rotate(800deg); }
+#LevelListContainer .i-4:nth-of-type(41) .LevelButton {
+  animation-delay: 4.1s;
+  filter: hue-rotate(820deg);
+  -webkit-filter: hue-rotate(820deg); }
+#LevelListContainer .i-4:nth-of-type(42) .LevelButton {
+  animation-delay: 4.2s;
+  filter: hue-rotate(840deg);
+  -webkit-filter: hue-rotate(840deg); }
+#LevelListContainer .i-4:nth-of-type(43) .LevelButton {
+  animation-delay: 4.3s;
+  filter: hue-rotate(860deg);
+  -webkit-filter: hue-rotate(860deg); }
+#LevelListContainer .i-4:nth-of-type(44) .LevelButton {
+  animation-delay: 4.4s;
+  filter: hue-rotate(880deg);
+  -webkit-filter: hue-rotate(880deg); }
+#LevelListContainer .i-4:nth-of-type(45) .LevelButton {
+  animation-delay: 4.5s;
+  filter: hue-rotate(900deg);
+  -webkit-filter: hue-rotate(900deg); }
+#LevelListContainer .i-4:nth-of-type(46) .LevelButton {
+  animation-delay: 4.6s;
+  filter: hue-rotate(920deg);
+  -webkit-filter: hue-rotate(920deg); }
+#LevelListContainer .i-4:nth-of-type(47) .LevelButton {
+  animation-delay: 4.7s;
+  filter: hue-rotate(940deg);
+  -webkit-filter: hue-rotate(940deg); }
+#LevelListContainer .i-4:nth-of-type(48) .LevelButton {
+  animation-delay: 4.8s;
+  filter: hue-rotate(960deg);
+  -webkit-filter: hue-rotate(960deg); }
+#LevelListContainer .i-4:nth-of-type(49) .LevelButton {
+  animation-delay: 4.9s;
+  filter: hue-rotate(980deg);
+  -webkit-filter: hue-rotate(980deg); }
+#LevelListContainer .i-4:nth-of-type(50) .LevelButton {
+  animation-delay: 5s;
+  filter: hue-rotate(1000deg);
+  -webkit-filter: hue-rotate(1000deg); }
+#LevelListContainer .i-4:nth-of-type(51) .LevelButton {
+  animation-delay: 5.1s;
+  filter: hue-rotate(1020deg);
+  -webkit-filter: hue-rotate(1020deg); }
+#LevelListContainer .i-4:nth-of-type(52) .LevelButton {
+  animation-delay: 5.2s;
+  filter: hue-rotate(1040deg);
+  -webkit-filter: hue-rotate(1040deg); }
+#LevelListContainer .i-4:nth-of-type(53) .LevelButton {
+  animation-delay: 5.3s;
+  filter: hue-rotate(1060deg);
+  -webkit-filter: hue-rotate(1060deg); }
+#LevelListContainer .i-4:nth-of-type(54) .LevelButton {
+  animation-delay: 5.4s;
+  filter: hue-rotate(1080deg);
+  -webkit-filter: hue-rotate(1080deg); }
+#LevelListContainer .i-4:nth-of-type(55) .LevelButton {
+  animation-delay: 5.5s;
+  filter: hue-rotate(1100deg);
+  -webkit-filter: hue-rotate(1100deg); }
+#LevelListContainer .i-4:nth-of-type(56) .LevelButton {
+  animation-delay: 5.6s;
+  filter: hue-rotate(1120deg);
+  -webkit-filter: hue-rotate(1120deg); }
+#LevelListContainer .i-4:nth-of-type(57) .LevelButton {
+  animation-delay: 5.7s;
+  filter: hue-rotate(1140deg);
+  -webkit-filter: hue-rotate(1140deg); }
+#LevelListContainer .i-4:nth-of-type(58) .LevelButton {
+  animation-delay: 5.8s;
+  filter: hue-rotate(1160deg);
+  -webkit-filter: hue-rotate(1160deg); }
+#LevelListContainer .i-4:nth-of-type(59) .LevelButton {
+  animation-delay: 5.9s;
+  filter: hue-rotate(1180deg);
+  -webkit-filter: hue-rotate(1180deg); }
+#LevelListContainer .i-4:nth-of-type(60) .LevelButton {
+  animation-delay: 6s;
+  filter: hue-rotate(1200deg);
+  -webkit-filter: hue-rotate(1200deg); }
+#LevelListContainer .i-4:nth-of-type(61) .LevelButton {
+  animation-delay: 6.1s;
+  filter: hue-rotate(1220deg);
+  -webkit-filter: hue-rotate(1220deg); }
+#LevelListContainer .i-4:nth-of-type(62) .LevelButton {
+  animation-delay: 6.2s;
+  filter: hue-rotate(1240deg);
+  -webkit-filter: hue-rotate(1240deg); }
+#LevelListContainer .i-4:nth-of-type(63) .LevelButton {
+  animation-delay: 6.3s;
+  filter: hue-rotate(1260deg);
+  -webkit-filter: hue-rotate(1260deg); }
+#LevelListContainer .i-4:nth-of-type(64) .LevelButton {
+  animation-delay: 6.4s;
+  filter: hue-rotate(1280deg);
+  -webkit-filter: hue-rotate(1280deg); }
+#LevelListContainer .i-4:nth-of-type(65) .LevelButton {
+  animation-delay: 6.5s;
+  filter: hue-rotate(1300deg);
+  -webkit-filter: hue-rotate(1300deg); }
+#LevelListContainer .i-4:nth-of-type(66) .LevelButton {
+  animation-delay: 6.6s;
+  filter: hue-rotate(1320deg);
+  -webkit-filter: hue-rotate(1320deg); }
+#LevelListContainer .i-4:nth-of-type(67) .LevelButton {
+  animation-delay: 6.7s;
+  filter: hue-rotate(1340deg);
+  -webkit-filter: hue-rotate(1340deg); }
+#LevelListContainer .i-4:nth-of-type(68) .LevelButton {
+  animation-delay: 6.8s;
+  filter: hue-rotate(1360deg);
+  -webkit-filter: hue-rotate(1360deg); }
+#LevelListContainer .i-4:nth-of-type(69) .LevelButton {
+  animation-delay: 6.9s;
+  filter: hue-rotate(1380deg);
+  -webkit-filter: hue-rotate(1380deg); }
+#LevelListContainer .i-4:nth-of-type(70) .LevelButton {
+  animation-delay: 7s;
+  filter: hue-rotate(1400deg);
+  -webkit-filter: hue-rotate(1400deg); }
+#LevelListContainer .i-4:nth-of-type(71) .LevelButton {
+  animation-delay: 7.1s;
+  filter: hue-rotate(1420deg);
+  -webkit-filter: hue-rotate(1420deg); }
+#LevelListContainer .i-4:nth-of-type(72) .LevelButton {
+  animation-delay: 7.2s;
+  filter: hue-rotate(1440deg);
+  -webkit-filter: hue-rotate(1440deg); }
+#LevelListContainer .i-4:nth-of-type(73) .LevelButton {
+  animation-delay: 7.3s;
+  filter: hue-rotate(1460deg);
+  -webkit-filter: hue-rotate(1460deg); }
+#LevelListContainer .i-4:nth-of-type(74) .LevelButton {
+  animation-delay: 7.4s;
+  filter: hue-rotate(1480deg);
+  -webkit-filter: hue-rotate(1480deg); }
+#LevelListContainer .i-4:nth-of-type(75) .LevelButton {
+  animation-delay: 7.5s;
+  filter: hue-rotate(1500deg);
+  -webkit-filter: hue-rotate(1500deg); }
+#LevelListContainer .i-4:nth-of-type(76) .LevelButton {
+  animation-delay: 7.6s;
+  filter: hue-rotate(1520deg);
+  -webkit-filter: hue-rotate(1520deg); }
+#LevelListContainer .i-4:nth-of-type(77) .LevelButton {
+  animation-delay: 7.7s;
+  filter: hue-rotate(1540deg);
+  -webkit-filter: hue-rotate(1540deg); }
+#LevelListContainer .i-4:nth-of-type(78) .LevelButton {
+  animation-delay: 7.8s;
+  filter: hue-rotate(1560deg);
+  -webkit-filter: hue-rotate(1560deg); }
+#LevelListContainer .i-4:nth-of-type(79) .LevelButton {
+  animation-delay: 7.9s;
+  filter: hue-rotate(1580deg);
+  -webkit-filter: hue-rotate(1580deg); }
+#LevelListContainer .i-4:nth-of-type(80) .LevelButton {
+  animation-delay: 8s;
+  filter: hue-rotate(1600deg);
+  -webkit-filter: hue-rotate(1600deg); }
+#LevelListContainer .i-4:nth-of-type(81) .LevelButton {
+  animation-delay: 8.1s;
+  filter: hue-rotate(1620deg);
+  -webkit-filter: hue-rotate(1620deg); }
+#LevelListContainer .i-4:nth-of-type(82) .LevelButton {
+  animation-delay: 8.2s;
+  filter: hue-rotate(1640deg);
+  -webkit-filter: hue-rotate(1640deg); }
+#LevelListContainer .i-4:nth-of-type(83) .LevelButton {
+  animation-delay: 8.3s;
+  filter: hue-rotate(1660deg);
+  -webkit-filter: hue-rotate(1660deg); }
+#LevelListContainer .i-4:nth-of-type(84) .LevelButton {
+  animation-delay: 8.4s;
+  filter: hue-rotate(1680deg);
+  -webkit-filter: hue-rotate(1680deg); }
+#LevelListContainer .i-4:nth-of-type(85) .LevelButton {
+  animation-delay: 8.5s;
+  filter: hue-rotate(1700deg);
+  -webkit-filter: hue-rotate(1700deg); }
+#LevelListContainer .i-4:nth-of-type(86) .LevelButton {
+  animation-delay: 8.6s;
+  filter: hue-rotate(1720deg);
+  -webkit-filter: hue-rotate(1720deg); }
+#LevelListContainer .i-4:nth-of-type(87) .LevelButton {
+  animation-delay: 8.7s;
+  filter: hue-rotate(1740deg);
+  -webkit-filter: hue-rotate(1740deg); }
+#LevelListContainer .i-4:nth-of-type(88) .LevelButton {
+  animation-delay: 8.8s;
+  filter: hue-rotate(1760deg);
+  -webkit-filter: hue-rotate(1760deg); }
+#LevelListContainer .i-4:nth-of-type(89) .LevelButton {
+  animation-delay: 8.9s;
+  filter: hue-rotate(1780deg);
+  -webkit-filter: hue-rotate(1780deg); }
+#LevelListContainer .i-4:nth-of-type(90) .LevelButton {
+  animation-delay: 9s;
+  filter: hue-rotate(1800deg);
+  -webkit-filter: hue-rotate(1800deg); }
+#LevelListContainer .i-4:nth-of-type(91) .LevelButton {
+  animation-delay: 9.1s;
+  filter: hue-rotate(1820deg);
+  -webkit-filter: hue-rotate(1820deg); }
+#LevelListContainer .i-4:nth-of-type(92) .LevelButton {
+  animation-delay: 9.2s;
+  filter: hue-rotate(1840deg);
+  -webkit-filter: hue-rotate(1840deg); }
+#LevelListContainer .i-4:nth-of-type(93) .LevelButton {
+  animation-delay: 9.3s;
+  filter: hue-rotate(1860deg);
+  -webkit-filter: hue-rotate(1860deg); }
+#LevelListContainer .i-4:nth-of-type(94) .LevelButton {
+  animation-delay: 9.4s;
+  filter: hue-rotate(1880deg);
+  -webkit-filter: hue-rotate(1880deg); }
+#LevelListContainer .i-4:nth-of-type(95) .LevelButton {
+  animation-delay: 9.5s;
+  filter: hue-rotate(1900deg);
+  -webkit-filter: hue-rotate(1900deg); }
+#LevelListContainer .i-4:nth-of-type(96) .LevelButton {
+  animation-delay: 9.6s;
+  filter: hue-rotate(1920deg);
+  -webkit-filter: hue-rotate(1920deg); }
+#LevelListContainer .i-4:nth-of-type(97) .LevelButton {
+  animation-delay: 9.7s;
+  filter: hue-rotate(1940deg);
+  -webkit-filter: hue-rotate(1940deg); }
+#LevelListContainer .i-4:nth-of-type(98) .LevelButton {
+  animation-delay: 9.8s;
+  filter: hue-rotate(1960deg);
+  -webkit-filter: hue-rotate(1960deg); }
+
+#LevelContainer {
+  /* TITOLO GIOCO
+  ============================================================================= */
+  /* LISTA PEDONI RIMASTI
+  ============================================================================= */
+  /* SCACCHIERA
+  ============================================================================= */
+  /* RIEMPIMENTO CELLE & BORDI
+  ============================================================================= */
+  /* SCELTA COLORE
+  ============================================================================= */
+  /* VITTORIA E SCONFITTA
+  ============================================================================= */ }
+  #LevelContainer #Title > h1 {
+    font-family: "Colorz";
+    font-size: 2.5rem;
+    font-weight: normal;
+    letter-spacing: -7px;
+    margin: 3rem 0;
+    text-align: center; }
+  #LevelContainer .Title-letter--green {
+    color: #99ff99; }
+  #LevelContainer .Title-letter--yellow {
+    color: #ffcc66; }
+  #LevelContainer .Title-letter--orange {
+    color: #ff9966; }
+  #LevelContainer .Title-letter--red {
+    color: #ff6666; }
+  #LevelContainer .Title-letter--blue {
+    color: #9999ff; }
+  #LevelContainer #PawnLeft {
+    text-align: center; }
+  #LevelContainer #PawnLeft-dummyContainer--red,
+  #LevelContainer #PawnLeft-dummyContainer--green,
+  #LevelContainer #PawnLeft-dummyContainer--blue {
+    display: inline-block;
+    height: 2.5rem;
+    position: relative;
+    vertical-align: middle;
+    width: 2.5rem; }
+  #LevelContainer .PawnLeft--red,
+  #LevelContainer .PawnLeft--green,
+  #LevelContainer .PawnLeft--blue,
+  #LevelContainer .PawnLeft--placeholder {
+    animation: zoomOut 0.3s ease forwards;
+    -webkit-animation: zoomOut 0.3s ease forwards;
+    -moz-animation: zoomOut 0.3s ease forwards;
+    border-radius: 50%;
+    display: inline-block;
+    height: 2.5rem;
+    left: 0;
+    position: absolute;
+    top: 0;
+    vertical-align: middle;
+    width: 2.5rem;
+    z-index: 2; }
+  #LevelContainer .PawnLeft--red {
+    background-color: #ff0000; }
+  #LevelContainer .PawnLeft--green {
+    background-color: #00ff00; }
+  #LevelContainer .PawnLeft--blue {
+    background-color: #0000ff; }
+  #LevelContainer .PawnLeft--placeholder {
+    background-color: #666666; }
+  #LevelContainer .PawnLeft--red.visible,
+  #LevelContainer .PawnLeft--green.visible,
+  #LevelContainer .PawnLeft--blue.visible,
+  #LevelContainer .PawnLeft--placeholder.visible {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    z-index: 3; }
+  #LevelContainer #PawnLeft--red-text,
+  #LevelContainer #PawnLeft--green-text,
+  #LevelContainer #PawnLeft--blue-text {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 200;
+    margin-left: 2px;
+    vertical-align: middle;
+    width: 1.5rem; }
+  #LevelContainer #ChessboardContainer {
+    margin: 50px 0;
+    width: 100%; }
+  #LevelContainer #Chessboard {
+    border-collapse: collapse;
+    margin: auto; }
+  #LevelContainer .Chessboard-cell {
+    border: 1px solid #777777;
+    /* grigio palette */
+    height: 50px;
+    position: relative;
+    text-align: center;
+    width: 50px; }
+  #LevelContainer .Chessboard-border--top--red {
+    border-top: 3px solid #ff0000; }
+  #LevelContainer .Chessboard-border--top--green {
+    border-top: 3px solid #00ff00; }
+  #LevelContainer .Chessboard-border--top--blue {
+    border-top: 3px solid #0000ff; }
+  #LevelContainer .Chessboard-border--right--red {
+    border-right: 3px solid #ff0000; }
+  #LevelContainer .Chessboard-border--right--green {
+    border-right: 3px solid #00ff00; }
+  #LevelContainer .Chessboard-border--right--blue {
+    border-right: 3px solid #0000ff; }
+  #LevelContainer .Chessboard-border--bottom--red {
+    border-bottom: 3px solid #ff0000; }
+  #LevelContainer .Chessboard-border--bottom--green {
+    border-bottom: 3px solid #00ff00; }
+  #LevelContainer .Chessboard-border--bottom--blue {
+    border-bottom: 3px solid #0000ff; }
+  #LevelContainer .Chessboard-border--left--red {
+    border-left: 3px solid #ff0000; }
+  #LevelContainer .Chessboard-border--left--green {
+    border-left: 3px solid #00ff00; }
+  #LevelContainer .Chessboard-border--left--blue {
+    border-left: 3px solid #0000ff; }
+  #LevelContainer .Chessboard-cell--red::before,
+  #LevelContainer .Chessboard-cell--green::before,
+  #LevelContainer .Chessboard-cell--blue::before {
+    animation: zoomIn 0.3s ease;
+    -webkit-animation: zoomIn 0.3s ease;
+    -moz-animation: zoomIn 0.3s ease;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 85%;
+    vertical-align: middle;
+    width: 85%; }
+  #LevelContainer .Chessboard-cell--red::before {
+    background-color: #ff0000; }
+  #LevelContainer .Chessboard-cell--green::before {
+    background-color: #00ff00; }
+  #LevelContainer .Chessboard-cell--blue::before {
+    background-color: #0000ff; }
+  #LevelContainer .Chessboard-cell--marker::before {
+    content: "X";
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 200;
+    vertical-align: middle; }
+  #LevelContainer #ColorSelection,
+  #LevelContainer #WinDialog,
+  #LevelContainer #LoseDialog,
+  #LevelContainer #ExitDialog {
+    background-color: white;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    width: 90%;
+    z-index: 10; }
+    #LevelContainer #ColorSelection > header,
+    #LevelContainer #WinDialog > header,
+    #LevelContainer #LoseDialog > header,
+    #LevelContainer #ExitDialog > header {
+      position: relative; }
+      #LevelContainer #ColorSelection > header > h1,
+      #LevelContainer #WinDialog > header > h1,
+      #LevelContainer #LoseDialog > header > h1,
+      #LevelContainer #ExitDialog > header > h1 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 200;
+        margin: 0;
+        padding: 1rem 0;
+        text-align: center; }
+  #LevelContainer #ColorSelection,
+  #LevelContainer #ExitDialog h1 {
+    background-color: #009999; }
+  #LevelContainer #WinDialog h1 {
+    background-color: #009933; }
+  #LevelContainer #LoseDialog h1 {
+    background-color: #660000; }
+  #LevelContainer .ColorChoice {
+    display: inline-block;
+    list-style: none;
+    margin: 20px 0;
+    text-align: center;
+    width: 49%; }
+    #LevelContainer .ColorChoice > span {
+      border-radius: 50%;
+      display: inline-block;
+      height: 3rem;
+      width: 3rem; }
+  #LevelContainer .ColorChoice--red > span {
+    background-color: #ff0000; }
+  #LevelContainer .ColorChoice--green > span {
+    background-color: #00ff00; }
+  #LevelContainer .ColorChoice--blue > span {
+    background-color: #0000ff; }
+  #LevelContainer .ColorChoice--marker {
+    font-size: 3rem;
+    font-weight: 200; }
+  #LevelContainer #WinDialog > p,
+  #LevelContainer #LoseDialog > p,
+  #LevelContainer #ExitDialog > p {
+    line-height: 1.6rem;
+    padding: 20px 10px;
+    text-align: center; }
+  #LevelContainer #WinDialog > footer,
+  #LevelContainer #LoseDialog > footer,
+  #LevelContainer #ExitDialog > footer {
+    padding: 10px;
+    text-align: right; }
+
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
+  #RelaxContainer #Title > h1 {
+    letter-spacing: 3px; } }
 /* TITOLO GIOCO
 ============================================================================= */
 #Title > h1 {
@@ -106,37 +1182,65 @@ ul {
 
 /* LISTA PEDONI RIMASTI
 ============================================================================= */
-#PawnLeft--red,
-#PawnLeft--green,
-#PawnLeft--blue {
-  font-size: 1.5rem;
-  font-weight: 200;
-  letter-spacing: 3px;
-  line-height: 2rem;
-  margin: auto;
+#PawnLeft {
   text-align: center; }
-  #PawnLeft--red::before,
-  #PawnLeft--green::before,
-  #PawnLeft--blue::before {
-    border-radius: 50%;
-    content: "";
-    display: inline-block;
-    height: 2rem;
-    margin-right: 5px;
-    position: relative;
-    transform: translateY(4px);
-    -moz-transform: translateY(4px);
-    -webkit-transform: translateY(4px);
-    width: 2rem; }
 
-#PawnLeft--red::before {
+#PawnLeft-dummyContainer--red,
+#PawnLeft-dummyContainer--green,
+#PawnLeft-dummyContainer--blue {
+  display: inline-block;
+  height: 2.5rem;
+  position: relative;
+  vertical-align: middle;
+  width: 2.5rem; }
+
+.PawnLeft--red,
+.PawnLeft--green,
+.PawnLeft--blue,
+.PawnLeft--placeholder {
+  animation: zoomOut 0.3s ease forwards;
+  -webkit-animation: zoomOut 0.3s ease forwards;
+  -moz-animation: zoomOut 0.3s ease forwards;
+  border-radius: 50%;
+  display: inline-block;
+  height: 2.5rem;
+  left: 0;
+  position: absolute;
+  top: 0;
+  vertical-align: middle;
+  width: 2.5rem;
+  z-index: 2; }
+
+.PawnLeft--red {
   background-color: #ff0000; }
 
-#PawnLeft--green::before {
+.PawnLeft--green {
   background-color: #00ff00; }
 
-#PawnLeft--blue::before {
+.PawnLeft--blue {
   background-color: #0000ff; }
+
+.PawnLeft--placeholder {
+  background-color: #666666; }
+
+.PawnLeft--red.visible,
+.PawnLeft--green.visible,
+.PawnLeft--blue.visible,
+.PawnLeft--placeholder.visible {
+  animation: zoomIn 0.3s ease;
+  -webkit-animation: zoomIn 0.3s ease;
+  -moz-animation: zoomIn 0.3s ease;
+  z-index: 3; }
+
+#PawnLeft--red-text,
+#PawnLeft--green-text,
+#PawnLeft--blue-text {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 200;
+  margin-left: 2px;
+  vertical-align: middle;
+  width: 1.5rem; }
 
 /* SCACCHIERA
 ============================================================================= */
@@ -227,7 +1331,8 @@ ul {
 ============================================================================= */
 #ColorSelection,
 #WinDialog,
-#LoseDialog {
+#LoseDialog,
+#ExitDialog {
   background-color: white;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   left: 50%;
@@ -236,14 +1341,17 @@ ul {
   transform: translate3d(-50%, -50%, 0);
   -moz-transform: translate3d(-50%, -50%, 0);
   -webkit-transform: translate3d(-50%, -50%, 0);
-  width: 90%; }
+  width: 90%;
+  z-index: 10; }
   #ColorSelection > header,
   #WinDialog > header,
-  #LoseDialog > header {
+  #LoseDialog > header,
+  #ExitDialog > header {
     position: relative; }
     #ColorSelection > header > h1,
     #WinDialog > header > h1,
-    #LoseDialog > header > h1 {
+    #LoseDialog > header > h1,
+    #ExitDialog > header > h1 {
       color: white;
       font-size: 1.5rem;
       font-weight: 200;
@@ -251,7 +1359,8 @@ ul {
       padding: 1rem 0;
       text-align: center; }
 
-#ColorSelection h1 {
+#ColorSelection,
+#ExitDialog h1 {
   background-color: #009999; }
 
 #WinDialog h1 {
@@ -288,13 +1397,19 @@ ul {
 /* VITTORIA E SCONFITTA
 ============================================================================= */
 #WinDialog > p,
-#LoseDialog > p {
+#LoseDialog > p,
+#ExitDialog > p {
   line-height: 1.6rem;
   padding: 20px 10px;
   text-align: center; }
 #WinDialog > footer,
-#LoseDialog > footer {
+#LoseDialog > footer,
+#ExitDialog > footer {
   padding: 10px;
   text-align: right; }
+
+@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
+  #Title > h1 {
+    letter-spacing: 3px; } }
 
 /*# sourceMappingURL=index.css.map */

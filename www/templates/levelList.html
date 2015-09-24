@@ -1,0 +1,23 @@
+
+
+<div class="i-g">
+    {{#each levels}}
+
+    <div class="i-4">
+        <div data-number="{{this.number}}" class="LevelButton" >
+
+
+            {{#if this.cleared}}
+            <i class="material-icons">done</i>
+
+            {{else}}
+
+            <span class="LevelButton-number">{{this.number}}</span>
+
+
+            {{/if}}
+        </div>
+    </div>
+
+    {{/each}}
+</div>
