@@ -3,7 +3,7 @@ define(function (require) {
     var Backbone = require("backbone");
     var Utils = require("utils");
 
-    var HomeView = Utils.Page.extend({
+    var InfoView = Utils.Page.extend({
         constructorName: "InfoView",
         id: "InfoContainer",
         // qui inseriamo eventuali classi che vogliamo aggiungere
@@ -32,6 +32,6 @@ define(function (require) {
 
     });
 
-    return HomeView;
+    return InfoView;
 
 });

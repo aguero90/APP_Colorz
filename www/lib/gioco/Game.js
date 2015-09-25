@@ -16,6 +16,9 @@ function Game(size, time, level) {
     this.endTime = null;
 
     this.level = level;
+    this.startTime;
+    this.removes = 0;
+    this.limit = null;
 
 
 
@@ -51,17 +54,62 @@ Game.prototype = {
         if (this.time) {
 
             // calcoliamo il tempo restante in millisecondi
+            // this.time indica i minuti
             this.timeLeft = this.time * 60 * 1000;
 
             // aggiungiamo "time" minuti alla data di inizio
             this.endTime = new Date().getTime() + this.timeLeft;
         }
 
-        if (this.level && typeof this.level === 'string') {
+        if (this.level) {
 
-            // se il livello ci è stato passato come stringa JSON e non come
-            // oggetto JS => la parsiamo per trasformarla in oggetto
-            this.level = JSON.parse(this.level);
+
+            if (typeof this.level === 'string') {
+
+                // se il livello ci è stato passato come stringa JSON e non come
+                // oggetto JS => la parsiamo per trasformarla in oggetto
+                this.level = JSON.parse(this.level);
+
+            }
+
+            this.startTime = new Date().getTime();
+
+            if (this.level.size == 3) {
+
+                this.limit = {
+                    removes: 2,
+                    // 3 minuti
+                    time: 1 * 60 * 1000
+                };
+
+            } else if (this.level.size == 4) {
+
+                this.limit = {
+                    // 10 mosse
+                    removes: 4,
+                    // 3 minuti
+                    time: 2 * 60 * 1000
+                };
+
+            } else if (this.level.size == 5) {
+
+                this.limit = {
+                    // 10 mosse
+                    removes: 8,
+                    // 3 minuti
+                    time: 3 * 60 * 1000
+                };
+
+            } else {
+
+                this.limit = {
+                    // 10 mosse
+                    removes: 10,
+                    // 3 minuti
+                    time: 4 * 60 * 1000
+                };
+
+            }
         }
 
         this.graphicsLayer.init(this.timeLeft);
@@ -425,6 +473,7 @@ Game.prototype = {
         this.pawnLeft[color].push(pawn);
         pawn.setCell(null);
         pawn.isPlaced(false);
+        this.removes++;
 
         this.graphicsLayer.updatePawnLeft(pawn.getDOMElement(), pawn.getColor(), this.pawnLeft[color].length);
     },
@@ -451,6 +500,7 @@ Game.prototype = {
             oldCell.clear();
             newCell.setPawn(pawn);
             pawn.setCell(newCell);
+            this.removes++;
         }
 
         if (this.pawnLeft.red.length === 0
@@ -597,9 +647,27 @@ Game.prototype = {
 
         if (this.level && this.level.cleared === false) {
 
+
+            var stars = 1;
+            var now = new Date().getTime();
+
+            if (this.removes <= this.limit.removes) {
+
+                stars++;
+            }
+
+            if (now - this.startTime <= this.limit.time) {
+
+                stars++;
+            }
+
+            console.log(this.removes);
+            console.log(stars);
+
             // aggiorniamo levels
             var levels = JSON.parse(window.localStorage.getItem('levels'));
             levels[this.level.number].cleared = true;
+            levels[this.level.number].stars = stars;
 
             window.localStorage.setItem('levels', JSON.stringify(levels));
         }

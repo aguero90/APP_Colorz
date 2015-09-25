@@ -12,7 +12,7 @@ define(function (require) {
         events: {
             "tap #goToRelax": "goToRelax",
             "tap #goToTime": "goToTime",
-            "tap #goToLevel": "goToLevel",
+            "tap #goToLevels": "goToLevels",
             "tap #goToInfo": "goToInfo"
         },
         initialize: function () {
@@ -38,7 +38,7 @@ define(function (require) {
         goToTime: function (e) {
             Backbone.history.navigate("time", {trigger: true});
         },
-        goToLevel: function (e) {
+        goToLevels: function (e) {
             Backbone.history.navigate("levelList", {trigger: true});
         },
         goToInfo: function (e) {

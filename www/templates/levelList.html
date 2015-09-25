@@ -8,14 +8,39 @@
 
 
             {{#if this.cleared}}
-            <i class="material-icons">done</i>
 
-            {{else}}
+            {{#ifCond this.stars '==' 1}}
+
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star-o"></span>
+            <span class="star fa fa-star-o"></span>
+
+            {{/ifCond}}
+
+
+            {{#ifCond this.stars '==' 2}}
+
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star-o"></span>
+
+            {{/ifCond}}
+
+            {{#ifCond this.stars '==' 3}}
+
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star"></span>
+
+            {{/ifCond}}
+
+            {{/if}}
+
 
             <span class="LevelButton-number">{{this.number}}</span>
 
 
-            {{/if}}
+
         </div>
     </div>
 

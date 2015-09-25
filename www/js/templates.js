@@ -15,5 +15,6 @@ define({
     time: "templates/time.html",
     level: "templates/level.html",
     levelList: "templates/levelList.html",
-    info: "templates/info.html"
+    info: "templates/info.html",
+    game: "templates/game.html"
 });

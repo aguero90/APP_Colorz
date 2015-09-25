@@ -3,9 +3,9 @@
 
     .LevelButton{
 
-        @include animation(zoomIn .3s ease both);
+        @include animation(zoomIn .2s ease both);
 
-        background-color: darkcyan;
+        background-color: hsl(180deg, 55%, 45%);
         border-radius: 50%;
         color: #fff;
         font-size: 2rem;
@@ -14,20 +14,38 @@
         line-height: 5rem;
         margin: 1rem auto;
         padding: 0;
+        position: relative;
         text-align: center;
         width: 5rem;
 
+
+        .star{
+
+            font-size: 15px;
+            position: absolute;
+            @include transform(translate3d(-50%, -50%, 0));
+
+
+            &:nth-of-type(1){
+
+                left: 25%;
+                top: 25%;
+            }
+
+            &:nth-of-type(2){
+
+                left: 50%;
+                top: 15%;
+            }
+
+            &:nth-of-type(3){
+
+                left: 75%;
+                top: 25%;
+            }
+        }
+
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -40,8 +58,8 @@
 
             .LevelButton{
 
-                animation-delay: 0.1s * $i;
-                @include filter(hue-rotate(20deg * $i));
+                animation-delay: 0.05s * $i;
+                @include hueRotate(background-color, 180deg, 55%, 45%, 20 * $i);
             }
         }
     }

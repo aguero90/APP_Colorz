@@ -3,30 +3,38 @@ define(function (require) {
     var Backbone = require("backbone");
     var Utils = require("utils");
 
-    var GameView = Utils.Page.extend({
+    var LevelView = Utils.Page.extend({
         constructorName: "LevelView",
         id: "LevelContainer",
         initialize: function (number) {
 
-            this.number = number;
+            // prendiamo il livello dal local storage
+            this.level = JSON.parse(window.localStorage.getItem('levels'))[number];
 
-            this.template = Utils.templates.level;
-            this.listenTo(this, "inTheDOM", this.addGame);
+            // diciamo chi è il template di questa view
+            this.template = Utils.templates.game;
+
+            this.listenTo(this, "inTheDOM", this.onDOMReady);
         },
         render: function () {
-            $(this.el).html(this.template());
+
+            var context = {
+                type: 'level',
+                title: ['l', 'e', 'v', 'e', 'l'],
+                size: this.level.size
+            };
+
+            $(this.el).html(this.template(context));
             return this;
         },
-        addGame: function () {
+        onDOMReady: function () {
 
-            var level = JSON.parse(window.localStorage.getItem('levels'))[this.number];
-
-            console.log("addGame");
-            var gioco = new Game(6, null, level);
+            // quando il DOM è pronto, creiamo il gioco e lo avviamo
+            var gioco = new Game(this.level.size, null, this.level);
             gioco.start();
         }
     });
 
-    return GameView;
+    return LevelView;
 
 });
