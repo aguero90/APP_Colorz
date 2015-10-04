@@ -1,204 +1,202 @@
 
-
-<div id="Title">
-    <h1>
+<div id="TitleContainer">
+    <div id="Title" class="u-centered">
         {{#each title}}
 
-        <!-- Stiamo supponendo che la variabile "title" sia un array di caratter -->
-        <span class="Title-letter">{{this}}</span>
+        <div class="Title-letter Title-letter--{{../title.length}}">
+            <span class="u-centered">{{this}}</span>
+        </div>
 
         {{/each}}
-    </h1>
+    </div>
+
 </div>
 
-{{#ifCond type '==' 'time'}}
+<div id="GameContainer">
+    <div id="Game" class="u-centered">
 
-<div id="Timer">00:00:00</div>
+        <!-- Utile solo nel livello e gioco a tempo -->
+        <div id="Timer"></div>
 
-{{/ifCond}}
 
-{{#ifCond type '==' 'level'}}
-
-<div id="Timer">00:00:00</div>
-
-{{/ifCond}}
-
-<div id="PawnLeft" class="i-g">
-    <div class="i-4">
-        <div id="PawnLeft-dummyContainer--red">
-            <div id="PawnLeft--placeholder--red" class="PawnLeft--placeholder"></div>
+        <div id="PawnLeft" class="i-g">
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--red">
+                    <div id="PawnLeft--placeholder--red" class="PawnLeft--placeholder"></div>
+                </div>
+                <div id="PawnLeft--red-text">x{{size}}</div>
+            </div>
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--green">
+                    <div id="PawnLeft--placeholder--green" class="PawnLeft--placeholder"></div>
+                </div>
+                <div id="PawnLeft--green-text">x{{size}}</div>
+            </div>
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--blue">
+                    <div id="PawnLeft--placeholder--blue" class="PawnLeft--placeholder"></div>
+                </div>
+                <div id="PawnLeft--blue-text">x{{size}}</div>
+            </div>
         </div>
-        <div id="PawnLeft--red-text">x{{size}}</div>
-    </div>
-    <div class="i-4">
-        <div id="PawnLeft-dummyContainer--green">
-            <div id="PawnLeft--placeholder--green" class="PawnLeft--placeholder"></div>
-        </div>
-        <div id="PawnLeft--green-text">x{{size}}</div>
-    </div>
-    <div class="i-4">
-        <div id="PawnLeft-dummyContainer--blue">
-            <div id="PawnLeft--placeholder--blue" class="PawnLeft--placeholder"></div>
-        </div>
-        <div id="PawnLeft--blue-text">x{{size}}</div>
+
+
+        <div id="ChessboardContainer">
+            <table id="Chessboard">
+                <tbody>
+
+
+                    {{#ifCond size '==' 3}}
+
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 1 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 2 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 3 -->
+
+                    {{/ifCond}} <!-- FINE 3x3 -->
+
+
+                    {{#ifCond size '==' 4}}
+
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 1 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 2 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 3 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 4 -->
+
+                    {{/ifCond}} <!-- FINE  4x4 -->
+
+
+                    {{#ifCond size '==' 5}}
+
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 1 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 2 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 3 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 4 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 5 -->
+
+                    {{/ifCond}} <!-- FINE 5x5 -->
+
+
+                    {{#ifCond size '==' 6}}
+
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 1 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 2 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 3 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 4 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 5 -->
+                    <tr>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                        <td class="dropzone Chessboard-cell Chessboard-border"></td>
+                    </tr> <!-- FINE RIGA 6 -->
+
+
+                    {{/ifCond}} <!-- FINE 6x6 -->
+
+                </tbody>
+            </table>
+        </div> <!-- FINE  ChessboardContainer -->
     </div>
 </div>
-
-
-<div id="ChessboardContainer">
-    <table id="Chessboard">
-        <tbody>
-
-
-            {{#ifCond size '==' 3}}
-
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 1 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 2 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 3 -->
-
-            {{/ifCond}} <!-- FINE 3x3 -->
-
-
-            {{#ifCond size '==' 4}}
-
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 1 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 2 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 3 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 4 -->
-
-            {{/ifCond}} <!-- FINE  4x4 -->
-
-
-            {{#ifCond size '==' 5}}
-
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 1 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 2 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 3 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 4 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 5 -->
-
-            {{/ifCond}} <!-- FINE 5x5 -->
-
-
-            {{#ifCond size '==' 6}}
-
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 1 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 2 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 3 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 4 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 5 -->
-            <tr>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-                <td class="dropzone Chessboard-cell Chessboard-border"></td>
-            </tr> <!-- FINE RIGA 6 -->
-
-
-            {{/ifCond}} <!-- FINE 6x6 -->
-
-        </tbody>
-    </table>
-</div> <!-- FINE  ChessboardContainer -->
 
 <!-- Scelte colori
 =================================================================-->
@@ -231,7 +229,7 @@
         Hai risolto il puzzle!
     </p>
     <footer>
-        <button id="NewGameWin" class="FlatButton">Nuova</button>
+        <div id="NewGameWin" class="FlatButton">Nuova</div>
     </footer>
 </div>
 
@@ -250,7 +248,7 @@
         Hai risolto il puzzle!
     </p>
     <footer>
-        <button id="NewGameWin" class="FlatButton">Nuova</button>
+        <div id="NewGameWin" class="FlatButton">Nuova</div>
     </footer>
 </div>
 
@@ -264,13 +262,29 @@
         <h1>Hai vinto!</h1>
         <span id="WinDialog-close" class="CloseDialog">X</span>
     </header>
-    <p>
-        Complimenti! <br/>
-        Hai risolto il puzzle! <br/>
-        Mettiti alla prova con un altro livello :)
-    </p>
+    <div>
+        <div id="obtainedStars">
+            <span id="obtainedStars-first" class=""></span>
+            <span id="obtainedStars-second" class=""></span>
+            <span id="obtainedStars-third" class=""></span>
+        </div>
+        <div id="infoStars">
+            <div id="infoStars-first">
+                <span id="infoStars-first-icon" class="icon_check_alt"></span>
+                <span id="infoStars-first-text"><b>Livello:</b> completato</span>
+            </div>
+            <div id="infoStars-second">
+                <span id="infoStars-second-icon" class=""></span>
+                <span id="infoStars-second-text"></span>
+            </div>
+            <div id="infoStars-third">
+                <span id="infoStars-third-icon" class=""></span>
+                <span id="infoStars-third-text"></span>
+            </div>
+        </div>
+    </div>
     <footer>
-        <button id="NewGameWin" class="FlatButton">OK</button>
+        <div id="NewGameWin" class="FlatButton">OK</div>
     </footer>
 </div>
 
@@ -292,8 +306,8 @@
         Continua per trovare quella esatta oppure risolvi un nuovo tabellone
     </p>
     <footer>
-        <button id="ContinueTheGame" class="FlatButton">Continua</button>
-        <button id="NewGameLose" class="FlatButton">Nuova</button>
+        <div id="ContinueTheGame" class="FlatButton">Continua</div>
+        <div id="NewGameLose" class="FlatButton">Nuova</div>
     </footer>
 </div>
 
@@ -312,8 +326,8 @@
         Cerca di risolvere il puzzle prima dello scadere del tempo o ritenta con un altro tabellone
     </p>
     <footer>
-        <button id="ContinueTheGame" class="FlatButton">Continua</button>
-        <button id="NewGameLose" class="FlatButton">Nuova</button>
+        <div id="ContinueTheGame" class="FlatButton">Continua</div>
+        <div id="NewGameLose" class="FlatButton">Nuova</div>
     </footer>
 </div>
 
@@ -332,8 +346,8 @@
         Continua per trovare quella esatta oppure ricomincia da capo
     </p>
     <footer>
-        <button id="ContinueTheGame" class="FlatButton">Continua</button>
-        <button id="NewGameLose" class="FlatButton">Ricomincia</button>
+        <div id="ContinueTheGame" class="FlatButton">Continua</div>
+        <div id="NewGameLose" class="FlatButton">Ricomincia</div>
     </footer>
 </div>
 
@@ -352,8 +366,8 @@
         Perderai la partita in corso!
     </p>
     <footer>
-        <button id="Exit" class="FlatButton">S&igrave;</button>
-        <button id="ReturnToGame" class="FlatButton">No</button>
+        <div id="Exit" class="FlatButton">S&igrave;</div>
+        <div id="ReturnToGame" class="FlatButton">No</div>
     </footer>
 </div>
 
@@ -373,7 +387,7 @@
         Prova batterlo con un nuovo tabellone :)
     </p>
     <footer>
-        <button id="NewGameTimeUp" class="FlatButton">Nuova</button>
+        <div id="NewGameTimeUp" class="FlatButton">Nuova</div>
     </footer>
 </div>
 

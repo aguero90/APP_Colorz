@@ -1,47 +1,59 @@
 
-function Chessboard(size, DOMElement) {
+define(function (require) {
 
-    this.size = size;
-    this.DOMElement = DOMElement;
-    // prima prendiamo i riferimenti alle celle nel DOM
-    this.cells = MyUtils.nodeList2Matrix(this.DOMElement.querySelectorAll("td"), this.size);
+    // impostiamo le dipendenze
+    var Utils = require("utils");
+    var Cell = require("cell");
 
 
-    // creiamo la struttura della scacchiera
-    for (var i = 0; i < this.size; i++) {
+    var Chessboard = function (size, DOMElement) {
 
-        for (var j = 0; j < this.size; j++) {
-            // poi wrappiamo il riferimento al DOM con un oggetto logico
-            // che rappresenta le celle
-            this.cells[i][j] = new Cell(this.cells[i][j], i, j);
-        }
-    }
-
-}
-
-Chessboard.prototype = {
-    getSize: function () {
-        return this.size;
-    },
-    getDOMElement: function () {
-        return this.DOMElement;
-    },
-    setDOMElement: function (DOMElement) {
+        this.size = size;
         this.DOMElement = DOMElement;
-    },
-    getAllCells: function () {
+        // prima prendiamo i riferimenti alle celle nel DOM
+        this.cells = Utils.nodeList2Matrix(this.DOMElement.querySelectorAll("td"), this.size);
+
+
+        // creiamo la struttura della scacchiera
+        for (var i = 0; i < this.size; i++) {
+
+            for (var j = 0; j < this.size; j++) {
+                // poi wrappiamo il riferimento al DOM con un oggetto logico
+                // che rappresenta le celle
+                this.cells[i][j] = new Cell(this.cells[i][j], i, j);
+            }
+        }
+    };
+
+    Chessboard.prototype.getSize = function () {
+        return this.size;
+    };
+
+    Chessboard.prototype.getDOMElement = function () {
+        return this.DOMElement;
+    };
+
+    Chessboard.prototype.setDOMElement = function (DOMElement) {
+        this.DOMElement = DOMElement;
+    };
+
+    Chessboard.prototype.getAllCells = function () {
         return this.cells;
-    },
-    getCell: function (row, column) {
+    };
+
+    Chessboard.prototype.getCell = function (row, column) {
         return this.cells[row][column];
-    },
-    insertPawn: function (row, column, color) {
+    };
+
+    Chessboard.prototype.insertPawn = function (row, column, color) {
         this.cells[row][column].setPawn(new Pawn(color));
-    },
-    removePawn: function (row, column) {
+    };
+
+    Chessboard.prototype.removePawn = function (row, column) {
         this.cells[row][column].clear();
-    },
-    getRow: function (row) {
+    };
+
+    Chessboard.prototype.getRow = function (row) {
 
         var result = [];
 
@@ -50,8 +62,9 @@ Chessboard.prototype = {
         }
 
         return result;
-    },
-    getColumn: function (column) {
+    };
+
+    Chessboard.prototype.getColumn = function (column) {
 
         var result = [];
 
@@ -60,8 +73,9 @@ Chessboard.prototype = {
         }
 
         return result;
-    },
-    getPawnsInTheRow: function (row) {
+    };
+
+    Chessboard.prototype.getPawnsInTheRow = function (row) {
 
         var result = [];
 
@@ -74,8 +88,9 @@ Chessboard.prototype = {
         }
 
         return result;
-    },
-    getPawnsInTheColumn: function (column) {
+    };
+
+    Chessboard.prototype.getPawnsInTheColumn = function (column) {
 
         var result = [];
 
@@ -88,8 +103,9 @@ Chessboard.prototype = {
         }
 
         return result;
-    },
-    getTopBorders: function () {
+    };
+
+    Chessboard.prototype.getTopBorders = function () {
 
         var result = [];
 
@@ -99,9 +115,9 @@ Chessboard.prototype = {
         }
 
         return result;
+    };
 
-    },
-    getRightBorders: function () {
+    Chessboard.prototype.getRightBorders = function () {
 
         var result = [];
 
@@ -111,9 +127,9 @@ Chessboard.prototype = {
         }
 
         return result;
+    };
 
-    },
-    getBottomBorders: function () {
+    Chessboard.prototype.getBottomBorders = function () {
 
         var result = [];
 
@@ -123,8 +139,9 @@ Chessboard.prototype = {
         }
 
         return result;
-    },
-    getLeftBorders: function () {
+    };
+
+    Chessboard.prototype.getLeftBorders = function () {
 
         var result = [];
 
@@ -134,9 +151,9 @@ Chessboard.prototype = {
         }
 
         return result;
+    };
 
-    },
-    getRowBorders: function (row) {
+    Chessboard.prototype.getRowBorders = function (row) {
 
         var result = {};
 
@@ -144,8 +161,9 @@ Chessboard.prototype = {
         result.right = this.getCell(row, this.getSize() - 1).getBorderColor().right;
 
         return result;
-    },
-    getColumnBorders: function (column) {
+    };
+
+    Chessboard.prototype.getColumnBorders = function (column) {
 
         var result = {};
 
@@ -153,6 +171,13 @@ Chessboard.prototype = {
         result.bottom = this.getCell(this.getSize() - 1, column).getBorderColor().bottom;
 
         return result;
-    }
-};
+    };
+
+
+
+
+    // esponiamo pubblicamente il modulo
+    return Chessboard;
+});
+
 

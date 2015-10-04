@@ -157,6 +157,10 @@ define(function (require) {
         return true;
     };
 
+
+    // BUILT-IN OBJECT UPGRADE
+    // =========================================================================
+
     // equivalent to Java's String.startsWith
     String.prototype.startsWith = function (prefix) {
         return this.indexOf(prefix) === 0;
@@ -172,7 +176,76 @@ define(function (require) {
         return this.replace(/(<([^>]+)>)/ig, "").replace(/(&lt;([^&gt;]+)&gt;)/ig, "");
     };
 
+    // per rendere disponibile la funzione contains anche su chrome
+    if (!String.prototype.contains) {
 
+        String.prototype.contains = function (subString) {
+
+            return this.indexOf(subString) !== -1;
+        };
+    }
+
+    // per rendere disponibile la funzione remove
+    if (!Array.prototype.remove) {
+
+        Array.prototype.remove = function (el) {
+
+            if (this.indexOf(el) !== -1) {
+                this.splice(this.indexOf(el), 1);
+            }
+        };
+    }
+
+    // per rendere disponibile la funzione hasClass
+    if (!Element.prototype.hasClass) {
+
+        Element.prototype.hasClass = function (className) {
+
+            if (this.classList) {
+                return this.classList.contains(className);
+            }
+            else {
+                return new RegExp('(^| )' + className + '( |$)', 'gi').test(this.className);
+            }
+        };
+    }
+
+    // per rendere disponibile la funzione addClass
+    if (!Element.prototype.addClass) {
+
+        Element.prototype.addClass = function (className) {
+
+            this.classList ? this.classList.add(className) : this.className += ' ' + className;
+
+        };
+    }
+
+    // per rendere disponibile la funzione removeClass
+    if (!Element.prototype.removeClass) {
+
+        Element.prototype.removeClass = function (className) {
+
+            if (this.classList) {
+                this.classList.remove(className);
+            }
+            else {
+                this.className = this.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+        };
+    }
+
+    /* per rendere disponibile la funzione toggleClass */
+    if (!Element.prototype.toggleClass) {
+
+        Element.prototype.toggleClass = function (className) {
+
+            this.hasClass(className) ? this.removeClass(className) : this.addClass(className);
+        };
+    }
+
+
+    // HANDLEBARS HELPER
+    // =========================================================================
 
     Handlebars.registerHelper('for', function (from, to, incr, block) {
 
@@ -209,6 +282,98 @@ define(function (require) {
                 return options.inverse(this);
         }
     });
+
+
+    // APP DEPENDANT FUNCTION
+    // =========================================================================
+
+    Utils.nodeList2Matrix = function (listaDiNodi, size) {
+
+        var result = new Array(size);
+        var cont = 0;
+        for (var riga = 0; riga < size; riga++) {
+            result[riga] = new Array(size);
+            for (var colonna = 0; colonna < size; colonna++) {
+                result[riga][colonna] = listaDiNodi[cont];
+                cont++;
+            }
+        }
+        return result;
+    };
+
+
+    // POLYFILL
+    // =========================================================================
+
+    if (typeof Object.create !== 'function') {
+
+        Object.create = (function () {
+
+            var Object = function () {
+            };
+
+
+            return function (prototype) {
+
+                if (arguments.length > 1) {
+                    throw Error('Second argument not supported');
+                }
+
+                if (typeof prototype !== 'object') {
+                    throw TypeError('Argument must be an object');
+                }
+
+                Object.prototype = prototype;
+                var result = new Object();
+                Object.prototype = null;
+                return result;
+            };
+        })();
+    }
+
+
+    // questa funzione è un polyfill preso su https://gist.github.com/paulirish/1579671
+    // della requestAnimationFrame() poiche non è supportata da tutti i browser
+    // http://caniuse.com/#search=requestAnimationFrame
+    // ( nel nostro caso è necessaria la compatibilità con android <= 4.3 )
+    //
+    // Questa funzione la implementa attraverso setTimeout
+    if (!window.requestAnimationFrame || !window.cancelAnimationFrame) {
+
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                    || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+
+
+            window.requestAnimationFrame = function (callback, element) {
+
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+
+                var id = window.setTimeout(function () {
+                    callback(currTime + timeToCall);
+                }, timeToCall);
+
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id);
+            };
+        }
+    }
+
 
 
 

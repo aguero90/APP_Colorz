@@ -1,60 +1,72 @@
 
-// MARKER è una pedina speciale che non viene contata come pedina del gioco
-Pawn.MARKER = "marker";
-Pawn.RED = "red";
-Pawn.GREEN = "green";
-Pawn.BLUE = "blue";
+define(function (require) {
 
-function Pawn(color) {
+    // questo modulo non ha dipendenze
 
-    this.color = color;
-    this.cell = null;
-    this.placed = false;
-    this.inDOM = false;
+    var Pawn = function (color) {
 
-    this.DOMElement = document.createElement("div");
-    this.DOMElement.addClass("draggable");
-    this.DOMElement.addClass("drag-drop");
-    this.DOMElement.addClass("PawnLeft--" + color);
+        this.color = color;
+        this.cell = null;
+        this.placed = false;
+        this.inDOM = false;
 
-    this.DOMElement.Colorz = {
-        color: color
+        this.DOMElement = document.createElement("div");
+        this.DOMElement.addClass("draggable");
+        this.DOMElement.addClass("drag-drop");
+        this.DOMElement.addClass("PawnLeft--" + color);
+
+        this.DOMElement.Colorz = {color: color};
     };
-}
 
-Pawn.prototype = {
-    getColor: function () {
+
+    // definiamo le variabili statiche
+    Pawn.RED = "red";
+    Pawn.GREEN = "green";
+    Pawn.BLUE = "blue";
+    // MARKER è una pedina speciale che non viene contata come pedina del gioco
+    Pawn.MARKER = "marker";
+
+
+    Pawn.prototype.getColor = function () {
         return this.color;
-    },
-    setColor: function (color) {
+    };
+
+    Pawn.prototype.setColor = function (color) {
         this.color = color;
 
         this.DOMElement.Colorz = {
             color: color
         };
-    },
-    isPlaced: function () {
+    };
+
+    Pawn.prototype.isPlaced = function () {
         return this.placed;
-    },
-    setPlaced: function (bool) {
+    };
+
+    Pawn.prototype.setPlaced = function (bool) {
         this.placed = bool;
-    },
-    isInDOM: function () {
+    };
+
+    Pawn.prototype.isInDOM = function () {
         return this.inDOM;
-    },
-    setInDOM: function (bool) {
+    };
+
+    Pawn.prototype.setInDOM = function (bool) {
         this.inDOM = bool;
-    },
-    getDOMElement: function () {
+    };
+
+    Pawn.prototype.getDOMElement = function () {
         return this.DOMElement;
     },
-    setDOMElement: function (DOMElement) {
-        this.DOMElement = DOMElement;
-    },
-    getCell: function () {
+            Pawn.prototype.setDOMElement = function (DOMElement) {
+                this.DOMElement = DOMElement;
+            };
+
+    Pawn.prototype.getCell = function () {
         return this.cell;
-    },
-    setCell: function (cell) {
+    };
+
+    Pawn.prototype.setCell = function (cell) {
 
         this.cell = cell;
 
@@ -68,6 +80,12 @@ Pawn.prototype = {
 
         this.DOMElement.Colorz.row = cell.getRow();
         this.DOMElement.Colorz.column = cell.getColumn();
-    }
-};
+    };
+
+
+
+    // esponiamo il modulo pubblicamente
+    return Pawn;
+
+});
 

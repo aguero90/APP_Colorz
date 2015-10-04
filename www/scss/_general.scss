@@ -6,10 +6,26 @@
 
 html, body{
 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     height: 100%;
     width: 100%;
 }
 
+#HomeContainer,
+#RelaxContainer,
+#TimeContainer,
+#LevelListContainer,
+#LevelContainer,
+#InfoContainer,
+#TutorialContainer{
+
+    height: 100%;
+}
+
 ul { padding-left: 0; }
 
+button,
+button:focus,
+button:active{
+    outline: none;
+}

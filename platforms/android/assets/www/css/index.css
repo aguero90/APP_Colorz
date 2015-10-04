@@ -7,27 +7,60 @@
 @font-face {
   font-family: 'Colorz';
   src: url(../fonts/Colorz.ttf) format("truetype"); }
+@font-face {
+  font-family: 'Roboto';
+  src: url("../fonts/Roboto-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
+@font-face {
+  font-family: 'Roboto';
+  src: url("../fonts/Roboto-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal; }
 /* GENERALE
 ============================================================================= */
 * {
   box-sizing: border-box; }
 
 html, body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
   height: 100%;
   width: 100%; }
+
+#HomeContainer,
+#RelaxContainer,
+#TimeContainer,
+#LevelListContainer,
+#LevelContainer,
+#InfoContainer,
+#TutorialContainer {
+  height: 100%; }
 
 ul {
   padding-left: 0; }
 
+button,
+button:focus,
+button:active {
+  outline: none; }
+
 .u-positionRelative {
   position: relative; }
 
+.u-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%); }
+
 .FlatButton {
   color: #006699;
-  background-color: transparent;
-  border: none;
+  display: inline;
   font-size: 1rem;
+  font-weight: bold;
+  margin-left: 15px;
   text-transform: uppercase; }
 
 .CloseDialog {
@@ -41,6 +74,9 @@ ul {
   -moz-transform: translate3d(-100%, -50%, 0px);
   -webkit-transform: translate3d(-100%, -50%, 0px); }
 
+@media (min-width: 450px) {
+  .FlatButton {
+    font-size: 1.3rem; } }
 .is-hidden {
   display: none; }
 
@@ -52,49 +88,50 @@ ul {
   -moz-transition: transform 0.2s ease;
   -webkit-transition: transform 0.2s ease; }
 
-#HomeContainer #TitleGame {
-  font-family: "Colorz";
-  font-size: 3rem;
-  font-weight: normal;
-  letter-spacing: -11px;
-  text-align: center;
-  margin: 15% 0; }
-#HomeContainer .TitleGame-letter--blue {
-  color: #6699ff; }
-#HomeContainer .TitleGame-letter--green {
-  color: #66ff66; }
-#HomeContainer .TitleGame-letter--yellow {
-  color: #ffcc66; }
-#HomeContainer .TitleGame-letter--orange {
-  color: #ff9966; }
-#HomeContainer .TitleGame-letter--red {
-  color: #ff6666; }
-#HomeContainer .TitleGame-letter--purple {
-  color: #9966ff; }
-#HomeContainer .HomeButton {
+#ButtonGirdContainer {
+  height: 80%;
+  position: relative; }
+
+#ButtonGrid {
+  width: 100%; }
+
+.HomeButton {
   animation: zoomIn 0.3s ease both;
   -webkit-animation: zoomIn 0.3s ease both;
   -moz-animation: zoomIn 0.3s ease both;
   border-radius: 50%;
   color: #fff;
-  height: 7rem;
-  line-height: 7rem;
   margin: 3rem auto;
-  padding: 0;
+  padding: 70% 0px 0px;
+  position: relative;
   text-align: center;
-  width: 7rem; }
-#HomeContainer .HomeButton--relax {
+  width: 70%; }
+
+.HomeButtonContainer:nth-of-type(1) > .HomeButton {
+  animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
   background-color: #003366; }
-#HomeContainer .HomeButton--time {
+.HomeButtonContainer:nth-of-type(2) > .HomeButton {
+  animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
   background-color: #660000; }
-#HomeContainer .HomeButton--levels {
+.HomeButtonContainer:nth-of-type(3) > .HomeButton {
+  animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
   background-color: #006600; }
-#HomeContainer .HomeButton--info {
+.HomeButtonContainer:nth-of-type(4) > .HomeButton {
+  animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
   background-color: #333333; }
 
-@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
-  #HomeContainer #TitleGame {
-    letter-spacing: 5px; } }
+@media (min-width: 450px) {
+  .HomeButton {
+    font-size: 1.5rem;
+    font-weight: 100; } }
 #LevelListContainer .LevelButton {
   animation: zoomIn 0.2s ease both;
   -webkit-animation: zoomIn 0.2s ease both;
@@ -104,15 +141,14 @@ ul {
   color: #fff;
   font-size: 2rem;
   font-weight: 100;
-  height: 5rem;
-  line-height: 5rem;
   margin: 1rem auto;
-  padding: 0;
+  padding: 70% 0px 0px;
   position: relative;
   text-align: center;
-  width: 5rem; }
+  width: 70%; }
   #LevelListContainer .LevelButton .star {
-    font-size: 15px;
+    display: inline-block;
+    font-size: 1rem;
     position: absolute;
     transform: translate3d(-50%, -50%, 0);
     -moz-transform: translate3d(-50%, -50%, 0);
@@ -126,593 +162,243 @@ ul {
     #LevelListContainer .LevelButton .star:nth-of-type(3) {
       left: 75%;
       top: 25%; }
+#LevelListContainer .LevelButton-number {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%); }
+#LevelListContainer .LevelButton--locked {
+  background-color: gray !important; }
 #LevelListContainer .i-4:nth-of-type(1) .LevelButton {
   animation-delay: 0.05s;
+  -webkit-animation-delay: 0.05s;
+  -moz-animation-delay: 0.05s;
   background-color: #3488b2; }
 #LevelListContainer .i-4:nth-of-type(2) .LevelButton {
   animation-delay: 0.1s;
+  -webkit-animation-delay: 0.1s;
+  -moz-animation-delay: 0.1s;
   background-color: #345eb2; }
 #LevelListContainer .i-4:nth-of-type(3) .LevelButton {
   animation-delay: 0.15s;
+  -webkit-animation-delay: 0.15s;
+  -moz-animation-delay: 0.15s;
   background-color: #3434b2; }
 #LevelListContainer .i-4:nth-of-type(4) .LevelButton {
   animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
   background-color: #5e34b2; }
 #LevelListContainer .i-4:nth-of-type(5) .LevelButton {
   animation-delay: 0.25s;
+  -webkit-animation-delay: 0.25s;
+  -moz-animation-delay: 0.25s;
   background-color: #8834b2; }
 #LevelListContainer .i-4:nth-of-type(6) .LevelButton {
   animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
   background-color: #b234b2; }
 #LevelListContainer .i-4:nth-of-type(7) .LevelButton {
   animation-delay: 0.35s;
+  -webkit-animation-delay: 0.35s;
+  -moz-animation-delay: 0.35s;
   background-color: #b23488; }
 #LevelListContainer .i-4:nth-of-type(8) .LevelButton {
   animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
   background-color: #b2345e; }
 #LevelListContainer .i-4:nth-of-type(9) .LevelButton {
   animation-delay: 0.45s;
+  -webkit-animation-delay: 0.45s;
+  -moz-animation-delay: 0.45s;
   background-color: #b23434; }
 #LevelListContainer .i-4:nth-of-type(10) .LevelButton {
   animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
   background-color: #b25e34; }
 #LevelListContainer .i-4:nth-of-type(11) .LevelButton {
   animation-delay: 0.55s;
+  -webkit-animation-delay: 0.55s;
+  -moz-animation-delay: 0.55s;
   background-color: #b28834; }
 #LevelListContainer .i-4:nth-of-type(12) .LevelButton {
   animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
   background-color: #b2b234; }
 #LevelListContainer .i-4:nth-of-type(13) .LevelButton {
   animation-delay: 0.65s;
+  -webkit-animation-delay: 0.65s;
+  -moz-animation-delay: 0.65s;
   background-color: #88b234; }
 #LevelListContainer .i-4:nth-of-type(14) .LevelButton {
   animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
   background-color: #5eb234; }
 #LevelListContainer .i-4:nth-of-type(15) .LevelButton {
   animation-delay: 0.75s;
+  -webkit-animation-delay: 0.75s;
+  -moz-animation-delay: 0.75s;
   background-color: #34b234; }
 #LevelListContainer .i-4:nth-of-type(16) .LevelButton {
   animation-delay: 0.8s;
+  -webkit-animation-delay: 0.8s;
+  -moz-animation-delay: 0.8s;
   background-color: #34b25e; }
 #LevelListContainer .i-4:nth-of-type(17) .LevelButton {
   animation-delay: 0.85s;
+  -webkit-animation-delay: 0.85s;
+  -moz-animation-delay: 0.85s;
   background-color: #34b288; }
 #LevelListContainer .i-4:nth-of-type(18) .LevelButton {
   animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+  -moz-animation-delay: 0.9s;
   background-color: #34b2b2; }
 #LevelListContainer .i-4:nth-of-type(19) .LevelButton {
   animation-delay: 0.95s;
+  -webkit-animation-delay: 0.95s;
+  -moz-animation-delay: 0.95s;
   background-color: #3488b2; }
 #LevelListContainer .i-4:nth-of-type(20) .LevelButton {
   animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
   background-color: #345eb2; }
-#LevelListContainer .i-4:nth-of-type(21) .LevelButton {
-  animation-delay: 1.05s;
-  background-color: #3434b2; }
-#LevelListContainer .i-4:nth-of-type(22) .LevelButton {
-  animation-delay: 1.1s;
-  background-color: #5e34b2; }
-#LevelListContainer .i-4:nth-of-type(23) .LevelButton {
-  animation-delay: 1.15s;
-  background-color: #8834b2; }
-#LevelListContainer .i-4:nth-of-type(24) .LevelButton {
-  animation-delay: 1.2s;
-  background-color: #b234b2; }
-#LevelListContainer .i-4:nth-of-type(25) .LevelButton {
-  animation-delay: 1.25s;
-  background-color: #b23488; }
-#LevelListContainer .i-4:nth-of-type(26) .LevelButton {
-  animation-delay: 1.3s;
-  background-color: #b2345e; }
-#LevelListContainer .i-4:nth-of-type(27) .LevelButton {
-  animation-delay: 1.35s;
-  background-color: #b23434; }
-#LevelListContainer .i-4:nth-of-type(28) .LevelButton {
-  animation-delay: 1.4s;
-  background-color: #b25e34; }
-#LevelListContainer .i-4:nth-of-type(29) .LevelButton {
-  animation-delay: 1.45s;
-  background-color: #b28834; }
-#LevelListContainer .i-4:nth-of-type(30) .LevelButton {
-  animation-delay: 1.5s;
-  background-color: #b2b234; }
-#LevelListContainer .i-4:nth-of-type(31) .LevelButton {
-  animation-delay: 1.55s;
-  background-color: #88b234; }
-#LevelListContainer .i-4:nth-of-type(32) .LevelButton {
-  animation-delay: 1.6s;
-  background-color: #5eb234; }
-#LevelListContainer .i-4:nth-of-type(33) .LevelButton {
-  animation-delay: 1.65s;
-  background-color: #34b234; }
-#LevelListContainer .i-4:nth-of-type(34) .LevelButton {
-  animation-delay: 1.7s;
-  background-color: #34b25e; }
-#LevelListContainer .i-4:nth-of-type(35) .LevelButton {
-  animation-delay: 1.75s;
-  background-color: #34b288; }
-#LevelListContainer .i-4:nth-of-type(36) .LevelButton {
-  animation-delay: 1.8s;
-  background-color: #34b2b2; }
-#LevelListContainer .i-4:nth-of-type(37) .LevelButton {
-  animation-delay: 1.85s;
-  background-color: #3488b2; }
-#LevelListContainer .i-4:nth-of-type(38) .LevelButton {
-  animation-delay: 1.9s;
-  background-color: #345eb2; }
-#LevelListContainer .i-4:nth-of-type(39) .LevelButton {
-  animation-delay: 1.95s;
-  background-color: #3434b2; }
-#LevelListContainer .i-4:nth-of-type(40) .LevelButton {
-  animation-delay: 2s;
-  background-color: #5e34b2; }
-#LevelListContainer .i-4:nth-of-type(41) .LevelButton {
-  animation-delay: 2.05s;
-  background-color: #8834b2; }
-#LevelListContainer .i-4:nth-of-type(42) .LevelButton {
-  animation-delay: 2.1s;
-  background-color: #b234b2; }
-#LevelListContainer .i-4:nth-of-type(43) .LevelButton {
-  animation-delay: 2.15s;
-  background-color: #b23488; }
-#LevelListContainer .i-4:nth-of-type(44) .LevelButton {
-  animation-delay: 2.2s;
-  background-color: #b2345e; }
-#LevelListContainer .i-4:nth-of-type(45) .LevelButton {
-  animation-delay: 2.25s;
-  background-color: #b23434; }
-#LevelListContainer .i-4:nth-of-type(46) .LevelButton {
-  animation-delay: 2.3s;
-  background-color: #b25e34; }
-#LevelListContainer .i-4:nth-of-type(47) .LevelButton {
-  animation-delay: 2.35s;
-  background-color: #b28834; }
-#LevelListContainer .i-4:nth-of-type(48) .LevelButton {
-  animation-delay: 2.4s;
-  background-color: #b2b234; }
-#LevelListContainer .i-4:nth-of-type(49) .LevelButton {
-  animation-delay: 2.45s;
-  background-color: #88b234; }
-#LevelListContainer .i-4:nth-of-type(50) .LevelButton {
-  animation-delay: 2.5s;
-  background-color: #5eb234; }
-#LevelListContainer .i-4:nth-of-type(51) .LevelButton {
-  animation-delay: 2.55s;
-  background-color: #34b234; }
-#LevelListContainer .i-4:nth-of-type(52) .LevelButton {
-  animation-delay: 2.6s;
-  background-color: #34b25e; }
-#LevelListContainer .i-4:nth-of-type(53) .LevelButton {
-  animation-delay: 2.65s;
-  background-color: #34b288; }
-#LevelListContainer .i-4:nth-of-type(54) .LevelButton {
-  animation-delay: 2.7s;
-  background-color: #34b2b2; }
-#LevelListContainer .i-4:nth-of-type(55) .LevelButton {
-  animation-delay: 2.75s;
-  background-color: #3488b2; }
-#LevelListContainer .i-4:nth-of-type(56) .LevelButton {
-  animation-delay: 2.8s;
-  background-color: #345eb2; }
-#LevelListContainer .i-4:nth-of-type(57) .LevelButton {
-  animation-delay: 2.85s;
-  background-color: #3434b2; }
-#LevelListContainer .i-4:nth-of-type(58) .LevelButton {
-  animation-delay: 2.9s;
-  background-color: #5e34b2; }
-#LevelListContainer .i-4:nth-of-type(59) .LevelButton {
-  animation-delay: 2.95s;
-  background-color: #8834b2; }
-#LevelListContainer .i-4:nth-of-type(60) .LevelButton {
-  animation-delay: 3s;
-  background-color: #b234b2; }
-#LevelListContainer .i-4:nth-of-type(61) .LevelButton {
-  animation-delay: 3.05s;
-  background-color: #b23488; }
-#LevelListContainer .i-4:nth-of-type(62) .LevelButton {
-  animation-delay: 3.1s;
-  background-color: #b2345e; }
-#LevelListContainer .i-4:nth-of-type(63) .LevelButton {
-  animation-delay: 3.15s;
-  background-color: #b23434; }
-#LevelListContainer .i-4:nth-of-type(64) .LevelButton {
-  animation-delay: 3.2s;
-  background-color: #b25e34; }
-#LevelListContainer .i-4:nth-of-type(65) .LevelButton {
-  animation-delay: 3.25s;
-  background-color: #b28834; }
-#LevelListContainer .i-4:nth-of-type(66) .LevelButton {
-  animation-delay: 3.3s;
-  background-color: #b2b234; }
-#LevelListContainer .i-4:nth-of-type(67) .LevelButton {
-  animation-delay: 3.35s;
-  background-color: #88b234; }
-#LevelListContainer .i-4:nth-of-type(68) .LevelButton {
-  animation-delay: 3.4s;
-  background-color: #5eb234; }
-#LevelListContainer .i-4:nth-of-type(69) .LevelButton {
-  animation-delay: 3.45s;
-  background-color: #34b234; }
-#LevelListContainer .i-4:nth-of-type(70) .LevelButton {
-  animation-delay: 3.5s;
-  background-color: #34b25e; }
-#LevelListContainer .i-4:nth-of-type(71) .LevelButton {
-  animation-delay: 3.55s;
-  background-color: #34b288; }
-#LevelListContainer .i-4:nth-of-type(72) .LevelButton {
-  animation-delay: 3.6s;
-  background-color: #34b2b2; }
-#LevelListContainer .i-4:nth-of-type(73) .LevelButton {
-  animation-delay: 3.65s;
-  background-color: #3488b2; }
-#LevelListContainer .i-4:nth-of-type(74) .LevelButton {
-  animation-delay: 3.7s;
-  background-color: #345eb2; }
-#LevelListContainer .i-4:nth-of-type(75) .LevelButton {
-  animation-delay: 3.75s;
-  background-color: #3434b2; }
-#LevelListContainer .i-4:nth-of-type(76) .LevelButton {
-  animation-delay: 3.8s;
-  background-color: #5e34b2; }
-#LevelListContainer .i-4:nth-of-type(77) .LevelButton {
-  animation-delay: 3.85s;
-  background-color: #8834b2; }
-#LevelListContainer .i-4:nth-of-type(78) .LevelButton {
-  animation-delay: 3.9s;
-  background-color: #b234b2; }
-#LevelListContainer .i-4:nth-of-type(79) .LevelButton {
-  animation-delay: 3.95s;
-  background-color: #b23488; }
-#LevelListContainer .i-4:nth-of-type(80) .LevelButton {
-  animation-delay: 4s;
-  background-color: #b2345e; }
-#LevelListContainer .i-4:nth-of-type(81) .LevelButton {
-  animation-delay: 4.05s;
-  background-color: #b23434; }
-#LevelListContainer .i-4:nth-of-type(82) .LevelButton {
-  animation-delay: 4.1s;
-  background-color: #b25e34; }
-#LevelListContainer .i-4:nth-of-type(83) .LevelButton {
-  animation-delay: 4.15s;
-  background-color: #b28834; }
-#LevelListContainer .i-4:nth-of-type(84) .LevelButton {
-  animation-delay: 4.2s;
-  background-color: #b2b234; }
-#LevelListContainer .i-4:nth-of-type(85) .LevelButton {
-  animation-delay: 4.25s;
-  background-color: #88b234; }
-#LevelListContainer .i-4:nth-of-type(86) .LevelButton {
-  animation-delay: 4.3s;
-  background-color: #5eb234; }
-#LevelListContainer .i-4:nth-of-type(87) .LevelButton {
-  animation-delay: 4.35s;
-  background-color: #34b234; }
-#LevelListContainer .i-4:nth-of-type(88) .LevelButton {
-  animation-delay: 4.4s;
-  background-color: #34b25e; }
-#LevelListContainer .i-4:nth-of-type(89) .LevelButton {
-  animation-delay: 4.45s;
-  background-color: #34b288; }
-#LevelListContainer .i-4:nth-of-type(90) .LevelButton {
-  animation-delay: 4.5s;
-  background-color: #34b2b2; }
-#LevelListContainer .i-4:nth-of-type(91) .LevelButton {
-  animation-delay: 4.55s;
-  background-color: #3488b2; }
-#LevelListContainer .i-4:nth-of-type(92) .LevelButton {
-  animation-delay: 4.6s;
-  background-color: #345eb2; }
-#LevelListContainer .i-4:nth-of-type(93) .LevelButton {
-  animation-delay: 4.65s;
-  background-color: #3434b2; }
-#LevelListContainer .i-4:nth-of-type(94) .LevelButton {
-  animation-delay: 4.7s;
-  background-color: #5e34b2; }
-#LevelListContainer .i-4:nth-of-type(95) .LevelButton {
-  animation-delay: 4.75s;
-  background-color: #8834b2; }
-#LevelListContainer .i-4:nth-of-type(96) .LevelButton {
-  animation-delay: 4.8s;
-  background-color: #b234b2; }
-#LevelListContainer .i-4:nth-of-type(97) .LevelButton {
-  animation-delay: 4.85s;
-  background-color: #b23488; }
-#LevelListContainer .i-4:nth-of-type(98) .LevelButton {
-  animation-delay: 4.9s;
-  background-color: #b2345e; }
 
-/* TITOLO GIOCO
-============================================================================= */
-#Title > h1 {
-  font-family: "Colorz";
-  font-size: 2.5rem;
-  font-weight: normal;
-  letter-spacing: -7px;
-  margin: 3rem 0;
-  text-align: center; }
-
-.Title-letter--green {
-  color: #99ff99; }
-
-.Title-letter--yellow {
-  color: #ffcc66; }
-
-.Title-letter--orange {
-  color: #ff9966; }
-
-.Title-letter--red {
-  color: #ff6666; }
-
-.Title-letter--blue {
-  color: #9999ff; }
-
-/* LISTA PEDONI RIMASTI
-============================================================================= */
-#PawnLeft {
-  text-align: center; }
-
-#PawnLeft-dummyContainer--red,
-#PawnLeft-dummyContainer--green,
-#PawnLeft-dummyContainer--blue {
-  display: inline-block;
-  height: 2.5rem;
-  position: relative;
-  vertical-align: middle;
-  width: 2.5rem; }
-
-.PawnLeft--red,
-.PawnLeft--green,
-.PawnLeft--blue,
-.PawnLeft--placeholder {
-  animation: zoomOut 0.3s ease forwards;
-  -webkit-animation: zoomOut 0.3s ease forwards;
-  -moz-animation: zoomOut 0.3s ease forwards;
-  border-radius: 50%;
-  display: inline-block;
-  height: 2.5rem;
-  left: 0;
-  position: absolute;
-  top: 0;
-  vertical-align: middle;
-  width: 2.5rem;
-  z-index: 2; }
-
-.PawnLeft--red {
-  background-color: #ff0000; }
-
-.PawnLeft--green {
-  background-color: #00ff00; }
-
-.PawnLeft--blue {
-  background-color: #0000ff; }
-
-.PawnLeft--placeholder {
-  background-color: #666666; }
-
-.PawnLeft--red.visible,
-.PawnLeft--green.visible,
-.PawnLeft--blue.visible,
-.PawnLeft--placeholder.visible {
-  animation: zoomIn 0.3s ease;
-  -webkit-animation: zoomIn 0.3s ease;
-  -moz-animation: zoomIn 0.3s ease;
-  z-index: 3; }
-
-#PawnLeft--red-text,
-#PawnLeft--green-text,
-#PawnLeft--blue-text {
-  display: inline-block;
+@media (min-width: 450px) {
+  #LevelListContainer .LevelButton {
+    font-size: 2.5rem; }
+    #LevelListContainer .LevelButton .star {
+      font-size: 1.2rem; } }
+.Info-list-item {
+  min-height: 3rem;
+  line-height: 3rem;
   font-size: 1.5rem;
-  font-weight: 200;
-  margin-left: 2px;
-  vertical-align: middle;
-  width: 1.5rem; }
+  border-bottom: 1px solid #C0C0C0;
+  padding-left: 10px; }
 
-/* SCACCHIERA
-============================================================================= */
-#ChessboardContainer {
-  margin: 50px 0;
-  width: 100%; }
+.Info-list-icon--right {
+  float: right;
+  line-height: 3rem;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+  -moz-transition: transform 0.3s ease;
+  -webkit-transition: transform 0.3s ease; }
 
-#Chessboard {
-  border-collapse: collapse;
-  margin: auto; }
+.slideVertically {
+  overflow: hidden;
+  max-height: 0;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  padding-left: 10px;
+  transition: max-height 0.3s ease;
+  -moz-transition: max-height 0.3s ease;
+  -webkit-transition: max-height 0.3s ease; }
 
-.Chessboard-cell {
-  border: 1px solid #777777;
-  /* grigio palette */
-  height: 50px;
-  position: relative;
-  text-align: center;
-  width: 50px; }
+#Info-list-item--credits.show > .Info-list-icon--right {
+  transform: rotateZ(90deg);
+  -moz-transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg); }
 
-/* RIEMPIMENTO CELLE & BORDI
-============================================================================= */
-.Chessboard-border--top--red {
-  border-top: 3px solid #ff0000; }
+#Info-list-item--credits.show > .slideVertically {
+  max-height: 4rem; }
 
-.Chessboard-border--top--green {
-  border-top: 3px solid #00ff00; }
+.Credits-item:last-of-type {
+  margin-bottom: 1rem; }
 
-.Chessboard-border--top--blue {
-  border-top: 3px solid #0000ff; }
+.u-bold {
+  font-weight: bold; }
 
-.Chessboard-border--right--red {
-  border-right: 3px solid #ff0000; }
-
-.Chessboard-border--right--green {
-  border-right: 3px solid #00ff00; }
-
-.Chessboard-border--right--blue {
-  border-right: 3px solid #0000ff; }
-
-.Chessboard-border--bottom--red {
-  border-bottom: 3px solid #ff0000; }
-
-.Chessboard-border--bottom--green {
-  border-bottom: 3px solid #00ff00; }
-
-.Chessboard-border--bottom--blue {
-  border-bottom: 3px solid #0000ff; }
-
-.Chessboard-border--left--red {
-  border-left: 3px solid #ff0000; }
-
-.Chessboard-border--left--green {
-  border-left: 3px solid #00ff00; }
-
-.Chessboard-border--left--blue {
-  border-left: 3px solid #0000ff; }
-
-.Chessboard-cell--red::before,
-.Chessboard-cell--green::before,
-.Chessboard-cell--blue::before {
-  animation: zoomIn 0.3s ease;
-  -webkit-animation: zoomIn 0.3s ease;
-  -moz-animation: zoomIn 0.3s ease;
-  border-radius: 50%;
-  content: "";
-  display: inline-block;
-  height: 85%;
-  vertical-align: middle;
-  width: 85%; }
-
-.Chessboard-cell--red::before {
-  background-color: #ff0000; }
-
-.Chessboard-cell--green::before {
-  background-color: #00ff00; }
-
-.Chessboard-cell--blue::before {
-  background-color: #0000ff; }
-
-.Chessboard-cell--marker::before {
-  content: "X";
-  display: inline-block;
-  font-size: 2rem;
-  font-weight: 200;
-  vertical-align: middle; }
-
-/* SCELTA COLORE
-============================================================================= */
-#ColorSelection,
-#WinDialog,
-#LoseDialog,
-#ExitDialog {
-  background-color: white;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  left: 50%;
-  position: fixed;
-  top: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  -moz-transform: translate3d(-50%, -50%, 0);
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  width: 90%;
-  z-index: 10; }
-  #ColorSelection > header,
-  #WinDialog > header,
-  #LoseDialog > header,
-  #ExitDialog > header {
-    position: relative; }
-    #ColorSelection > header > h1,
-    #WinDialog > header > h1,
-    #LoseDialog > header > h1,
-    #ExitDialog > header > h1 {
-      color: white;
-      font-size: 1.5rem;
-      font-weight: 200;
-      margin: 0;
-      padding: 1rem 0;
-      text-align: center; }
-
-#ColorSelection,
-#ExitDialog h1 {
-  background-color: #009999; }
-
-#WinDialog h1 {
-  background-color: #009933; }
-
-#LoseDialog h1 {
-  background-color: #660000; }
-
-.ColorChoice {
-  display: inline-block;
-  list-style: none;
-  margin: 20px 0;
-  text-align: center;
-  width: 49%; }
-  .ColorChoice > span {
-    border-radius: 50%;
-    display: inline-block;
-    height: 3rem;
-    width: 3rem; }
-
-.ColorChoice--red > span {
-  background-color: #ff0000; }
-
-.ColorChoice--green > span {
-  background-color: #00ff00; }
-
-.ColorChoice--blue > span {
-  background-color: #0000ff; }
-
-.ColorChoice--marker {
-  font-size: 3rem;
-  font-weight: 200; }
-
-/* VITTORIA E SCONFITTA
-============================================================================= */
-#WinDialog > p,
-#LoseDialog > p,
-#ExitDialog > p {
-  line-height: 1.6rem;
-  padding: 20px 10px;
-  text-align: center; }
-#WinDialog > footer,
-#LoseDialog > footer,
-#ExitDialog > footer {
-  padding: 10px;
-  text-align: right; }
-
-@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
-  #Title > h1 {
-    letter-spacing: 3px; } }
 /* TITOLO GIOCO
 ============================================================================= */
-#Title > h1 {
-  font-family: "Colorz";
+#TitleContainer {
+  height: 20%;
+  position: relative; }
+
+#Title {
+  width: 100%;
+  text-align: center; }
+
+.Title-letter {
+  animation: zoomIn 0.3s ease both;
+  -webkit-animation: zoomIn 0.3s ease both;
+  -moz-animation: zoomIn 0.3s ease both;
+  border-radius: 50%;
+  color: white;
   font-size: 2.5rem;
-  font-weight: normal;
-  letter-spacing: -7px;
-  margin: 2rem 0 1rem;
-  text-align: center;
-  color: #3f8807; }
-  #Title > h1 .Title-letter:nth-of-type(1) {
-    color: #26d98b; }
-  #Title > h1 .Title-letter:nth-of-type(2) {
-    color: #2674d9; }
-  #Title > h1 .Title-letter:nth-of-type(3) {
-    color: #8b26d9; }
-  #Title > h1 .Title-letter:nth-of-type(4) {
-    color: #d92674; }
-  #Title > h1 .Title-letter:nth-of-type(5) {
-    color: #d98b26; }
-  #Title > h1 .Title-letter:nth-of-type(6) {
-    color: #74d926; }
-  #Title > h1 .Title-letter:nth-of-type(7) {
-    color: #26d98b; }
-  #Title > h1 .Title-letter:nth-of-type(8) {
-    color: #2674d9; }
-  #Title > h1 .Title-letter:nth-of-type(9) {
-    color: #8b26d9; }
+  font-weight: 100;
+  display: inline-block;
+  padding-top: 15%;
+  position: relative;
+  width: 15%; }
+  .Title-letter:nth-of-type(1) {
+    animation-delay: 0.05s;
+    -webkit-animation-delay: 0.05s;
+    -moz-animation-delay: 0.05s;
+    background-color: #52e0a3; }
+  .Title-letter:nth-of-type(2) {
+    animation-delay: 0.1s;
+    -webkit-animation-delay: 0.1s;
+    -moz-animation-delay: 0.1s;
+    background-color: #528fe0; }
+  .Title-letter:nth-of-type(3) {
+    animation-delay: 0.15s;
+    -webkit-animation-delay: 0.15s;
+    -moz-animation-delay: 0.15s;
+    background-color: #a352e0; }
+  .Title-letter:nth-of-type(4) {
+    animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    -moz-animation-delay: 0.2s;
+    background-color: #e0528f; }
+  .Title-letter:nth-of-type(5) {
+    animation-delay: 0.25s;
+    -webkit-animation-delay: 0.25s;
+    -moz-animation-delay: 0.25s;
+    background-color: #e0a352; }
+  .Title-letter:nth-of-type(6) {
+    animation-delay: 0.3s;
+    -webkit-animation-delay: 0.3s;
+    -moz-animation-delay: 0.3s;
+    background-color: #8fe052; }
+  .Title-letter:nth-of-type(7) {
+    animation-delay: 0.35s;
+    -webkit-animation-delay: 0.35s;
+    -moz-animation-delay: 0.35s;
+    background-color: #52e0a3; }
+
+.Title-letter--7 {
+  width: 12.85714%;
+  padding-top: 12.85714%; }
+
+/* GAME
+============================================================================= */
+#GameContainer {
+  height: 80%;
+  position: relative; }
+
+#Game {
+  width: 100%; }
 
 /* TIMER
 ============================================================================= */
 #Timer {
   font-size: 2.5rem;
-  font-weight: 200;
-  margin-bottom: 5%;
+  font-weight: 100;
+  height: 3.5rem;
   text-align: center; }
+  #Timer.timeExceeded {
+    color: red;
+    transition: color 0.3s ease;
+    -moz-transition: color 0.3s ease;
+    -webkit-transition: color 0.3s ease; }
 
 /* LISTA PEDONI RIMASTI
 ============================================================================= */
@@ -737,22 +423,22 @@ ul {
   -moz-animation: zoomOut 0.3s ease forwards;
   border-radius: 50%;
   display: inline-block;
-  height: 2.5rem;
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   vertical-align: middle;
-  width: 2.5rem;
+  width: 100%;
   z-index: 2; }
 
 .PawnLeft--red {
   background-color: #ff0000; }
 
 .PawnLeft--green {
-  background-color: #00ff00; }
+  background-color: #0000ff; }
 
 .PawnLeft--blue {
-  background-color: #0000ff; }
+  background-color: #00ff00; }
 
 .PawnLeft--placeholder {
   background-color: #666666; }
@@ -789,10 +475,10 @@ ul {
 .Chessboard-cell {
   border: 1px solid #777777;
   /* grigio palette */
-  height: 50px;
+  height: 3rem;
   position: relative;
   text-align: center;
-  width: 50px; }
+  width: 3rem; }
 
 /* RIEMPIMENTO CELLE & BORDI
 ============================================================================= */
@@ -800,60 +486,57 @@ ul {
   border-top: 3px solid #ff0000; }
 
 .Chessboard-border--top--green {
-  border-top: 3px solid #00ff00; }
+  border-top: 3px solid #0000ff; }
 
 .Chessboard-border--top--blue {
-  border-top: 3px solid #0000ff; }
+  border-top: 3px solid #00ff00; }
 
 .Chessboard-border--right--red {
   border-right: 3px solid #ff0000; }
 
 .Chessboard-border--right--green {
-  border-right: 3px solid #00ff00; }
+  border-right: 3px solid #0000ff; }
 
 .Chessboard-border--right--blue {
-  border-right: 3px solid #0000ff; }
+  border-right: 3px solid #00ff00; }
 
 .Chessboard-border--bottom--red {
   border-bottom: 3px solid #ff0000; }
 
 .Chessboard-border--bottom--green {
-  border-bottom: 3px solid #00ff00; }
+  border-bottom: 3px solid #0000ff; }
 
 .Chessboard-border--bottom--blue {
-  border-bottom: 3px solid #0000ff; }
+  border-bottom: 3px solid #00ff00; }
 
 .Chessboard-border--left--red {
   border-left: 3px solid #ff0000; }
 
 .Chessboard-border--left--green {
-  border-left: 3px solid #00ff00; }
-
-.Chessboard-border--left--blue {
   border-left: 3px solid #0000ff; }
 
+.Chessboard-border--left--blue {
+  border-left: 3px solid #00ff00; }
+
+/*
 .Chessboard-cell--red::before,
 .Chessboard-cell--green::before,
-.Chessboard-cell--blue::before {
-  animation: zoomIn 0.3s ease;
-  -webkit-animation: zoomIn 0.3s ease;
-  -moz-animation: zoomIn 0.3s ease;
-  border-radius: 50%;
-  content: "";
-  display: inline-block;
-  height: 85%;
-  vertical-align: middle;
-  width: 85%; }
+.Chessboard-cell--blue::before{
 
-.Chessboard-cell--red::before {
-  background-color: #ff0000; }
+    @include animation(zoomIn .3s ease);
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 85%;
+    vertical-align: middle;
+    width: 85%;
 
-.Chessboard-cell--green::before {
-  background-color: #00ff00; }
+}
 
-.Chessboard-cell--blue::before {
-  background-color: #0000ff; }
-
+.Chessboard-cell--red::before   { background-color: #ff0000; }
+.Chessboard-cell--green::before { background-color: #00ff00; }
+.Chessboard-cell--blue::before  { background-color: #0000ff; }
+*/
 .Chessboard-cell--marker::before {
   content: "X";
   display: inline-block;
@@ -861,7 +544,7 @@ ul {
   font-weight: 200;
   vertical-align: middle; }
 
-/* SCELTA COLORE
+/* SCELTA COLORE, VITTORIA, SCONFITTA e USCITA
 ============================================================================= */
 #ColorSelection,
 #WinDialog,
@@ -895,6 +578,21 @@ ul {
       margin: 0;
       padding: 1rem 0;
       text-align: center; }
+  #ColorSelection > p,
+  #WinDialog > p,
+  #LoseDialog > p,
+  #ExitDialog > p,
+  #TimeUp > p {
+    line-height: 1.6rem;
+    padding: 20px 10px;
+    text-align: center; }
+  #ColorSelection > footer,
+  #WinDialog > footer,
+  #LoseDialog > footer,
+  #ExitDialog > footer,
+  #TimeUp > footer {
+    padding: 10px;
+    text-align: right; }
 
 #ColorSelection h1,
 #ExitDialog h1 {
@@ -907,49 +605,358 @@ ul {
 #TimeUp h1 {
   background-color: #660000; }
 
-.ColorChoice {
-  display: inline-block;
-  list-style: none;
-  margin: 20px 0;
-  text-align: center;
-  width: 49%; }
-  .ColorChoice > span {
-    border-radius: 50%;
-    display: inline-block;
-    height: 3rem;
-    width: 3rem; }
-
-.ColorChoice--red > span {
-  background-color: #ff0000; }
-
-.ColorChoice--green > span {
-  background-color: #00ff00; }
-
-.ColorChoice--blue > span {
-  background-color: #0000ff; }
-
-.ColorChoice--marker {
-  font-size: 3rem;
-  font-weight: 200; }
-
-/* VITTORIA E SCONFITTA
-============================================================================= */
-#WinDialog > p,
-#LoseDialog > p,
-#ExitDialog > p,
-#TimeUp > p {
-  line-height: 1.6rem;
-  padding: 20px 10px;
+#obtainedStars {
+  color: #e0a352;
+  font-size: 2.5rem;
+  margin: 30px 0;
   text-align: center; }
-#WinDialog > footer,
-#LoseDialog > footer,
-#ExitDialog > footer,
-#TimeUp > footer {
-  padding: 10px;
-  text-align: right; }
 
-@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5) {
-  #Title > h1 {
-    letter-spacing: 3px; } }
+#obtainedStars-first,
+#obtainedStars-second,
+#obtainedStars-third {
+  display: inline-block;
+  animation: rotateIn 0.6s ease both;
+  -webkit-animation: rotateIn 0.6s ease both;
+  -moz-animation: rotateIn 0.6s ease both;
+  margin: 0 10px; }
+
+#obtainedStars-first {
+  animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s; }
+
+#obtainedStars-second {
+  position: relative;
+  top: -10px;
+  animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s; }
+
+#obtainedStars-third {
+  animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s; }
+
+#infoStars-first,
+#infoStars-second,
+#infoStars-third {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  padding-left: 1.5rem; }
+
+#infoStars-first-icon,
+#infoStars-second-icon,
+#infoStars-third-icon {
+  animation: zoomIn 0.3s ease both;
+  -webkit-animation: zoomIn 0.3s ease both;
+  -moz-animation: zoomIn 0.3s ease both;
+  display: inline-block;
+  font-size: 1.5rem;
+  margin-right: 7px;
+  min-width: 1.5rem;
+  position: relative;
+  text-align: center;
+  top: 3px; }
+
+#infoStars-first-icon {
+  animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s; }
+
+#infoStars-second-icon {
+  animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+  -moz-animation-delay: 0.9s; }
+
+#infoStars-third-icon {
+  animation-delay: 1.2s;
+  -webkit-animation-delay: 1.2s;
+  -moz-animation-delay: 1.2s; }
+
+#infoStars-first-text,
+#infoStars-second-text,
+#infoStars-third-text {
+  animation: fadeInRight 0.5s ease both;
+  -webkit-animation: fadeInRight 0.5s ease both;
+  -moz-animation: fadeInRight 0.5s ease both;
+  display: inline-block; }
+
+#infoStars-first-text {
+  animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s; }
+
+#infoStars-second-text {
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s; }
+
+#infoStars-third-text {
+  animation-delay: 1.3s;
+  -webkit-animation-delay: 1.3s;
+  -moz-animation-delay: 1.3s; }
+
+#infoStars .icon_check_alt {
+  color: #00cc33; }
+
+#infoStars .icon_close_alt {
+  color: #990000; }
+
+/*
+.ColorChoice{
+
+    display: inline-block;
+    list-style: none;
+    margin: 20px 0;
+    text-align: center;
+    width: 49%;
+
+    & > span{
+
+        border-radius: 50%;
+        display: inline-block;
+        height: 3rem;
+        width: 3rem;
+    }
+}
+
+.ColorChoice--red > span   { background-color: #ff0000; }
+.ColorChoice--green > span { background-color: #00ff00; }
+.ColorChoice--blue > span  { background-color: #0000ff; }
+
+.ColorChoice--marker{
+
+    font-size: 3rem;
+    font-weight: 200;
+}
+*/
+/* TOAST
+============================================================================= */
+#toast {
+  opacity: 0;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  white-space: pre;
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transition: opacity 0.4s ease;
+  -moz-transition: opacity 0.4s ease;
+  -webkit-transition: opacity 0.4s ease; }
+  #toast.show {
+    opacity: 1; }
+
+@media (min-width: 450px) {
+  .Title-letter {
+    font-size: 3rem; }
+
+  #Timer {
+    font-size: 3.5rem;
+    height: 4.5rem; }
+
+  #PawnLeft-dummyContainer--red,
+  #PawnLeft-dummyContainer--green,
+  #PawnLeft-dummyContainer--blue {
+    height: 3.5rem;
+    width: 3.5rem; }
+
+  #PawnLeft--red-text,
+  #PawnLeft--green-text,
+  #PawnLeft--blue-text {
+    font-size: 2rem; }
+
+  .Chessboard-cell {
+    height: 4rem;
+    width: 4rem; }
+
+  #WinDialog > header > h1,
+  #LoseDialog > header > h1,
+  #ExitDialog > header > h1,
+  #TimeUp > header > h1 {
+    font-size: 2rem; }
+  #WinDialog > p,
+  #LoseDialog > p,
+  #ExitDialog > p,
+  #TimeUp > p {
+    font-size: 1.3rem; }
+
+  #obtainedStars {
+    font-size: 3.5rem;
+    margin: 45px 0; }
+
+  #infoStars-first,
+  #infoStars-second,
+  #infoStars-third {
+    font-size: 1.5rem; }
+
+  #infoStars-first-icon,
+  #infoStars-second-icon,
+  #infoStars-third-icon {
+    font-size: 2rem;
+    top: 6px; }
+
+  #toast {
+    font-size: 1.2rem; } }
+#TutorialContainer #rules {
+  height: 25%;
+  position: relative;
+  width: 100%; }
+  #TutorialContainer #rules .rule {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 100;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+    #TutorialContainer #rules .rule .DummyDiv-center {
+      position: absolute;
+      left: 50%;
+      top: 50%; }
+    #TutorialContainer #rules .rule .DummyDiv-scale {
+      width: 50rem;
+      height: 50rem;
+      position: absolute;
+      top: -25rem;
+      left: -25rem;
+      border-radius: 50%;
+      transform: scale(0);
+      -moz-transform: scale(0);
+      -webkit-transform: scale(0);
+      transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -webkit-transition: all 1s ease; }
+    #TutorialContainer #rules .rule .rule-content {
+      width: 100%;
+      opacity: 0;
+      color: white;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+      transition: opacity 0.3s ease 0.4s;
+      -moz-transition: opacity 0.3s ease 0.4s;
+      -webkit-transition: opacity 0.3s ease 0.4s; }
+    #TutorialContainer #rules .rule .rule-number {
+      width: 15%;
+      float: left; }
+      #TutorialContainer #rules .rule .rule-number > span {
+        display: block;
+        border-radius: 50%;
+        background-color: white;
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        margin: auto;
+        font-weight: 300;
+        transform: scale(0);
+        -moz-transform: scale(0);
+        -webkit-transform: scale(0);
+        transition: transform 0.3s ease 0.4s;
+        -moz-transition: transform 0.3s ease 0.4s;
+        -webkit-transition: transform 0.3s ease 0.4s; }
+    #TutorialContainer #rules .rule .rule-text {
+      text-align: left;
+      width: 85%;
+      float: left;
+      padding-right: 10px;
+      transform: translate3d(-10%, 0, 0);
+      -moz-transform: translate3d(-10%, 0, 0);
+      -webkit-transform: translate3d(-10%, 0, 0);
+      transition: transform 0.3s ease 0.4s;
+      -moz-transition: transform 0.3s ease 0.4s;
+      -webkit-transition: transform 0.3s ease 0.4s; }
+    #TutorialContainer #rules .rule.show .DummyDiv-scale {
+      transform: scale(1);
+      -moz-transform: scale(1);
+      -webkit-transform: scale(1); }
+    #TutorialContainer #rules .rule.show .rule-content {
+      opacity: 1; }
+    #TutorialContainer #rules .rule.show .rule-number > span {
+      transform: scale(1);
+      -moz-transform: scale(1);
+      -webkit-transform: scale(1); }
+    #TutorialContainer #rules .rule.show .rule-text {
+      transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0); }
+#TutorialContainer #GameLayerContainer {
+  height: 75%;
+  position: relative;
+  transform: scale(0);
+  -moz-transform: scale(0);
+  -webkit-transform: scale(0);
+  transition: transform 0.4s ease;
+  -moz-transition: transform 0.4s ease;
+  -webkit-transition: transform 0.4s ease; }
+  #TutorialContainer #GameLayerContainer.show {
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1); }
+#TutorialContainer #GameLayer {
+  z-index: 5;
+  width: 100%; }
+#TutorialContainer #next {
+  text-align: center;
+  background-color: darkcyan;
+  color: white;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 100;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  height: 4rem;
+  width: 4rem;
+  line-height: 4rem;
+  transform: scale(0);
+  -moz-transform: scale(0);
+  -webkit-transform: scale(0);
+  transition: transform 0.4s ease;
+  -moz-transition: transform 0.4s ease;
+  -webkit-transition: transform 0.4s ease; }
+  #TutorialContainer #next.show {
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1); }
+  #TutorialContainer #next > span {
+    line-height: inherit; }
+#TutorialContainer .draggable {
+  transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease; }
+#TutorialContainer .rule:nth-of-type(1) .DummyDiv-scale {
+  background-color: #3434b2; }
+#TutorialContainer .rule:nth-of-type(2) .DummyDiv-scale {
+  background-color: #b234b2; }
+#TutorialContainer .rule:nth-of-type(3) .DummyDiv-scale {
+  background-color: #b23434; }
+#TutorialContainer .rule:nth-of-type(4) .DummyDiv-scale {
+  background-color: #b2b234; }
+#TutorialContainer .rule:nth-of-type(1) .rule-number > span {
+  color: #3434b2; }
+#TutorialContainer .rule:nth-of-type(2) .rule-number > span {
+  color: #b234b2; }
+#TutorialContainer .rule:nth-of-type(3) .rule-number > span {
+  color: #b23434; }
+#TutorialContainer .rule:nth-of-type(4) .rule-number > span {
+  color: #b2b234; }
+@media (min-width: 450px) {
+  #TutorialContainer #next {
+    font-size: 2rem;
+    height: 4.5rem;
+    width: 4.5rem;
+    line-height: 4.5rem; }
+    #TutorialContainer #next > span {
+      line-height: inherit; } }
 
 /*# sourceMappingURL=index.css.map */

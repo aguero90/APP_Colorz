@@ -6,6 +6,12 @@
 // IDEA
 // ============================================================================
 
+   il servitore occupa una casella che non è occupabile da altre pedine
+   (per il nostro algoritmo, una vuota) xD viene piazzata in un certo punto della
+   scacchiera (preferibilmente vicino a uno dei due bordi perché ora che ci penso
+   se la metti in mezzo, quali bordi oscuri? DX, SX? Sopra o sotto? XD)
+   e se rispetto ai due bordi vicini a lei c'è qualche pedina fra lei e il bordo,
+   quel bordo viene mantenuto, altrimenti viene oscurato XD
 
 // BUG
 // ============================================================================

@@ -4,12 +4,24 @@ require.config({
         jquery: '../lib/zepto/zepto', // ../lib/jquery/jquery',
         underscore: '../lib/underscore/underscore',
         backbone: "../lib/backbone/backbone",
+        localstorage: "../lib/backbone/backbone.localStorage",
         text: '../lib/require/text',
         async: '../lib/require/async',
         handlebars: '../lib/handlebars/handlebars',
         templates: '../templates',
         utils: '../lib/utils/utils',
-        gioco: '../lib/gioco/gioco'
+        interact: '../lib/interact/interact',
+        pawn: '../lib/gioco/Pawn',
+        cell: '../lib/gioco/Cell',
+        chessboard: '../lib/gioco/Chessboard',
+        game: '../lib/gioco/Game',
+        relaxGame: '../lib/gioco/RelaxGame',
+        timeGame: '../lib/gioco/TimeGame',
+        levelGame: '../lib/gioco/LevelGame',
+        graphicsLayer: '../lib/gioco/GraphicsLayer',
+        relaxGraphicsLayer: '../lib/gioco/RelaxGraphicsLayer',
+        timeGraphicsLayer: '../lib/gioco/TimeGraphicsLayer',
+        levelGraphicsLayer: '../lib/gioco/LevelGraphicsLayer'
     },
     shim: {
         'jquery': {
@@ -30,6 +42,7 @@ require(['backbone', 'utils'], function (Backbone, Utils) {
         document.addEventListener("deviceready", run, false);
         function run() {
 
+            window.localStorage.removeItem('Colorz');
 
             if (!window.localStorage.getItem('Colorz')) {
 
@@ -37,37 +50,16 @@ require(['backbone', 'utils'], function (Backbone, Utils) {
                 // => carichiamo tutti i livelli nel localStorage
                 var levels = {};
 
-
-                levels['1'] = {"number": 1, "cleared": false, "stars": 0, "size": 3, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
-                levels['2'] = {"number": 2, "cleared": false, "stars": 0, "size": 4, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue"}, "2": {"0": "blue", "1": "void", "2": "red", "3": "green"}, "3": {"0": "green", "1": "blue", "2": "void", "3": "red"}}};
-                levels['3'] = {"number": 3, "cleared": false, "stars": 0, "size": 5, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue"}, "3": {"0": "blue", "1": "void", "2": "void", "3": "red", "4": "green"}, "4": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "red"}}};
-                levels['4'] = {"number": 4, "cleared": false, "stars": 0, "size": 6, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void", "5": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void", "5": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue", "5": "void"}, "3": {"0": "void", "1": "void", "2": "void", "3": "red", "4": "green", "5": "blue"}, "4": {"0": "blue", "1": "void", "2": "void", "3": "void", "4": "red", "5": "green"}, "5": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "void", "5": "red"}}};
-                levels['5'] = {"number": 1, "cleared": false, "stars": 0, "size": 3, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
-                levels['6'] = {"number": 2, "cleared": false, "stars": 0, "size": 4, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue"}, "2": {"0": "blue", "1": "void", "2": "red", "3": "green"}, "3": {"0": "green", "1": "blue", "2": "void", "3": "red"}}};
-                levels['7'] = {"number": 3, "cleared": false, "stars": 0, "size": 5, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue"}, "3": {"0": "blue", "1": "void", "2": "void", "3": "red", "4": "green"}, "4": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "red"}}};
-                levels['8'] = {"number": 4, "cleared": false, "stars": 0, "size": 6, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void", "5": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void", "5": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue", "5": "void"}, "3": {"0": "void", "1": "void", "2": "void", "3": "red", "4": "green", "5": "blue"}, "4": {"0": "blue", "1": "void", "2": "void", "3": "void", "4": "red", "5": "green"}, "5": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "void", "5": "red"}}};
-                levels['9'] = {"number": 1, "cleared": false, "stars": 0, "size": 3, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
-                levels['10'] = {"number": 2, "cleared": false, "stars": 0, "size": 4, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue"}, "2": {"0": "blue", "1": "void", "2": "red", "3": "green"}, "3": {"0": "green", "1": "blue", "2": "void", "3": "red"}}};
-                levels['11'] = {"number": 3, "cleared": false, "stars": 0, "size": 5, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue"}, "3": {"0": "blue", "1": "void", "2": "void", "3": "red", "4": "green"}, "4": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "red"}}};
-                levels['12'] = {"number": 4, "cleared": false, "stars": 0, "size": 6, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void", "5": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void", "5": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue", "5": "void"}, "3": {"0": "void", "1": "void", "2": "void", "3": "red", "4": "green", "5": "blue"}, "4": {"0": "blue", "1": "void", "2": "void", "3": "void", "4": "red", "5": "green"}, "5": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "void", "5": "red"}}};
-                levels['13'] = {"number": 1, "cleared": false, "stars": 0, "size": 3, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
-                levels['14'] = {"number": 2, "cleared": false, "stars": 0, "size": 4, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue"}, "2": {"0": "blue", "1": "void", "2": "red", "3": "green"}, "3": {"0": "green", "1": "blue", "2": "void", "3": "red"}}};
-                levels['15'] = {"number": 3, "cleared": false, "stars": 0, "size": 5, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue"}, "3": {"0": "blue", "1": "void", "2": "void", "3": "red", "4": "green"}, "4": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "red"}}};
-                levels['16'] = {"number": 4, "cleared": false, "stars": 0, "size": 6, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void", "5": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void", "5": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue", "5": "void"}, "3": {"0": "void", "1": "void", "2": "void", "3": "red", "4": "green", "5": "blue"}, "4": {"0": "blue", "1": "void", "2": "void", "3": "void", "4": "red", "5": "green"}, "5": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "void", "5": "red"}}};
-                levels['17'] = {"number": 1, "cleared": false, "stars": 0, "size": 3, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
-                levels['18'] = {"number": 2, "cleared": false, "stars": 0, "size": 4, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue"}, "2": {"0": "blue", "1": "void", "2": "red", "3": "green"}, "3": {"0": "green", "1": "blue", "2": "void", "3": "red"}}};
-                levels['19'] = {"number": 3, "cleared": false, "stars": 0, "size": 5, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue"}, "3": {"0": "blue", "1": "void", "2": "void", "3": "red", "4": "green"}, "4": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "red"}}};
-                levels['20'] = {"number": 4, "cleared": false, "stars": 0, "size": 6, "solution": {"0": {"0": "red", "1": "green", "2": "blue", "3": "void", "4": "void", "5": "void"}, "1": {"0": "void", "1": "red", "2": "green", "3": "blue", "4": "void", "5": "void"}, "2": {"0": "void", "1": "void", "2": "red", "3": "green", "4": "blue", "5": "void"}, "3": {"0": "void", "1": "void", "2": "void", "3": "red", "4": "green", "5": "blue"}, "4": {"0": "blue", "1": "void", "2": "void", "3": "void", "4": "red", "5": "green"}, "5": {"0": "green", "1": "blue", "2": "void", "3": "void", "4": "void", "5": "red"}}};
-
-
+                levels['1'] = {"number": 1, "cleared": false, "unlocked": true, "stars": 0, "size": 3, "timeLimit": 120000, "removedLimit": 1, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
+                levels['2'] = {"number": 2, "cleared": false, "unlocked": false, "stars": 0, "size": 3, "timeLimit": 120000, "removedLimit": 1, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
+                levels['3'] = {"number": 3, "cleared": false, "unlocked": false, "stars": 0, "size": 3, "timeLimit": 120000, "removedLimit": 1, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
+                levels['4'] = {"number": 4, "cleared": false, "unlocked": false, "stars": 0, "size": 3, "timeLimit": 120000, "removedLimit": 1, "solution": {"0": {"0": "red", "1": "green", "2": "blue"}, "1": {"0": "blue", "1": "red", "2": "green"}, "2": {"0": "green", "1": "blue", "2": "red"}}};
 
                 window.localStorage.setItem("levels", JSON.stringify(levels));
-
 
                 // diciamo che abbiamo effettuato il primo lancio dell'app
                 window.localStorage.setItem('Colorz', 'true');
             }
-
 
             // Here we precompile ALL the templates so that the app will be quickier when switching views
             // see utils.js

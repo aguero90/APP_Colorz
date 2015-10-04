@@ -4,45 +4,46 @@
     {{#each levels}}
 
     <div class="i-4">
-        <div data-number="{{this.number}}" class="LevelButton" >
+        {{#if this.unlocked}}
+        <div data-number="{{this.number}}" class="LevelButton LevelButton--unlocked">
+            {{else}}
+            <div data-number="{{this.number}}" class="LevelButton LevelButton--locked">
+                {{/if}}
 
 
-            {{#if this.cleared}}
+                {{#if this.cleared}}
 
-            {{#ifCond this.stars '==' 1}}
+                {{#ifCond this.stars '==' 1}}
 
-            <span class="star fa fa-star"></span>
-            <span class="star fa fa-star-o"></span>
-            <span class="star fa fa-star-o"></span>
+                <span class="star icon_star"></span>
+                <span class="star icon_star_alt"></span>
+                <span class="star icon_star_alt"></span>
 
-            {{/ifCond}}
-
-
-            {{#ifCond this.stars '==' 2}}
-
-            <span class="star fa fa-star"></span>
-            <span class="star fa fa-star"></span>
-            <span class="star fa fa-star-o"></span>
-
-            {{/ifCond}}
-
-            {{#ifCond this.stars '==' 3}}
-
-            <span class="star fa fa-star"></span>
-            <span class="star fa fa-star"></span>
-            <span class="star fa fa-star"></span>
-
-            {{/ifCond}}
-
-            {{/if}}
+                {{/ifCond}}
 
 
-            <span class="LevelButton-number">{{this.number}}</span>
+                {{#ifCond this.stars '==' 2}}
 
+                <span class="star icon_star"></span>
+                <span class="star icon_star"></span>
+                <span class="star icon_star_alt"></span>
 
+                {{/ifCond}}
 
+                {{#ifCond this.stars '==' 3}}
+
+                <span class="star icon_star"></span>
+                <span class="star icon_star"></span>
+                <span class="star icon_star"></span>
+
+                {{/ifCond}}
+
+                {{/if}}
+
+                <span class="LevelButton-number">{{this.number}}</span>
+
+            </div>
         </div>
-    </div>
 
-    {{/each}}
-</div>
+        {{/each}}
+    </div>

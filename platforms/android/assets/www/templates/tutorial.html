@@ -1,0 +1,108 @@
+
+<div id="rules">
+    <div id="animation1" class="rule">
+        <div class="DummyDiv-center">
+            <div class="DummyDiv-scale"></div>
+        </div>
+        <div class="rule-content">
+            Ciao, <br/>
+            ora ti mostrerò brevemente le regole del gioco
+        </div>
+    </div>
+
+    <div id="animation2" class="rule">
+        <div class="DummyDiv-center">
+            <div class="DummyDiv-scale"></div>
+        </div>
+        <div class="rule-content">
+            <div class="rule-number"><span>1</span></div>
+            <div class="rule-text">
+                I bordi indicano con quale colore deve iniziare e finire una riga o una colonna.
+                Perciò assicurati di rispettarli
+            </div>
+        </div>
+    </div>
+
+    <div id="animation3" class="rule">
+        <div class="DummyDiv-center">
+            <div class="DummyDiv-scale"></div>
+        </div>
+        <div class="rule-content">
+            <div class="rule-number"><span>2</span></div>
+            <div class="rule-text">
+                su ogni riga ed ogni colonna ci deve essere una sola pedina di ogni colore
+            </div>
+        </div>
+    </div>
+
+    <div id="animation4" class="rule">
+        <div class="DummyDiv-center">
+            <div class="DummyDiv-scale"></div>
+        </div>
+        <div class="rule-content">
+            <div class="rule-number"><span>3</span></div>
+            <div class="rule-text">
+                Posiziona le pedine sulla scacchiera fino ad usarle tutte.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="GameLayerContainer">
+    <div id="GameLayer" class="u-centered">
+
+        <div id="PawnLeft" class="i-g">
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--red">
+                    <div id="PawnLeft--placeholder--red" class="PawnLeft--placeholder"></div>
+                    <div class="draggable drag-drop PawnLeft--red"></div>
+                    <div class="draggable drag-drop PawnLeft--red"></div>
+                    <div class="draggable drag-drop PawnLeft--red visible"></div>
+                </div>
+                <div id="PawnLeft--red-text">x3</div>
+            </div>
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--green">
+                    <div id="PawnLeft--placeholder--green" class="PawnLeft--placeholder"></div>
+                    <div class="draggable drag-drop PawnLeft--green"></div>
+                    <div class="draggable drag-drop PawnLeft--green"></div>
+                    <div class="draggable drag-drop PawnLeft--green visible"></div>
+                </div>
+                <div id="PawnLeft--green-text">x3</div>
+            </div>
+            <div class="i-4">
+                <div id="PawnLeft-dummyContainer--blue">
+                    <div id="PawnLeft--placeholder--blue" class="PawnLeft--placeholder"></div>
+                    <div class="draggable drag-drop PawnLeft--blue"></div>
+                    <div class="draggable drag-drop PawnLeft--blue"></div>
+                    <div class="draggable drag-drop PawnLeft--blue visible"></div>
+                </div>
+                <div id="PawnLeft--blue-text">x3</div>
+            </div>
+        </div>
+
+        <div id="ChessboardContainer">
+            <table id="Chessboard">
+                <tbody>
+                    <tr id="Chessboard-row1">
+                        <td id="cell_1-1" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--top--red Chessboard-border--left--red"></td>
+                        <td id="cell_1-2" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--top--green"></td>
+                        <td id="cell_1-3" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--top--blue Chessboard-border--right--blue"></td>
+                    </tr> <!-- FINE RIGA 1 -->
+                    <tr id="Chessboard-row2">
+                        <td id="cell_2-1" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--left--blue"></td>
+                        <td id="cell_2-2" class="dropzone Chessboard-cell"></td>
+                        <td id="cell_2-3" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--right--green"></td>
+                    </tr> <!-- FINE RIGA 2 -->
+                    <tr id="Chessboard-row3">
+                        <td id="cell_3-1" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--bottom--green Chessboard-border--left--green"></td>
+                        <td id="cell_3-2" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--bottom--blue"></td>
+                        <td id="cell_3-3" class="dropzone Chessboard-cell Chessboard-border Chessboard-border--bottom--red Chessboard-border--right--red"></td>
+                    </tr> <!-- FINE RIGA 3 -->
+                </tbody>
+            </table>
+        </div><!-- FINE ChessboardContainer -->
+    </div>
+</div>
+
+<div id="next"><span class="arrow_carrot-2right"></span></div>

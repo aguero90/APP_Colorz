@@ -1,52 +1,42 @@
 
-#HomeContainer{
+#ButtonGirdContainer{
 
-    #TitleGame{
-        font-family: "Colorz";
-        font-size: 3rem;
-        font-weight: normal;
-        letter-spacing: -11px;
-        text-align: center;
-        margin: 15% 0;
-    }
+    height: 80%;
+    position: relative;
+}
 
-    .TitleGame-letter--blue   { color: #6699ff; }
-    .TitleGame-letter--green  { color: #66ff66; }
-    .TitleGame-letter--yellow { color: #ffcc66; }
-    .TitleGame-letter--orange { color: #ff9966; }
-    .TitleGame-letter--red    { color: #ff6666; }
-    .TitleGame-letter--purple { color: #9966ff; }
+#ButtonGrid { width: 100%; }
 
-    .HomeButton{
+.HomeButton{
 
-        @include animation(zoomIn .3s ease both);
+    @include animation(zoomIn .3s ease both);
+    border-radius: 50%;
+    color: #fff;
+    margin: 3rem auto;
+    // per rendere l'altezza uguale alla larghezza
+    padding: 70% 0px 0px;
+    position: relative;
+    text-align: center;
+    width: 70%;
+}
 
-        border-radius: 50%;
-        color: #fff;
-        height: 7rem;
-        line-height: 7rem;
-        margin: 3rem auto;
-        padding: 0;
-        text-align: center;
-        width: 7rem;
-    }
+.HomeButtonContainer{
 
-    .HomeButton--relax  { background-color: #003366; }
-    .HomeButton--time   { background-color: #660000; }
-    .HomeButton--levels { background-color: #006600; }
-    .HomeButton--info   { background-color: #333333; }
+    &:nth-of-type(1) > .HomeButton{ @include animationDelay(.2s); background-color: #003366; }
+    &:nth-of-type(2) > .HomeButton{ @include animationDelay(.3s); background-color: #660000; }
+    &:nth-of-type(3) > .HomeButton{ @include animationDelay(.4s); background-color: #006600; }
+    &:nth-of-type(4) > .HomeButton{ @include animationDelay(.5s); background-color: #333333; }
 }
 
 
+// Media Query
+// ============================================================================
 
-// tutti quei dispositivi che al massimo 600px CSS ( cioè quelli fisici)
-// e che hanno al massimo 1.5 come device pixel ratio.
-// questo vuol dire che stiamo identificando qui tutti quei dispostivi che
-// hanno al massimo 600px * 1.5 = 900px logici
-@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5){
+@media (min-width: 450px){
 
-    #HomeContainer{
+    .HomeButton{
 
-        #TitleGame { letter-spacing: 5px; }
+        font-size: 1.5rem;
+        font-weight: 100;
     }
 }

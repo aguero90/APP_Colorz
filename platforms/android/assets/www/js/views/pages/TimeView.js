@@ -2,6 +2,7 @@ define(function (require) {
 
     var Backbone = require("backbone");
     var Utils = require("utils");
+    var TimeGame = require("timeGame");
 
     var TimeView = Utils.Page.extend({
         constructorName: "TimeView",
@@ -25,10 +26,8 @@ define(function (require) {
         },
         onDOMReady: function () {
 
-
-            var gioco = new Game(6, 3);
-            gioco.start();
-
+            var game = new TimeGame(6, 3);
+            game.start();
         }
     });
 

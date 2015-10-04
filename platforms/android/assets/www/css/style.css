@@ -11,18 +11,12 @@ body {
   -webkit-user-select: none;
   /* no copy and paste, etc. */
   background-attachment: fixed;
-  font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
   height: 100%;
   margin: 0px;
   padding: 0px;
   width: 100%; }
 
 /* END STANDARD MOBILE */
-/* CUSTOM FONTS */
-@font-face {
-  font-family: 'Dax';
-  src: url("../fonts/DaxBold.ttf") format("truetype"); }
-/* END CUSTOM FONTS */
 /* START STRUCTURE */
 #main {
   position: absolute;

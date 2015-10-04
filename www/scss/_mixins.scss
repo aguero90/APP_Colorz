@@ -29,6 +29,12 @@
     -moz-animation:         $value;
 }
 
+@mixin animationDelay($value){
+    animation-delay:              $value;
+    -webkit-animation-delay:      $value;
+    -moz-animation-delay:         $value;
+}
+
 @mixin filter($value){
     filter:              $value;
     -webkit-filter:      $value;

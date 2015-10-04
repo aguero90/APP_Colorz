@@ -1,78 +1,99 @@
 
-function Cell(DOMElement, row, column, borderColorTop, borderColorRight, borderColorBottom, borderColorLeft) {
+define(function (require) {
 
-    this.DOMElement = DOMElement;
-    this.row = row;
-    this.column = column;
+    // questo modulo non ha dipendenze
 
-    // impostiamo delle proprietà all'interno dell'elemento DOM per riprenderle
-    // in seguito
-    DOMElement.Colorz = {
-        row: row,
-        column: column
+    var Cell = function (DOMElement, row, column, borderColorTop,
+            borderColorRight, borderColorBottom, borderColorLeft) {
+
+        this.DOMElement = DOMElement;
+        this.row = row;
+        this.column = column;
+
+        // impostiamo delle proprietà all'interno dell'elemento DOM per riprenderle
+        // in seguito
+        DOMElement.Colorz = {
+            row: row,
+            column: column
+        };
+
+        this.borderColor = {
+            top: borderColorTop,
+            right: borderColorRight,
+            bottom: borderColorBottom,
+            left: borderColorLeft
+        };
+
+        this.pawn = null;
     };
 
-    this.borderColor = {
-        top: borderColorTop,
-        right: borderColorRight,
-        bottom: borderColorBottom,
-        left: borderColorLeft
-    };
-}
-
-Cell.prototype = {
-    pawn: null,
-    getDOMElement: function () {
+    Cell.prototype.getDOMElement = function () {
         return this.DOMElement;
-    },
-    getRow: function () {
+    };
+
+    Cell.prototype.getRow = function () {
         return this.row;
-    },
-    getColumn: function () {
+    };
+
+    Cell.prototype.getColumn = function () {
         return this.column;
-    },
-    getBorderColor: function () {
+    };
+
+    Cell.prototype.getBorderColor = function () {
         return this.borderColor;
-    },
-    setBorderColor: function (borderColor) {
+    };
+
+    Cell.prototype.setBorderColor = function (borderColor) {
         this.borderColor = borderColor;
-    },
-    setBorderColorTop: function (borderColorTop) {
+    };
+
+    Cell.prototype.setBorderColorTop = function (borderColorTop) {
         this.borderColor.top = borderColorTop;
-    },
-    setBorderColorRight: function (borderColorRight) {
+    };
+
+    Cell.prototype.setBorderColorRight = function (borderColorRight) {
         this.borderColor.right = borderColorRight;
-    },
-    setBorderColorBottom: function (borderColorBottom) {
+    };
+
+    Cell.prototype.setBorderColorBottom = function (borderColorBottom) {
         this.borderColor.bottom = borderColorBottom;
-    },
-    setBorderColorLeft: function (borderColorLeft) {
+    };
+
+    Cell.prototype.setBorderColorLeft = function (borderColorLeft) {
         this.borderColor.left = borderColorLeft;
-    },
-    getPawn: function () {
+    };
+
+    Cell.prototype.getPawn = function () {
         return this.pawn;
-    },
-    setPawn: function (pawn) {
+    };
+
+    Cell.prototype.setPawn = function (pawn) {
 
 //        if (!this.isEmpty()) {
 //            this.clear();
 //        }
 
         this.pawn = pawn;
-    },
-    isEmpty: function () {
-        return !this.pawn;
-    },
-    clear: function () {
+    };
 
-        this.pawn = undefined;
-    },
-    clearBorder: function () {
+    Cell.prototype.isEmpty = function () {
+        return !this.pawn;
+    };
+
+    Cell.prototype.clear = function () {
+        this.pawn = null;
+    };
+
+    Cell.prototype.clearBorder = function () {
 
         this.borderColor.top = null;
         this.borderColor.right = null;
         this.borderColor.bottom = null;
         this.borderColor.left = null;
-    }
-};
+    };
 
+
+    // esponiamo pubblicamente il modulo
+    return Cell;
+
+});

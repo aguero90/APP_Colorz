@@ -1,33 +1,53 @@
 
-
 /* TITOLO GIOCO
 ============================================================================= */
 
-#Title{
+#TitleContainer{
 
-    & > h1{
-
-        font-family: "Colorz";
-        font-size: 2.5rem;
-        font-weight: normal;
-        letter-spacing: -7px;
-        margin: 2rem 0 1rem;
-        text-align: center;
-        color: hsl(94deg, 90%, 28%);
-
-
-        .Title-letter{
-
-            // Iteriamo per 10 volte in modo da cambiare il colore delle lettere
-            @for $i from 1 to 10 {
-
-                &:nth-of-type(#{$i}){ @include hueRotate(color, 94deg, 70%, 50%, 60 * $i); }
-
-            }
-        }
-    }
+    height: 20%;
+    position: relative;
 }
 
+#Title{
+
+    width: 100%;
+    text-align: center;
+}
+
+.Title-letter{
+
+    @include animation(zoomIn .3s ease both);
+    border-radius: 50%;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 100;
+    display: inline-block;
+    padding-top: 90 / 6 * 1%;
+    position: relative;
+    width: 90 / 6 * 1%;
+
+    &:nth-of-type(1){ @include animationDelay(.05s * 1); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 1); }
+    &:nth-of-type(2){ @include animationDelay(.05s * 2); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 2); }
+    &:nth-of-type(3){ @include animationDelay(.05s * 3); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 3); }
+    &:nth-of-type(4){ @include animationDelay(.05s * 4); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 4); }
+    &:nth-of-type(5){ @include animationDelay(.05s * 5); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 5); }
+    &:nth-of-type(6){ @include animationDelay(.05s * 6); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 6); }
+    &:nth-of-type(7){ @include animationDelay(.05s * 7); @include hueRotate(background-color, 94deg, 70%, 60%, 60 * 7); }
+
+}
+
+.Title-letter--7 { width: 90 / 7 * 1%; padding-top: 90 / 7 * 1%; }
+
+
+/* GAME
+============================================================================= */
+#GameContainer{
+
+    height: 80%;
+    position: relative;
+}
+
+#Game { width: 100%; }
 
 
 /* TIMER
@@ -36,12 +56,16 @@
 #Timer{
 
     font-size: 2.5rem;
-    font-weight: 200;
-    margin-bottom: 5%;
+    font-weight: 100;
+    height: 3.5rem;
     text-align: center;
+
+    &.timeExceeded{
+
+        color: red;
+        @include transition(color .3s ease);
+    }
 }
-
-
 
 
 /* LISTA PEDONI RIMASTI
@@ -50,6 +74,7 @@
 
     text-align: center;
 }
+
 
 #PawnLeft-dummyContainer--red,
 #PawnLeft-dummyContainer--green,
@@ -72,20 +97,21 @@
 
     border-radius: 50%;
     display: inline-block;
-    height: 2.5rem;
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
     vertical-align: middle;
-    width: 2.5rem;
+    width: 100%;
     // per fare in modo che siano ancora draggabili una
     // volta droppati nella scacchiera
     z-index: 2;
 }
 
-.PawnLeft--red   { background-color: #ff0000; }
-.PawnLeft--green { background-color: #00ff00; }
-.PawnLeft--blue  { background-color: #0000ff; }
+
+.PawnLeft--red   { background-color: $pawnRed; }
+.PawnLeft--green { background-color: $pawnGreen; }
+.PawnLeft--blue  { background-color: $pawnBlue; }
 .PawnLeft--placeholder { background-color: #666666 }
 
 .PawnLeft--red.visible,
@@ -130,32 +156,33 @@
 .Chessboard-cell{
 
     border: 1px solid rgb(119, 119, 119); /* grigio palette */
-    height: 50px;
+    height: 3rem;
     position: relative;
     text-align: center;
-    width: 50px;
+    width: 3rem;
 }
 
 
 /* RIEMPIMENTO CELLE & BORDI
 ============================================================================= */
-.Chessboard-border--top--red   { border-top: $cellBorderWidth solid #ff0000; }
-.Chessboard-border--top--green { border-top: $cellBorderWidth solid #00ff00; }
-.Chessboard-border--top--blue  { border-top: $cellBorderWidth solid #0000ff; }
+.Chessboard-border--top--red   { border-top: $cellBorderWidth solid $pawnRed; }
+.Chessboard-border--top--green { border-top: $cellBorderWidth solid $pawnGreen; }
+.Chessboard-border--top--blue  { border-top: $cellBorderWidth solid $pawnBlue; }
 
-.Chessboard-border--right--red   { border-right: $cellBorderWidth solid #ff0000; }
-.Chessboard-border--right--green { border-right: $cellBorderWidth solid #00ff00; }
-.Chessboard-border--right--blue  { border-right: $cellBorderWidth solid #0000ff; }
+.Chessboard-border--right--red   { border-right: $cellBorderWidth solid $pawnRed; }
+.Chessboard-border--right--green { border-right: $cellBorderWidth solid $pawnGreen; }
+.Chessboard-border--right--blue  { border-right: $cellBorderWidth solid $pawnBlue; }
 
-.Chessboard-border--bottom--red   { border-bottom: $cellBorderWidth solid #ff0000; }
-.Chessboard-border--bottom--green { border-bottom: $cellBorderWidth solid #00ff00; }
-.Chessboard-border--bottom--blue  { border-bottom: $cellBorderWidth solid #0000ff; }
+.Chessboard-border--bottom--red   { border-bottom: $cellBorderWidth solid $pawnRed; }
+.Chessboard-border--bottom--green { border-bottom: $cellBorderWidth solid $pawnGreen; }
+.Chessboard-border--bottom--blue  { border-bottom: $cellBorderWidth solid $pawnBlue; }
 
-.Chessboard-border--left--red   { border-left: $cellBorderWidth solid #ff0000; }
-.Chessboard-border--left--green { border-left: $cellBorderWidth solid #00ff00; }
-.Chessboard-border--left--blue  { border-left: $cellBorderWidth solid #0000ff; }
+.Chessboard-border--left--red   { border-left: $cellBorderWidth solid $pawnRed; }
+.Chessboard-border--left--green { border-left: $cellBorderWidth solid $pawnGreen; }
+.Chessboard-border--left--blue  { border-left: $cellBorderWidth solid $pawnBlue; }
 
 
+/*
 .Chessboard-cell--red::before,
 .Chessboard-cell--green::before,
 .Chessboard-cell--blue::before{
@@ -173,6 +200,7 @@
 .Chessboard-cell--red::before   { background-color: #ff0000; }
 .Chessboard-cell--green::before { background-color: #00ff00; }
 .Chessboard-cell--blue::before  { background-color: #0000ff; }
+*/
 
 
 .Chessboard-cell--marker::before{
@@ -185,8 +213,7 @@
 }
 
 
-
-/* SCELTA COLORE
+/* SCELTA COLORE, VITTORIA, SCONFITTA e USCITA
 ============================================================================= */
 #ColorSelection,
 #WinDialog,
@@ -217,6 +244,19 @@
             text-align: center;
         }
     }
+
+    & > p{
+
+        line-height: 1.6rem;
+        padding: 20px 10px;
+        text-align: center;
+    }
+
+    & > footer{
+
+        padding: 10px;
+        text-align: right;
+    }
 }
 
 #ColorSelection h1,
@@ -226,6 +266,78 @@
 #TimeUp h1{ background-color: #660000; }
 
 
+#obtainedStars{
+
+    color: #e0a352;
+    font-size: 2.5rem;
+    margin: 30px 0;
+    text-align: center;
+}
+
+#obtainedStars-first,
+#obtainedStars-second,
+#obtainedStars-third {
+
+    display: inline-block;
+    @include animation(rotateIn .6s ease both);
+    margin: 0 10px;
+}
+
+#obtainedStars-first { @include animationDelay(.2s); }
+
+#obtainedStars-second {
+
+    position: relative;
+    top: -10px;
+    @include animationDelay(.3s);
+}
+
+#obtainedStars-third { @include animationDelay(.4s); }
+
+#infoStars-first,
+#infoStars-second,
+#infoStars-third {
+
+    font-size: 1.2rem;
+    margin: 10px 0;
+    padding-left: 1.5rem;
+}
+
+
+#infoStars-first-icon,
+#infoStars-second-icon,
+#infoStars-third-icon {
+
+    @include animation(zoomIn .3s ease both);
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-right: 7px;
+    min-width: 1.5rem;
+    position: relative;
+    text-align: center;
+    top: 3px;
+}
+
+#infoStars-first-icon { @include animationDelay(.6s); }
+#infoStars-second-icon { @include animationDelay(.9s); }
+#infoStars-third-icon { @include animationDelay(1.2s); }
+
+#infoStars-first-text,
+#infoStars-second-text,
+#infoStars-third-text  {
+
+    @include animation(fadeInRight .5s ease both);
+    display: inline-block;
+}
+
+#infoStars-first-text { @include animationDelay(.7s); }
+#infoStars-second-text { @include animationDelay(1s); }
+#infoStars-third-text { @include animationDelay(1.3s); }
+
+#infoStars .icon_check_alt { color: #00cc33; }
+#infoStars .icon_close_alt { color: #990000; }
+
+/*
 .ColorChoice{
 
     display: inline-block;
@@ -252,39 +364,98 @@
     font-size: 3rem;
     font-weight: 200;
 }
+*/
 
-/* VITTORIA E SCONFITTA
+
+/* TOAST
 ============================================================================= */
+#toast{
 
-#WinDialog,
-#LoseDialog,
-#ExitDialog,
-#TimeUp{
+    opacity: 0;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    white-space: pre;
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    @include transform(translateX(-50%));
+    @include transition(opacity .4s ease);
 
-    & > p{
-
-        line-height: 1.6rem;
-        padding: 20px 10px;
-        text-align: center;
-    }
-
-    & > footer{
-
-        padding: 10px;
-        text-align: right;
+    &.show{
+        opacity: 1;
     }
 }
 
 
 
+// Media Query
+// ============================================================================
+
+@media (min-width: 450px){
+
+    .Title-letter{ font-size: 3rem; }
+
+    #Timer{
+
+        font-size: 3.5rem;
+        height: 4.5rem;
+    }
+
+    #PawnLeft-dummyContainer--red,
+    #PawnLeft-dummyContainer--green,
+    #PawnLeft-dummyContainer--blue{
+
+        height: 3.5rem;
+        width: 3.5rem;
+    }
+
+    #PawnLeft--red-text,
+    #PawnLeft--green-text,
+    #PawnLeft--blue-text{
+
+        font-size: 2rem;
+    }
+
+    .Chessboard-cell{
+
+        height: 4rem;
+        width: 4rem;
+    }
+
+    #WinDialog,
+    #LoseDialog,
+    #ExitDialog,
+    #TimeUp{
+
+        & > header{
+
+            & > h1{ font-size: 2rem; }
+        }
+
+        & > p{ font-size: 1.3rem; }
+    }
+
+    #obtainedStars{
+
+        font-size: 3.5rem;
+        margin: 45px 0;
+    }
+
+    #infoStars-first,
+    #infoStars-second,
+    #infoStars-third { font-size: 1.5rem; }
+
+    #infoStars-first-icon,
+    #infoStars-second-icon,
+    #infoStars-third-icon {
+
+        font-size: 2rem;
+        top: 6px;
+    }
 
 
-// tutti quei dispositivi che al massimo 600px CSS ( cioè quelli fisici)
-// e che hanno al massimo 1.5 come device pixel ratio.
-// questo vuol dire che stiamo identificando qui tutti quei dispostivi che
-// hanno al massimo 600px * 1.5 = 900px logici
-@media (max-width: 600px) and (-webkit-max-device-pixel-ratio: 1.5){
-
-    #Title > h1{ letter-spacing: 3px; }
+    #toast{ font-size: 1.2rem; }
 
 }

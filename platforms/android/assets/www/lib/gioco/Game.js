@@ -1,42 +1,34 @@
 
-// il primo parametro indica la grandezza della scacchiera. Ad esempio, se ci
-// viene passato 6 => la scacchiera sarà 6*6
-//
-// il secondo parametro indica la quantità di minuti massimi per risolvere
-// il puzzle. Questo parametro è opzionale
-function Game(size, time, level) {
+define(function (require) {
 
-    MyUtils.enhanceDOMElements();
+    // impostiamo le dipendenze
+    var Backbone = require("backbone");
+    var Chessboard = require("chessboard");
+    var Pawn = require("pawn");
 
+    /**
+     *
+     * @param {Number} size - The size of the game, for example 6 for 6*6
+     * @param {Number} time - This argument indicate the minutes
+     * @param {Number} level - The level object or JSON of level
+     * @returns {Game}
+     */
+    var Game = function (size) {
 
-    this.size = size;
+        this.size = size;
 
-    this.time = time;
-    this.timeLeft = null;
-    this.endTime = null;
+        this.chessboard = new Chessboard(size, document.getElementById("Chessboard"));
 
-    this.level = level;
-    this.startTime;
-    this.removes = 0;
-    this.limit = null;
-
-
-
-    this.chessboard = new Chessboard(size, document.getElementById("Chessboard"));
-
-    this.pawnLeft = {
-        red: [],
-        green: [],
-        blue: [],
-        marker: []
+        this.pawnLeft = {
+            red: [],
+            green: [],
+            blue: [],
+            marker: []
+        };
     };
 
-    this.graphicsLayer = new GraphicsLayer(this);
-}
 
-Game.prototype = {
-    tappedCell: null,
-    init: function () {
+    Game.prototype.init = function () {
 
         for (var i = 0; i < this.size; i++) {
 
@@ -49,104 +41,25 @@ Game.prototype = {
 
             this.pawnLeft.marker.push(new Pawn(Pawn.MARKER));
         }
+    };
 
-        // inizializziamo per bene il timer se c'è
-        if (this.time) {
-
-            // calcoliamo il tempo restante in millisecondi
-            // this.time indica i minuti
-            this.timeLeft = this.time * 60 * 1000;
-
-            // aggiungiamo "time" minuti alla data di inizio
-            this.endTime = new Date().getTime() + this.timeLeft;
-        }
-
-        if (this.level) {
-
-
-            if (typeof this.level === 'string') {
-
-                // se il livello ci è stato passato come stringa JSON e non come
-                // oggetto JS => la parsiamo per trasformarla in oggetto
-                this.level = JSON.parse(this.level);
-
-            }
-
-            this.startTime = new Date().getTime();
-
-            if (this.level.size == 3) {
-
-                this.limit = {
-                    removes: 2,
-                    // 3 minuti
-                    time: 1 * 60 * 1000
-                };
-
-            } else if (this.level.size == 4) {
-
-                this.limit = {
-                    // 10 mosse
-                    removes: 4,
-                    // 3 minuti
-                    time: 2 * 60 * 1000
-                };
-
-            } else if (this.level.size == 5) {
-
-                this.limit = {
-                    // 10 mosse
-                    removes: 8,
-                    // 3 minuti
-                    time: 3 * 60 * 1000
-                };
-
-            } else {
-
-                this.limit = {
-                    // 10 mosse
-                    removes: 10,
-                    // 3 minuti
-                    time: 4 * 60 * 1000
-                };
-
-            }
-        }
-
-        this.graphicsLayer.init(this.timeLeft);
-
-    },
-    start: function () {
+    Game.prototype.start = function () {
 
         this.init();
         this.createLevel();
+    };
 
-        // se è il gioco a tempo => avviamo il timer
-        if (this.time) {
-
-            this.graphicsLayer.startTimer();
-        }
-    },
-    restart: function () {
+    Game.prototype.restart = function () {
 
         this.clearLevel();
         this.createLevel();
+        this.graphicsLayer.addHandler();
+    };
 
-        // se è il gioco a tempo => resettiamo il timer e lo avviamo
-        if (this.time) {
-
-            // calcoliamo il tempo restante in millisecondi
-            this.timeLeft = this.time * 60 * 1000;
-
-            // aggiungiamo "time" minuti alla data di inizio
-            this.endTime = new Date().getTime() + this.time * 60 * 1000;
-
-            this.graphicsLayer.startTimer();
-        }
-    },
     // questa funzione pulisce tutte le celle
     // dalle pedine
     // e resetta anche tutti i bordi
-    clearLevel: function () {
+    Game.prototype.clearLevel = function () {
 
         var cell;
         var pawn;
@@ -199,39 +112,16 @@ Game.prototype = {
                 }
             }
         }
-    },
-    createLevel: function () {
+    };
 
-        if (this.level) {
+    Game.prototype.createLevel = function () {
 
-            this.setSolution(this.level.solution);
-
-        } else {
-
-            this.generateSolution();
-        }
-
+        this.generateSolution();
         this.generateBorderFromSolution();
         this.clearSolution();
-    },
-    setSolution: function (solution) {
+    };
 
-        for (var row = 0; row < this.size; row++) {
-
-            for (var column = 0; column < this.size; column++) {
-
-
-                if (solution[row][column] !== "void") {
-
-                    this.chessboard.getCell(row, column).getDOMElement().Colorz.color = solution[row][column];
-
-                    // decommentare se si vuole vedere la soluzione creata
-                    // this.chessboard.getCell(row, column).getDOMElement().addClass("Chessboard-cell--" + level.solution[row][column]);
-                }
-            }
-        }
-    },
-    clearSolution: function () {
+    Game.prototype.clearSolution = function () {
 
         for (var row = 0; row < this.size; row++) {
 
@@ -240,12 +130,14 @@ Game.prototype = {
                 delete this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
             }
         }
-    },
-    cellHasColor: function (row, column) {
+    };
+
+    Game.prototype.cellHasColor = function (row, column) {
 
         return this.chessboard.getCell(row, column).getDOMElement().Colorz.color;
-    },
-    colorInColumn: function (color, column) {
+    };
+
+    Game.prototype.colorInColumn = function (color, column) {
 
         for (var row = 0; row < this.size; row++) {
 
@@ -256,8 +148,9 @@ Game.prototype = {
         }
 
         return false;
-    },
-    generateSolution: function () {
+    };
+
+    Game.prototype.generateSolution = function () {
 
         var colorLeft;
         var positionLeft;
@@ -310,8 +203,9 @@ Game.prototype = {
                 // this.chessboard.getCell(row, randomPosition).getDOMElement().addClass("Chessboard-cell--" + randomColor);
             }
         }
-    },
-    generateBorderFromSolution: function () {
+    };
+
+    Game.prototype.generateBorderFromSolution = function () {
 
         var color;
 
@@ -375,12 +269,13 @@ Game.prototype = {
                 }
             }
         }
-    },
+    };
+
     // questa funzione viene chiamata nel momento in cui una
     // cella viene tappata
     // semplicemente inserisce un marker se questo non c'è già
     // altrimenti lo rimuove
-    onTappedCell: function (row, column) {
+    Game.prototype.onTappedCell = function (row, column) {
 
         var cell = this.chessboard.getCell(row, column);
         var pawn;
@@ -392,6 +287,7 @@ Game.prototype = {
             cell.setPawn(pawn);
             pawn.setCell(cell);
             pawn.isPlaced(true);
+            this.graphicsLayer.markCell(cell.getDOMElement());
 
         } else {
 
@@ -409,11 +305,13 @@ Game.prototype = {
             pawn.setCell(null);
             pawn.isPlaced(false);
             this.pawnLeft.marker.push(pawn);
+            this.graphicsLayer.unmarkCell(cell.getDOMElement());
         }
-    },
+    };
+
     // questa funzione viene chiamata nel momento in cui una NUOVA
     // pedina viene inserita nella scacchiera
-    pawnPlaced: function (row, column, color) {
+    Game.prototype.pawnPlaced = function (row, column, color) {
 
         var cell = this.chessboard.getCell(row, column);
 
@@ -450,11 +348,32 @@ Game.prototype = {
 
             this.checkSolution();
         }
+    };
 
-    },
+    // questa funzione viene chiamata nel momento in cui una pedina
+    // GIA' PRESENTE SULLA SCACCHIERA viene spostata e piazzata in un'altra
+    // cella
+    Game.prototype.pawnMoved = function (newRow, newColumn, oldRow, oldColumn, color) {
+
+        var oldCell = this.chessboard.getCell(oldRow, oldColumn);
+        var newCell = this.chessboard.getCell(newRow, newColumn);
+        var pawn = oldCell.getPawn();
+
+        if (!newCell.isEmpty()) {
+
+            // se la nuova cella non è già occupata
+            // => riportiamo la pedina alla cella di partenza
+            this.graphicsLayer.movePawnToCell(pawn.getDOMElement(), oldCell.getDOMElement());
+        } else {
+
+            this.pawnRemoved(oldRow, oldColumn, color);
+            this.pawnPlaced(newRow, newColumn, color);
+        }
+    };
+
     // questa funzione viene chiamata nel momento in cui una
     // pedina viene rimossa dalla scacchiera
-    pawnRemoved: function (row, column, color) {
+    Game.prototype.pawnRemoved = function (row, column, color) {
 
         var cell = this.chessboard.getCell(row, column);
         var pawn = cell.getPawn();
@@ -473,46 +392,13 @@ Game.prototype = {
         this.pawnLeft[color].push(pawn);
         pawn.setCell(null);
         pawn.isPlaced(false);
-        this.removes++;
 
         this.graphicsLayer.updatePawnLeft(pawn.getDOMElement(), pawn.getColor(), this.pawnLeft[color].length);
-    },
-    // questa funzione viene chiamata nel momento in cui una pedina
-    // GIA' PRESENTE SULLA SCACCHIERA viene spostata e piazzata in un'altra
-    // cella
-    pawnMoved: function (newRow, newColumn, oldRow, oldColumn, color) {
+    };
 
-        var oldCell = this.chessboard.getCell(oldRow, oldColumn);
-        var newCell = this.chessboard.getCell(newRow, newColumn);
-        var pawn = oldCell.getPawn();
-
-
-        if (!newCell.isEmpty()) {
-
-            // se la nuova cella non è già occupata
-            // => riportiamo la pedina alla cella di partenza
-            this.graphicsLayer.movePawnToCell(pawn.getDOMElement(), oldCell.getDOMElement());
-
-        } else {
-
-            // altrimenti semplicemente togliamo la pedina dalla vecchia
-            // cella e la mettiamo in quella nuova
-            oldCell.clear();
-            newCell.setPawn(pawn);
-            pawn.setCell(newCell);
-            this.removes++;
-        }
-
-        if (this.pawnLeft.red.length === 0
-                && this.pawnLeft.green.length === 0
-                && this.pawnLeft.blue.length === 0) {
-
-            this.checkSolution();
-        }
-    },
     // questa funziona controlla la soluzione del
     // giocatore
-    checkSolution: function () {
+    Game.prototype.checkSolution = function () {
 
         for (var i = 0; i < this.size; i++) {
 
@@ -526,11 +412,12 @@ Game.prototype = {
         // se arrivo qui allora è tutto ok
         // ed il giocatore ha trovato la soluzione
         this.win();
-    },
+    };
+
     // questa funzione verifica che in una riga
     // ci sono 3 pedine di colori diversi
     // e che i bordi siano rispettati
-    checkRow: function (row) {
+    Game.prototype.checkRow = function (row) {
 
         var pawns = this.chessboard.getPawnsInTheRow(row);
         var red = 0;
@@ -582,9 +469,10 @@ Game.prototype = {
         }
 
         return (firstPawn.getColor() === borders.left && lastPawn.getColor() === borders.right);
-    },
+    };
+
     // come checkRow() ma per le colonne
-    checkColumn: function (column) {
+    Game.prototype.checkColumn = function (column) {
 
         var pawns = this.chessboard.getPawnsInTheColumn(column);
         var red = 0;
@@ -637,99 +525,55 @@ Game.prototype = {
         }
 
         return (firstPawn.getColor() === borders.top && lastPawn.getColor() === borders.bottom);
-    },
-    lose: function () {
+    };
+
+    Game.prototype.lose = function () {
 
         this.pause();
-        this.graphicsLayer.loseDialog.removeClass("is-hidden");
-    },
-    win: function () {
+        this.graphicsLayer.showLoseDialog();
+    };
 
-        if (this.level && this.level.cleared === false) {
-
-
-            var stars = 1;
-            var now = new Date().getTime();
-
-            if (this.removes <= this.limit.removes) {
-
-                stars++;
-            }
-
-            if (now - this.startTime <= this.limit.time) {
-
-                stars++;
-            }
-
-            console.log(this.removes);
-            console.log(stars);
-
-            // aggiorniamo levels
-            var levels = JSON.parse(window.localStorage.getItem('levels'));
-            levels[this.level.number].cleared = true;
-            levels[this.level.number].stars = stars;
-
-            window.localStorage.setItem('levels', JSON.stringify(levels));
-        }
+    Game.prototype.win = function () {
 
         this.pause();
-        this.graphicsLayer.winDialog.removeClass("is-hidden");
-    },
-    pause: function () {
+        this.graphicsLayer.showWinDialog();
+    };
 
-        // se c'è il timer lo stoppiamo
-        if (this.time) {
+    Game.prototype.pause = function () {
 
-            // salviamo il tempo rimanente in modo da ripristinarlo
-            // al resume
-            this.timeLeft = this.endTime - new Date().getTime();
-            this.graphicsLayer.stopTimer();
-        }
+        this.graphicsLayer.removeHandler();
+    };
 
-    },
-    resume: function () {
+    Game.prototype.resume = function () {
 
-        if (this.time) {
+        this.graphicsLayer.addHandler();
+    };
 
-            this.endTime = new Date().getTime() + this.timeLeft;
-            this.graphicsLayer.startTimer();
-        }
-
-    },
-    exit: function () {
+    Game.prototype.exit = function () {
 
         this.graphicsLayer.destroy();
         this.destroy();
         Backbone.history.history.back();
-    },
-    // questa funzione viene chiamata nel momento in cui scade il tempo
-    // nella modalità "tempo"
-    timeUp: function () {
+    };
 
-        this.pause();
-        this.graphicsLayer.TimeUpDialog.removeClass('is-hidden');
-    },
     // questa funzione viene chiamata nel momento in cui il gioco
     // viene chiuso.
     // Si occupa di cancellare tutti i riferimenti e gli handler
-    destroy: function () {
+    Game.prototype.destroy = function () {
 
         // dereferenziamo le variabili
-//        this.size =
-//                this.time =
-//                this.timeLeft =
-//                this.endTime =
-//                this.chessboard =
-//                this.pawnLeft =
-//                this.pawnLeft.red =
-//                this.pawnLeft.green =
-//                this.pawnLeft.blue =
-//                this.pawnLeft.marker =
-//                this.graphicsLayer =
-//                this.tappedCell = null;
+//        this.size = null;
+//        this.chessboard = null;
+//        this.pawnLeft = null;
+//        this.pawnLeft.red = null;
+//        this.pawnLeft.green = null;
+//        this.pawnLeft.blue = null;
+//        this.pawnLeft.marker = null;
+//        this.graphicsLayer = null;
+//        this.tappedCell = null;
+    };
 
-    },
-    bindAll: function () {
+    Game.prototype.bindAll = function () {
 
         for (var prop in this) {
 
@@ -739,7 +583,12 @@ Game.prototype = {
             }
 
         }
-    }
-};
+    };
+
+
+    // esponiamo pubblicamente il modulo
+    return Game;
+
+});
 
 

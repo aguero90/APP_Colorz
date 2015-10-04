@@ -10,57 +10,75 @@
         color: #fff;
         font-size: 2rem;
         font-weight: 100;
-        height: 5rem;
-        line-height: 5rem;
         margin: 1rem auto;
-        padding: 0;
+        padding: 70% 0px 0px;
         position: relative;
         text-align: center;
-        width: 5rem;
+        width: 70%;
 
 
         .star{
 
-            font-size: 15px;
+            display: inline-block;
+            font-size: 1rem;
             position: absolute;
             @include transform(translate3d(-50%, -50%, 0));
 
+            &:nth-of-type(1) { left: 25%; top: 25%; }
+            &:nth-of-type(2) { left: 50%; top: 15%; }
+            &:nth-of-type(3) { left: 75%; top: 25%; }
 
-            &:nth-of-type(1){
-
-                left: 25%;
-                top: 25%;
-            }
-
-            &:nth-of-type(2){
-
-                left: 50%;
-                top: 15%;
-            }
-
-            &:nth-of-type(3){
-
-                left: 75%;
-                top: 25%;
-            }
-        }
-
-    }
-
-
-
-
-    // Iteriamo per 99 volte in modo da cambiare il delay dell'animazione
-    // ed il colore dei bottoni
-    @for $i from 1 to 99 {
-
-        .i-4:nth-of-type(#{$i}) {
-
-            .LevelButton{
-
-                animation-delay: 0.05s * $i;
-                @include hueRotate(background-color, 180deg, 55%, 45%, 20 * $i);
-            }
         }
     }
+
+    .LevelButton-number{
+
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        @include transform(translate(-50%, -50%));
+    }
+
+    .LevelButton--locked{
+
+        background-color: gray !important;
+    }
+
+    .i-4:nth-of-type( 1) .LevelButton { @include animationDelay(.05s *  1); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  1); }
+    .i-4:nth-of-type( 2) .LevelButton { @include animationDelay(.05s *  2); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  2); }
+    .i-4:nth-of-type( 3) .LevelButton { @include animationDelay(.05s *  3); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  3); }
+    .i-4:nth-of-type( 4) .LevelButton { @include animationDelay(.05s *  4); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  4); }
+    .i-4:nth-of-type( 5) .LevelButton { @include animationDelay(.05s *  5); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  5); }
+    .i-4:nth-of-type( 6) .LevelButton { @include animationDelay(.05s *  6); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  6); }
+    .i-4:nth-of-type( 7) .LevelButton { @include animationDelay(.05s *  7); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  7); }
+    .i-4:nth-of-type( 8) .LevelButton { @include animationDelay(.05s *  8); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  8); }
+    .i-4:nth-of-type( 9) .LevelButton { @include animationDelay(.05s *  9); @include hueRotate(background-color, 180deg, 55%, 45%, 20 *  9); }
+    .i-4:nth-of-type(10) .LevelButton { @include animationDelay(.05s * 10); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 10); }
+    .i-4:nth-of-type(11) .LevelButton { @include animationDelay(.05s * 11); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 11); }
+    .i-4:nth-of-type(12) .LevelButton { @include animationDelay(.05s * 12); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 12); }
+    .i-4:nth-of-type(13) .LevelButton { @include animationDelay(.05s * 13); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 13); }
+    .i-4:nth-of-type(14) .LevelButton { @include animationDelay(.05s * 14); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 14); }
+    .i-4:nth-of-type(15) .LevelButton { @include animationDelay(.05s * 15); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 15); }
+    .i-4:nth-of-type(16) .LevelButton { @include animationDelay(.05s * 16); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 16); }
+    .i-4:nth-of-type(17) .LevelButton { @include animationDelay(.05s * 17); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 17); }
+    .i-4:nth-of-type(18) .LevelButton { @include animationDelay(.05s * 18); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 18); }
+    .i-4:nth-of-type(19) .LevelButton { @include animationDelay(.05s * 19); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 19); }
+    .i-4:nth-of-type(20) .LevelButton { @include animationDelay(.05s * 20); @include hueRotate(background-color, 180deg, 55%, 45%, 20 * 20); }
+
+}
+
+
+@media (min-width: 450px){
+
+    #LevelListContainer{
+
+        .LevelButton{
+
+            font-size: 2.5rem;
+
+            .star{ font-size: 1.2rem; }
+
+        }
+    }
+
 }

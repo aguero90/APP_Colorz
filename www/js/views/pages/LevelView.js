@@ -2,6 +2,7 @@ define(function (require) {
 
     var Backbone = require("backbone");
     var Utils = require("utils");
+    var LevelGame = require("levelGame");
 
     var LevelView = Utils.Page.extend({
         constructorName: "LevelView",
@@ -20,7 +21,7 @@ define(function (require) {
 
             var context = {
                 type: 'level',
-                title: ['l', 'e', 'v', 'e', 'l'],
+                title: ['l', 'i', 'v', 'e', 'l', 'l', 'o'],
                 size: this.level.size
             };
 
@@ -30,8 +31,8 @@ define(function (require) {
         onDOMReady: function () {
 
             // quando il DOM è pronto, creiamo il gioco e lo avviamo
-            var gioco = new Game(this.level.size, null, this.level);
-            gioco.start();
+            var game = new LevelGame(this.level.size, this.level);
+            game.start();
         }
     });
 

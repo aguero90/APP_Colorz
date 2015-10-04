@@ -9,6 +9,7 @@ define(function (require) {
     var LevelListView = require("views/pages/LevelListView");
     var LevelView = require("views/pages/LevelView");
     var InfoView = require("views/pages/InfoView");
+    var TutorialView = require("views/pages/TutorialView");
 
     var AppRouter = Backbone.Router.extend({
         constructorName: "AppRouter",
@@ -20,7 +21,8 @@ define(function (require) {
             "time": "TimeView",
             "levelList": "LevelListView",
             "level/:number": "LevelView",
-            "info": "InfoView"
+            "info": "InfoView",
+            "tutorial": "TutorialView"
         },
         firstView: "home",
         initialize: function (options) {
@@ -59,16 +61,36 @@ define(function (require) {
             var page = new InfoView();
             this.changePage(page);
         },
+        TutorialView: function () {
+            // create the view and show it
+            var page = new TutorialView();
+            this.changePage(page);
+        },
         // load the structure view
         showStructure: function () {
+
             if (!this.structureView) {
                 this.structureView = new StructureView();
                 // put the el element of the structure view into the DOM
                 document.body.appendChild(this.structureView.render().el);
                 this.structureView.trigger("inTheDOM");
             }
+
+
             // go to first view
             this.navigate(this.firstView, {trigger: true});
+
+
+
+            // window.localStorage.removeItem('tutorial');
+
+            if (!window.localStorage.getItem('tutorial')) {
+
+                this.navigate("tutorial", {trigger: true});
+
+                // diciamo che abbiamo mostrato il tutorial
+                window.localStorage.setItem('tutorial', 'true');
+            }
         }
     });
 

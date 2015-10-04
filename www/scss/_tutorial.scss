@@ -1,0 +1,169 @@
+
+#TutorialContainer{
+
+    #rules{
+
+        height: 25%;
+        position: relative;
+        width:100%;
+
+        .rule{
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 100;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            .DummyDiv-center{
+
+                position: absolute;
+                left: 50%;
+                top: 50%;
+            }
+
+            .DummyDiv-scale{
+
+                width: 50rem;
+                height: 50rem;
+                position: absolute;
+                top: -25rem;
+                left: -25rem;
+                border-radius: 50%;
+                @include transform(scale(0));
+                @include transition(all 1s ease);
+            }
+
+            .rule-content{
+
+                width: 100%;
+                opacity: 0;
+                color: white;
+                position: absolute;
+                top: 50%;
+                @include transform(translateY(-50%));
+                @include transition(opacity .3s ease .4s);
+            }
+
+            .rule-number{
+
+                width: 15%;
+                float: left;
+
+                & > span{
+                    display: block;
+                    border-radius: 50%;
+                    background-color: white;
+                    width: 2rem;
+                    height: 2rem;
+                    line-height: 2rem;
+                    margin: auto;
+                    font-weight: 300;
+                    @include transform(scale(0));
+                    @include transition(transform .3s ease .4s);
+                }
+            }
+
+            .rule-text{
+
+                text-align: left;
+                width: 85%;
+                float: left;
+                padding-right: 10px;
+                @include transform(translate3d(-10%, 0, 0));
+                @include transition(transform .3s ease .4s);
+            }
+
+            &.show{
+
+                .DummyDiv-scale{
+                    @include transform(scale(1));
+                }
+
+                .rule-content{ opacity: 1; }
+
+                .rule-number > span{ @include transform(scale(1)); }
+
+                .rule-text{ @include transform(translate3d(0, 0, 0)); }
+            }
+        }
+    }
+
+    #GameLayerContainer{
+
+        height: 75%;
+        position: relative;
+        @include transform(scale(0));
+        @include transition(transform .4s ease);
+
+        &.show{ @include transform(scale(1)); }
+    }
+
+    #GameLayer{
+
+        z-index: 5;
+        width: 100%;
+    }
+
+
+    #next{
+
+        text-align: center;
+        background-color: darkcyan;
+        color: white;
+        display: inline-block;
+        font-size: 1.5rem;
+        font-weight: 100;
+        border-radius: 50%;
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        height: 4rem;
+        width: 4rem;
+        line-height: 4rem;
+        @include transform(scale(0));
+        @include transition(transform .4s ease);
+
+        &.show { @include transform(scale(1)); }
+
+        & > span{ line-height: inherit; }
+    }
+
+
+    .draggable { @include transition(all .3s ease); }
+
+    .rule:nth-of-type(1) .DummyDiv-scale { @include hueRotate(background-color, 180deg, 55%, 45%, 60 * 1); }
+    .rule:nth-of-type(2) .DummyDiv-scale { @include hueRotate(background-color, 180deg, 55%, 45%, 60 * 2); }
+    .rule:nth-of-type(3) .DummyDiv-scale { @include hueRotate(background-color, 180deg, 55%, 45%, 60 * 3); }
+    .rule:nth-of-type(4) .DummyDiv-scale { @include hueRotate(background-color, 180deg, 55%, 45%, 60 * 4); }
+
+    .rule:nth-of-type(1) .rule-number > span { @include hueRotate(color, 180deg, 55%, 45%, 60 * 1); }
+    .rule:nth-of-type(2) .rule-number > span { @include hueRotate(color, 180deg, 55%, 45%, 60 * 2); }
+    .rule:nth-of-type(3) .rule-number > span { @include hueRotate(color, 180deg, 55%, 45%, 60 * 3); }
+    .rule:nth-of-type(4) .rule-number > span { @include hueRotate(color, 180deg, 55%, 45%, 60 * 4); }
+
+
+
+
+    // Media Query
+    // ============================================================================
+
+    @media (min-width: 450px){
+
+        #next{
+
+            font-size: 2rem;
+            height: 4.5rem;
+            width: 4.5rem;
+            line-height: 4.5rem;
+
+            & > span{ line-height: inherit; }
+        }
+    }
+}
+
+
+

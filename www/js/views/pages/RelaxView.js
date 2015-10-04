@@ -2,6 +2,7 @@ define(function (require) {
 
     var Backbone = require("backbone");
     var Utils = require("utils");
+    var RelaxGame = require("relaxGame");
 
     var RelaxView = Utils.Page.extend({
         constructorName: "RelaxView",
@@ -24,8 +25,8 @@ define(function (require) {
         },
         onDOMReady: function () {
 
-            var gioco = new Game(6);
-            gioco.start();
+            var game = new RelaxGame(6);
+            game.start();
         }
     });
 

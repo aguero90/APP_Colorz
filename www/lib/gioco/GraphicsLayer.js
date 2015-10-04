@@ -1,13 +1,17 @@
 
-var GraphicsLayer = function (game) {
+define(function (require) {
 
-    this.game = game;
-};
-GraphicsLayer.prototype = {
-    init: function (timeLeft) {
+    // impostiamo le dipendenze
+    var Interact = require("interact");
+
+    var GraphicsLayer = function (game) {
+
+        this.game = game;
+    };
+
+    GraphicsLayer.prototype.init = function () {
 
         this.bindAll();
-        this.polyFillRequestAnimationFrame();
 
         // prendiamo tutti i riferimenti agli elementi del DOM che ci servono
         this.pawnLeftRedContainer = document.getElementById("PawnLeft-dummyContainer--red");
@@ -39,9 +43,23 @@ GraphicsLayer.prototype = {
         this.game.pawnLeft["green"][this.game.size - 1].getDOMElement().addClass("visible");
         this.game.pawnLeft["blue"][this.game.size - 1].getDOMElement().addClass("visible");
 
+
+        this.addHandler();
+
+        // aggiungiamo gli handler da non rimuovere mai
+        Interact(this.winDialogNewGameButton).on('tap', this.onTapNewGameWin);
+        Interact(this.loseDialogContinueButton).on('tap', this.onTapContinueLose);
+        Interact(this.loseDialogNewGameButton).on('tap', this.onTapNewGameLose);
+        Interact(this.exitDialogExitButton).on('tap', this.onTapExit);
+        Interact(this.exitDialogContinueButton).on('tap', this.onTapContinueExit);
+
+    };
+
+    GraphicsLayer.prototype.addHandler = function () {
+
         // inizializziamo il drag & drop con interact
         // rendiamo "draggabili" tutti gli elementi che hanno classe "draggable"
-        interact('.draggable').draggable({
+        Interact('.draggable').draggable({
             restrict: {
                 endOnly: true,
                 elementRect: {top: 0, left: 0, bottom: 1, right: 1}
@@ -55,7 +73,7 @@ GraphicsLayer.prototype = {
         // diciamo che tutti gli elementi che hanno come classe "dropzone"
         // possono accettare tutti gli elementi draggabili che hanno come
         // classe "draggable"
-        interact('.dropzone')
+        Interact('.dropzone')
                 .dropzone({
                     accept: '.draggable',
                     ondropactivate: this.onDropActivate,
@@ -68,32 +86,20 @@ GraphicsLayer.prototype = {
                 // cioè al tap su una cella deve accadere qualcosa
                 .on('tap', this.onTappedCell);
 
-        // aggiungiamo handler ai bottoni del winDialog
-        interact(this.winDialogNewGameButton).on('tap', this.onTapNewGameWin);
-        interact(this.loseDialogContinueButton).on('tap', this.onTapContinueLose);
-        interact(this.loseDialogNewGameButton).on('tap', this.onTapNewGameLose);
-        interact(this.exitDialogExitButton).on('tap', this.onTapExit);
-        interact(this.exitDialogContinueButton).on('tap', this.onTapContinueExit);
+
         document.addEventListener("backbutton", this.onBackButton);
+    };
 
-        if (timeLeft) {
-
-
-            this.timer = document.getElementById("Timer");
-            this.isTimerRunning = null;
-
-            this.TimeUpDialog = document.getElementById("TimeUp");
-            this.TimeUpDialogNewGameButton = document.getElementById("NewGameTimeUp");
-
-            interact(this.TimeUpDialogNewGameButton).on('tap', this.onTapNewGameTimeUp);
-
-            // inizializziamo il timer;
-            this.timer.innerHTML = this.formatTime(timeLeft);
-        }
+    GraphicsLayer.prototype.removeHandler = function () {
 
 
-    },
-    updatePawnLeft: function (element, color, value) {
+        Interact('.draggable').unset();
+        Interact('.dropzone').unset();
+
+        document.removeEventListener("backbutton", this.onBackButton);
+    };
+
+    GraphicsLayer.prototype.updatePawnLeft = function (element, color, value) {
 
         /*
          * <NOTA>: al momento gestisce solo il caso in cui una pedina viene
@@ -115,12 +121,14 @@ GraphicsLayer.prototype = {
             // mettiamo il placeholder
             document.getElementById("PawnLeft--placeholder--" + color).addClass("visible");
         }
-    },
-    updateBorder: function (cell, position, color) {
+    };
+
+    GraphicsLayer.prototype.updateBorder = function (cell, position, color) {
 
         cell.addClass("Chessboard-border--" + position + "--" + color);
-    },
-    clearBorder: function (cell) {
+    };
+
+    GraphicsLayer.prototype.clearBorder = function (cell) {
 
         // non ci interessa quale sia il bordo in questione.
         // ripuliamo tutto
@@ -136,12 +144,14 @@ GraphicsLayer.prototype = {
         cell.removeClass("Chessboard-border--left--red");
         cell.removeClass("Chessboard-border--left--green");
         cell.removeClass("Chessboard-border--left--blue");
-    },
-    removeFromDOM: function (element) {
+    };
+
+    GraphicsLayer.prototype.removeFromDOM = function (element) {
 
         element.removeClass("visible");
-    },
-    movePawnToStart: function (pawn) {
+    };
+
+    GraphicsLayer.prototype.movePawnToStart = function (pawn) {
 
         pawn.style.webkitTransition = pawn.style.transition = 'transform .3s ease';
         // se l'utente non ha inserito la pedina in una cella
@@ -150,8 +160,9 @@ GraphicsLayer.prototype = {
         // ripristiniamo anche i dati per il movimento
         pawn.setAttribute('data-x', 0);
         pawn.setAttribute('data-y', 0);
-    },
-    movePawnToCell: function (pawn, cell) {
+    };
+
+    GraphicsLayer.prototype.movePawnToCell = function (pawn, cell) {
 
         var rect = cell.getBoundingClientRect();
         var x = rect.left + (rect.width / 2) - parseFloat(pawn.getAttribute('data-startX'));
@@ -162,83 +173,11 @@ GraphicsLayer.prototype = {
         // ripristiniamo anche i dati per il movimento
         pawn.setAttribute('data-x', x);
         pawn.setAttribute('data-y', y);
-    },
-    markCell: function (cell) {
+    };
 
-        cell.addClass("Chessboard-cell--marker");
-    },
-    unmarkCell: function (cell) {
-
-        cell.removeClass("Chessboard-cell--marker");
-    },
-    updateTimer: function (dt) {
-
-        var now = new Date().getTime();
-
-
-        if (now >= this.game.endTime) {
-
-            // diciamo al gioco che il tempo è scaduto
-            this.game.timeUp();
-            // ritorniamo false per bloccare il loop
-            return false;
-        }
-
-        // aggiorniamo il timer
-        this.timer.innerHTML = this.formatTime(this.game.endTime - now);
-
-        return this.isTimerRunning;
-    },
-    animLoop: function (render, element) {
-
-        var running, lastFrame = new Date().getTime();
-        function loop(now) {
-
-            // stop the loop if render returned false
-            if (running !== false) {
-
-                requestAnimationFrame(loop, element);
-                var dt = now - lastFrame;
-                // do not render frame when dt is too high
-                if (dt < 160) {
-
-                    running = render(dt);
-                }
-
-                lastFrame = now;
-            }
-        }
-
-        loop(lastFrame);
-    },
-    startTimer: function () {
-
-        this.isTimerRunning = true;
-        this.animLoop(this.updateTimer.bind(this));
-    },
-    stopTimer: function () {
-
-        this.isTimerRunning = false;
-    },
-    formatTime: function (time) {
-
-        // time è un intero che indica i millisecondi
-        var s = Math.floor(time / 1000);
-        var m = Math.floor(s / 60);
-        s = s % 60;
-        if (m < 10) {
-            m = "0" + m;
-        }
-
-        if (s < 10) {
-            s = "0" + s;
-        }
-
-        return m + ":" + s;
-    },
     // questa funzione determina cosa avviene nel momento
     // in cui parte il drag
-    onDragStart: function (e) {
+    GraphicsLayer.prototype.onDragStart = function (e) {
 
         // l'oggetto che stiamo muovendo deve stare più in alto
         // di tutti
@@ -256,10 +195,11 @@ GraphicsLayer.prototype = {
             e.target.setAttribute('data-startX', rect.left + (rect.width / 2));
             e.target.setAttribute('data-startY', rect.top + (rect.height / 2));
         }
-    },
+    };
+
     // questa funzione determina cosa avviene mentre
     // l'oggetto si sta muovendo
-    onDragMove: function (e) {
+    GraphicsLayer.prototype.onDragMove = function (e) {
 
         // salviamo i dati relativi alla X ed alla Y dell'oggetto
         var x = (parseFloat(e.target.getAttribute('data-x')) || 0) + e.dx;
@@ -269,10 +209,11 @@ GraphicsLayer.prototype = {
         // aggiorniamo gli attributi della X e della Y
         e.target.setAttribute('data-x', x);
         e.target.setAttribute('data-y', y);
-    },
+    };
+
     // questa funzione determina cosa avviene quando
     // l'oggetto è stato droppato
-    onDragEnd: function (e) {
+    GraphicsLayer.prototype.onDragEnd = function (e) {
 
         // rimettiamo alla vecchia z-index
         e.target.style["z-index"] = null;
@@ -292,40 +233,45 @@ GraphicsLayer.prototype = {
             // => facciamo una transizione più breve
             e.target.style.webkitTransition = e.target.style.transition = 'transform .1s ease';
         }
-    },
+    };
+
     // Questa funzione determina cosa avviene nel momento in cui
     // è possibile droppare un elemento
-    onDropActivate: function (e) {
+    GraphicsLayer.prototype.onDropActivate = function (e) {
 
         // aggiungere feedback eventuali
-    },
+    };
+
     // Questa funzione determina cosa avviene nel momento in cui
     // non è più possibile droppare un elemento
-    onDropDeactivate: function (e) {
+    GraphicsLayer.prototype.onDropDeactivate = function (e) {
 
         // rimuovere feedback eventualmente aggiunti nella
         // ondropactivate
-    },
+    };
+
     // Questa funzione determina cosa avviene nel momento in cui
     // un elemento draggabile entra nell'area di drop
-    onDragEnter: function (e) {
+    GraphicsLayer.prototype.onDragEnter = function (e) {
 
         // var draggableElement = event.relatedTarget;
         // var dropzoneElement = event.target;
 
         // mostriamo all'utente che è possibile effettuare il drop
-    },
+    };
+
     // Questa funzione determina cosa avviene nel momento in cui
     // un elemento draggabile esce dall'area di drop
-    onDragLeave: function (e) {
+    GraphicsLayer.prototype.onDragLeave = function (e) {
 
         // rimuoviamo il feedback creato per far capire all'utente
         // che non è più possibile effetuare il drop
 
-    },
+    };
+
     // Questa funzione determina cosa avviene nel momento in cui
     // l'elemento draggabile viene droppato
-    onDrop: function (e) {
+    GraphicsLayer.prototype.onDrop = function (e) {
 
         this.movePawnToCell(e.relatedTarget, e.target);
         if (e.relatedTarget.Colorz.row != undefined) {
@@ -338,96 +284,105 @@ GraphicsLayer.prototype = {
             // è stata posizionata una nuova pedina
             this.game.pawnPlaced(e.target.Colorz.row, e.target.Colorz.column, e.relatedTarget.Colorz.color);
         }
+    };
 
-    },
     // questa funziona cosa avviene nel momento in cui viene tappata una
     // cella
-    onTappedCell: function (e) {
+    GraphicsLayer.prototype.onTappedCell = function (e) {
 
-        e.currentTarget.toggleClass("Chessboard-cell--marker");
         this.game.onTappedCell(e.currentTarget.Colorz.row, e.currentTarget.Colorz.column);
-    },
+    };
+
+    GraphicsLayer.prototype.markCell = function (cell) {
+
+        cell.addClass("Chessboard-cell--marker");
+    };
+
+    GraphicsLayer.prototype.unmarkCell = function (cell) {
+
+        cell.removeClass("Chessboard-cell--marker");
+    };
+
     // questa funzione viene chiamata nel momento in cui il gioco
     // viene chiuso.
     // Si occupa di cancellare tutti i riferimenti e gli handler
-    onTapNewGameWin: function (e) {
+    GraphicsLayer.prototype.onTapNewGameWin = function (e) {
 
         this.winDialog.addClass("is-hidden");
+    };
 
-        // NON MI PIACE PROPRIO INSERIRE QUI QUESTO
-        // PEZZO DI LOGICA xD
-        //
-        // Comunque, se siamo in un livello => usciamo
-        // altrimenti creiamo una nuova partita
-        this.game.level ? this.game.exit() : this.game.restart();
-
-    },
-    onTapContinueLose: function (e) {
+    GraphicsLayer.prototype.onTapContinueLose = function (e) {
 
         this.loseDialog.addClass("is-hidden");
         this.game.resume();
+    };
 
-    },
-    onTapNewGameLose: function (e) {
+    GraphicsLayer.prototype.onTapNewGameLose = function (e) {
 
         this.loseDialog.addClass("is-hidden");
         this.game.restart();
+    };
 
-    },
-    onTapNewGameTimeUp: function (e) {
-
-        this.TimeUpDialog.addClass("is-hidden");
-        this.game.restart();
-    },
-    onTapExit: function (e) {
+    GraphicsLayer.prototype.onTapExit = function (e) {
 
         this.game.exit();
-    },
-    onTapContinueExit: function (e) {
+    };
+
+    GraphicsLayer.prototype.onTapContinueExit = function (e) {
 
         this.exitDialog.addClass("is-hidden");
         this.game.resume();
+    };
 
-    },
-    onBackButton: function (e) {
+    GraphicsLayer.prototype.onBackButton = function (e) {
 
         this.game.pause();
         this.exitDialog.removeClass("is-hidden");
-    },
-    destroy: function () {
+    };
+
+    GraphicsLayer.prototype.showLoseDialog = function () {
+
+        this.loseDialog.removeClass("is-hidden");
+    };
+
+    GraphicsLayer.prototype.showWinDialog = function () {
+
+        this.winDialog.removeClass("is-hidden");
+    };
+
+    GraphicsLayer.prototype.destroy = function () {
 
         // rimuoviamo gli handler
-        interact('.draggable').unset();
-        interact('.dropzone').unset();
+        Interact('.draggable').unset();
+        Interact('.dropzone').unset();
         // NOTA: prima di rimuoverli dovremmo metterli tutti come funzioni
-        interact(this.winDialogNewGameButton).unset();
-        interact(this.loseDialogContinueButton).unset();
-        interact(this.loseDialogNewGameButton).unset();
-        interact(this.exitDialogExitButton).unset();
-        interact(this.exitDialogContinueButton).unset();
+        Interact(this.winDialogNewGameButton).unset();
+        Interact(this.loseDialogContinueButton).unset();
+        Interact(this.loseDialogNewGameButton).unset();
+        Interact(this.exitDialogExitButton).unset();
+        Interact(this.exitDialogContinueButton).unset();
         document.removeEventListener("backbutton", this.onBackButton);
 
         // dereferenziamo le variabili
-//        this.game =
-//                this.pawnLeftRedContainer =
-//                this.pawnLeftGreenContainer =
-//                this.pawnLeftBlueContainer =
-//                this.winDialog =
-//                this.winDialogClose =
-//                this.winDialogNewGameButton =
-//                this.loseDialog =
-//                this.loseDialogClose =
-//                this.loseDialogContinueButton =
-//                this.loseDialogNewGameButton =
-//                this.exitDialogExitButton =
-//                this.exitDialogContinueButton =
-//                this.timer =
-//                this.isTimerRunning = null;
-    },
+//        this.game = null;
+//        this.pawnLeftRedContainer = null;
+//        this.pawnLeftGreenContainer = null;
+//        this.pawnLeftBlueContainer = null;
+//        this.winDialog = null;
+//        this.winDialogClose = null;
+//        this.winDialogNewGameButton = null;
+//        this.loseDialog = null;
+//        this.loseDialogClose = null;
+//        this.loseDialogContinueButton = null;
+//        this.loseDialogNewGameButton = null;
+//        this.exitDialogExitButton = null;
+//        this.exitDialogContinueButton = null;
+    };
+
     // questa funzione permette di legare tutte le esecuzione al
     // contesto "this". In questo modo anche le callback degli eventi
     // avranno come contesto l'oggetto in questione e non window
-    bindAll: function () {
+    GraphicsLayer.prototype.bindAll = function () {
 
         for (var prop in this) {
 
@@ -437,43 +392,11 @@ GraphicsLayer.prototype = {
             }
 
         }
-    },
-    // questa funzione è un polyfill preso su https://gist.github.com/paulirish/1579671
-    // della requestAnimationFrame() poiche non è supportata da tutti i browser
-    // http://caniuse.com/#search=requestAnimationFrame
-    // ( nel nostro caso è necessaria la compatibilità con android <= 4.3 )
-    //
-    // Questa funzione la implementa attraverso setTimeout
-    polyFillRequestAnimationFrame: function () {
+    };
 
-        var lastTime = 0;
-        var vendors = ['ms', 'moz', 'webkit', 'o'];
-        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
-                    || window[vendors[x] + 'CancelRequestAnimationFrame'];
-        }
+    // esponiamo pubblicamente il modulo
+    return GraphicsLayer;
 
-        if (!window.requestAnimationFrame) {
-            window.requestAnimationFrame = function (callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function () {
-                    callback(currTime + timeToCall);
-                },
-                        timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-        }
-
-        if (!window.cancelAnimationFrame) {
-            window.cancelAnimationFrame = function (id) {
-                clearTimeout(id);
-            };
-        }
-
-    }
-};
+});
 
 
