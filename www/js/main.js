@@ -42,7 +42,11 @@ require(['backbone', 'utils'], function (Backbone, Utils) {
         document.addEventListener("deviceready", run, false);
         function run() {
 
-            window.localStorage.removeItem('Colorz');
+            // manteniamo attivo lo schermo
+            window.plugins.insomnia.keepAwake();
+
+
+            // window.localStorage.removeItem('Colorz');
 
             if (!window.localStorage.getItem('Colorz')) {
 

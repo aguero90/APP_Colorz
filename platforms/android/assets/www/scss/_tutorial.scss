@@ -73,7 +73,7 @@
                 width: 85%;
                 float: left;
                 padding-right: 10px;
-                @include transform(translate3d(-10%, 0, 0));
+                @include transform(translateX(-20px));
                 @include transition(transform .3s ease .4s);
             }
 
@@ -87,7 +87,7 @@
 
                 .rule-number > span{ @include transform(scale(1)); }
 
-                .rule-text{ @include transform(translate3d(0, 0, 0)); }
+                .rule-text{ @include transform(translateX(0)); }
             }
         }
     }
@@ -96,10 +96,10 @@
 
         height: 75%;
         position: relative;
-        @include transform(scale(0));
-        @include transition(transform .4s ease);
+        opacity: 0;
+        @include transition(opacity .4s ease);
 
-        &.show{ @include transform(scale(1)); }
+        &.show{ opacity: 1; }
     }
 
     #GameLayer{
