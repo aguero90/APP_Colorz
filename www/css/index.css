@@ -55,6 +55,13 @@ button:active {
   -moz-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%); }
 
+.u-verticalCentered {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); }
+
 .FlatButton {
   color: #006699;
   display: inline;
@@ -277,16 +284,24 @@ button:active {
     font-size: 2.5rem; }
     #LevelListContainer .LevelButton .star {
       font-size: 1.2rem; } }
+.Info-list {
+  height: 100%; }
+
 .Info-list-item {
-  min-height: 3rem;
-  line-height: 3rem;
+  min-height: 5rem;
+  line-height: 5rem;
   font-size: 1.5rem;
   border-bottom: 1px solid #C0C0C0;
-  padding-left: 10px; }
+  padding-left: 10px;
+  color: white; }
+  .Info-list-item:nth-of-type(1) {
+    background-color: #3449b2; }
+  .Info-list-item:nth-of-type(2) {
+    background-color: #8834b2; }
 
 .Info-list-icon--right {
   float: right;
-  line-height: 3rem;
+  line-height: 5rem;
   margin-right: 10px;
   transition: transform 0.3s ease;
   -moz-transition: transform 0.3s ease;
@@ -308,7 +323,7 @@ button:active {
   -webkit-transform: rotateZ(90deg); }
 
 #Info-list-item--credits.show > .slideVertically {
-  max-height: 4rem; }
+  max-height: 10rem; }
 
 .Credits-item:last-of-type {
   margin-bottom: 1rem; }
@@ -316,6 +331,19 @@ button:active {
 .u-bold {
   font-weight: bold; }
 
+@media (min-width: 450px) {
+  .Info-list-item {
+    min-height: 7rem;
+    line-height: 7rem;
+    font-size: 2rem;
+    padding-left: 15px; }
+
+  .Info-list-icon--right {
+    line-height: 7rem;
+    margin-right: 15px; }
+
+  #Info-list-item--credits.show > .slideVertically {
+    max-height: 14rem; } }
 /* TITOLO GIOCO
 ============================================================================= */
 #TitleContainer {

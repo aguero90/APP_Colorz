@@ -9,5 +9,12 @@
     @include transform(translate(-50%, -50%));
 }
 
+.u-verticalCentered{
+
+    position: absolute;
+    top: 50%;
+    @include transform(translateY(-50%));
+}
+
 
 
